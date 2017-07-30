@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+ <!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+    <definition name="home.hometask" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/home/mydesk.jsp" />
+  </definition>
+   <definition name="home.addbulletin" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/bulletin/addbulletin.jsp" />
+  </definition>
+  
+   <definition name="home.addNewTask" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/task/addNewTask.jsp" />
+  </definition>
+    <definition name="home.forwardTask" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/task/forwardTask.jsp" />
+  </definition>
+   <definition name="lookup.add" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/lookup/addLookupValue.jsp" />
+  </definition>
+   <definition name="customer.add" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/lookup/addNewCustomer.jsp" />
+  </definition>
+ 
+   <definition name="vendor.add" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/lookup/addNewVendor.jsp" />
+  </definition>
+   <definition name="matspec.add" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/lookup/addNewMatSpec.jsp" />
+  </definition>
+   <definition name="lookup.success" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/lookup/addSuccess.jsp" />
+  </definition>
+   <definition name="exception.view" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/home/exception.jsp" />
+  </definition>
+</tiles-definitions>

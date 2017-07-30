@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+ <!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+	<!-- DEFAULT MAIN TEMPLATE -->
+ <definition name="mainlayout" template="/WEB-INF/jsp/layout/scigenicslayout.jsp">
+     
+      <put-attribute name="header" value="/WEB-INF/jsp/layout/header.jsp" />
+     
+      <put-attribute name="footer" value="/WEB-INF/jsp/layout/footer.jsp" />
+   
+  </definition>
+ 
+   <definition name="main.login" extends="mainlayout" >
+  <put-attribute name="menu" value="/WEB-INF/jsp/layout/usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/login/login.jsp" />
+  </definition>
+  
+  <definition name="main.userrole"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+ 
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/login/changerole.jsp" />
+  </definition>
+  
+    <definition name="main.logout" extends="mainlayout" >
+  <put-attribute name="menu" value="/WEB-INF/jsp/layout/logoutmenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/login/logout.jsp" />
+  </definition>
+  <definition name="main.changepass"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/login/changepassword.jsp" />
+  </definition>
+   <definition name="main.passsuccess"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/login/passwordsuccess.jsp" />
+  </definition>
+</tiles-definitions>

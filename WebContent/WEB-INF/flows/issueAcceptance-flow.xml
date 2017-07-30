@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<webflow:flow xmlns:webflow="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="issueLookup">
+<webflow:on-start>
+        <webflow:evaluate expression="storeRequestCont.setupForm"/>
+      
+    </webflow:on-start>
+<webflow:view-state id="issueLookup" view="mi.issueAcceptList">
+<webflow:on-entry>
+   <webflow:evaluate expression="storeRequestCont.loadIssueAcceptance"/>
+</webflow:on-entry>
+        <webflow:transition on="submit" to="issueLookup">
+            <webflow:evaluate expression="storeRequestCont.bind"/>
+            <webflow:evaluate expression="storeRequestCont.updateIssueAcceptance"/>
+        </webflow:transition>
+    </webflow:view-state>
+
+<webflow:exception-handler bean="exceptionresol"/>
+</webflow:flow>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<webflow:flow xmlns:webflow="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="logout">
+<webflow:on-start>
+        <webflow:evaluate expression="logoutcont.logoutApp"/>
+    </webflow:on-start>
+<webflow:view-state id="logout" view="main.logout"/>
+<webflow:exception-handler bean="exceptionresol"/>
+</webflow:flow>

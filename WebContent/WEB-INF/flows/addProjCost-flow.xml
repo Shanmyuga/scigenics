@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<webflow:flow xmlns:webflow="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="entersearch">
+<webflow:on-start>
+        <webflow:evaluate expression="searchworkcont.setupForm"/>
+        <webflow:evaluate expression="searchworkcont.searchWorkOrder"/>
+          
+            <webflow:evaluate expression="lookupbean.getDropDownList('cost_category')" result="flowScope.costcategorylist"/>
+    </webflow:on-start>
+<webflow:view-state id="entersearch" view="workorder.scheduleview">
+
+        <webflow:transition on="addProjsche" to="addProjsche">
+            <webflow:evaluate expression="searchworkcont.bind"/>
+            <webflow:evaluate expression="searchworkcont.selectWorder"/>
+        </webflow:transition>
+        
+      
+    </webflow:view-state>
+    
+
+<webflow:view-state id="addProjsche" view="projest.addProjecCostview">
+
+
+        <webflow:on-entry>
+            <webflow:evaluate expression="projtrack.setupForm"/>
+            <webflow:evaluate expression="projtrack.loadProjectCost"/>
+        </webflow:on-entry>
+        <webflow:transition on="addProj" to="addProjsche">
+            <webflow:evaluate expression="projtrack.bind"/>
+            <webflow:evaluate expression="projtrack.addProjectCosts"/>
+        </webflow:transition>
+        
+    </webflow:view-state>
+<webflow:exception-handler bean="exceptionresol"/>
+</webflow:flow>

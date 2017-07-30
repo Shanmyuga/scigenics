@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<webflow:flow xmlns:webflow="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="addworkflow">
+<webflow:on-start>
+        <webflow:evaluate expression="workordercont.setupForm"/>
+<!-- WARNING: parameter-type is no longer supported.  Use <set name="temp" value="'inpection_key'" type="string" /> to convert the type before the evaluate action. --><webflow:evaluate expression="lookupbean.getDropDownList('inpection_key')" result="flowScope.inspitems"/>
+<!-- WARNING: parameter-type is no longer supported.  Use <set name="temp" value="'worktype_key'" type="string" /> to convert the type before the evaluate action. --><webflow:evaluate expression="lookupbean.getDropDownList('worktype_key')" result="flowScope.workorderitems"/>
+<!-- WARNING: parameter-type is no longer supported.  Use <set name="temp" value="'customer_key'" type="string" /> to convert the type before the evaluate action. --><webflow:evaluate expression="lookupbean.getDropDownList('customer_key')" result="flowScope.customerData"/>
+    </webflow:on-start>
+<webflow:view-state id="addworkflow" view="workorder.display">
+        <webflow:transition on="Downstream Equipment" to="Downstreamjob">
+            <webflow:evaluate expression="workordercont.bindAndValidate"/>
+        </webflow:transition>
+        <webflow:transition on="Fermenter" to="Fermenterjob">
+            <webflow:evaluate expression="workordercont.bind"/>
+        </webflow:transition>
+        <webflow:transition on="Mixing Vessels" to="Mixingjob">
+            <webflow:evaluate expression="workordercont.bindAndValidate"/>
+        </webflow:transition>
+        <webflow:transition on="Spares" to="Sparesjob">
+            <webflow:evaluate expression="workordercont.bindAndValidate"/>
+        </webflow:transition>
+        <webflow:transition on="Services" to="Servicesjob">
+            <webflow:evaluate expression="workordercont.bindAndValidate"/>
+        </webflow:transition>
+        <webflow:transition on="designspec" to="designspec">
+            <webflow:evaluate expression="workordercont.bind"/>
+        </webflow:transition>
+        <webflow:transition on="changeWtype" to="addworkflow">
+            <webflow:evaluate expression="workordercont.bind"/>
+        </webflow:transition>
+        <webflow:transition on="saveWorkOrder" to="saveworkaction">
+            <webflow:evaluate expression="workordercont.bind"/>
+        </webflow:transition>
+    </webflow:view-state>
+<webflow:action-state id="saveworkaction">
+        <webflow:evaluate expression="workordercont.addWorkOrder"/>
+        <webflow:transition on="success" to="worksuccss"/>
+    </webflow:action-state>
+<webflow:view-state id="designspec" view="workorder.desgspec">
+        <webflow:on-render>
+            <webflow:evaluate expression="desiSpecCont.setupForm"/>
+        </webflow:on-render>
+        <webflow:transition on="jobdetails" to="vesselspec">
+            <webflow:evaluate expression="desiSpecCont.bind"/>
+        </webflow:transition>
+        <webflow:transition on="back" to="addworkflow"/>
+    </webflow:view-state>
+<webflow:view-state id="vesselspec" view="workorder.vesselspec">
+        <webflow:transition on="jobdetails" to="piperackspec">
+            <webflow:evaluate expression="desiSpecCont.bind"/>
+        </webflow:transition>
+        <webflow:transition on="back" to="designspec"/>
+    </webflow:view-state>
+<webflow:view-state id="piperackspec" view="workorder.piperackspec">
+        <webflow:on-render>
+            <webflow:evaluate expression="piperackcont.setupForm"/>
+        </webflow:on-render>
+        <webflow:transition on="jobdetails" to="instruspec1">
+            <webflow:evaluate expression="desiSpecCont.bind"/>
+        </webflow:transition>
+        <webflow:transition on="back" to="vesselspec"/>
+    </webflow:view-state>
+<webflow:view-state id="instruspec1" view="workorder.instru1spec">
+        <webflow:on-render>
+            <webflow:evaluate expression="instrudetcont.setupForm"/>
+        </webflow:on-render>
+        <webflow:transition on="jobdetails" to="instruspec2">
+            <webflow:evaluate expression="instrudetcont.bind"/>
+        </webflow:transition>
+        <webflow:transition on="back" to="piperackspec"/>
+    </webflow:view-state>
+<webflow:view-state id="instruspec2" view="workorder.instru2spec">
+        <webflow:transition on="jobdetails" to="instruspec3">
+            <webflow:evaluate expression="instrudetcont.bind"/>
+        </webflow:transition>
+        <webflow:transition on="back" to="instruspec1"/>
+    </webflow:view-state>
+<webflow:view-state id="instruspec3" view="workorder.instru3spec">
+        <webflow:transition on="jobdetails" to="instruspec4">
+            <webflow:evaluate expression="instrudetcont.bind"/>
+        </webflow:transition>
+        <webflow:transition on="back" to="instruspec2"/>
+    </webflow:view-state>
+<webflow:view-state id="instruspec4" view="workorder.instru4spec">
+        <webflow:transition on="jobdetails" to="utilityspec">
+            <webflow:evaluate expression="instrudetcont.bind"/>
+        </webflow:transition>
+        <webflow:transition on="back" to="instruspec3"/>
+    </webflow:view-state>
+<webflow:view-state id="utilityspec" view="workorder.utilityspec">
+        <webflow:transition on="back" to="instruspec4"/>
+        <webflow:transition on="addworkfinal" to="addtotalwork"/>
+    </webflow:view-state>
+<webflow:action-state id="addtotalwork">
+        <webflow:evaluate expression="instrudetcont.addFinalWorkOrder"/>
+        <webflow:transition on="success" to="worksuccss"/>
+    </webflow:action-state>
+<webflow:view-state id="worksuccss" view="workorder.worksuccess"/>
+<webflow:exception-handler bean="exceptionresol"/>
+</webflow:flow>

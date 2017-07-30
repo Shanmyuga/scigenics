@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<webflow:flow xmlns:webflow="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="entersearch">
+<webflow:on-start>
+        <webflow:evaluate expression="storecont.setupForm"/>
+        <webflow:evaluate expression="lookupbean.getDropDownList('matdept_key')" result="flowScope.matdeptlist"/>
+       
+    </webflow:on-start>
+<webflow:view-state id="entersearch" view="stores.issuemi">
+        <webflow:transition on="viewbyMI" to="entersearch">
+            <webflow:evaluate expression="storecont.bind"/>
+            <webflow:evaluate expression="storecont.searchByMi"/>
+        </webflow:transition>
+        
+        <webflow:transition on="loadCategory" to="entersearch">
+            <webflow:evaluate expression="storecont.bind"/>
+            <webflow:evaluate expression="storecont.loadMatCatItems"/>
+        </webflow:transition>
+        <webflow:transition on="displaysubmit" to="entersearch">
+            <webflow:evaluate expression="storecont.bind"/>
+            
+        </webflow:transition>
+          <webflow:transition on="loadPrevIssues" to="entersearch">
+            <webflow:evaluate expression="storecont.bind"/>
+            <webflow:evaluate expression="storecont.loadPrevIssues"/>
+        </webflow:transition>
+        <webflow:transition on="searchstoresreq" to="entersearch">
+            <webflow:evaluate expression="storecont.bind"/>
+            <webflow:evaluate expression="storecont.loadStoreRequest"/>
+        </webflow:transition>
+        <webflow:transition on="viewbyMat" to="entersearch">
+            <webflow:evaluate expression="storecont.bind"/>
+            <webflow:evaluate expression="storecont.searchByMatCode"/>
+        </webflow:transition>
+        <webflow:transition on="issueItem" to="itemsadded">
+            <webflow:evaluate expression="storecont.bind"/>
+            <webflow:evaluate expression="storecont.issueItem"/>
+        </webflow:transition>
+    </webflow:view-state>
+<webflow:view-state id="itemsadded" view="stores.issuesucces">
+        <webflow:transition on="back" to="entersearch"/>
+    </webflow:view-state>
+<webflow:exception-handler bean="exceptionresol"/>
+</webflow:flow>

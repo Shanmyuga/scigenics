@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<webflow:flow xmlns:webflow="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="entersearch">
+<webflow:on-start>
+        <webflow:evaluate expression="enqcont.setupForm"/>
+        <webflow:evaluate expression="lookupbean.getDropDownList('customer_key')" result="flowScope.custstats"/>
+         <webflow:evaluate expression="lookupbean.getDropDownList('enq_types_key')" result="flowScope.enqtypes"/>
+         <webflow:evaluate expression="lookupbean.getDropDownList('enq_categ_key')" result="flowScope.enqCategories"/>
+             <webflow:evaluate expression="lookupbean.getDropDownList('customer_dept_key')" result="flowScope.customerDepts"/>
+    </webflow:on-start>
+    
+   <webflow:view-state id="entersearch" view="enq.loadview">
+ 
+        <webflow:transition on="addEnq" to="addview">
+         
+        </webflow:transition>
+        
+        <webflow:transition on="searchEnquiry" to="entersearch">
+         <webflow:evaluate expression="enqcont.bind"/>
+            <webflow:evaluate expression="enqcont.loadEnquiryMaster"/>
+        </webflow:transition>
+            <webflow:transition on="loadEnqDetails" to="entersearch">
+         <webflow:evaluate expression="enqcont.bind"/>
+            <webflow:evaluate expression="enqcont.loadEnquiryDetails"/>
+        </webflow:transition>
+          <webflow:transition on="addEnqdet" to="entersearch" >
+           <webflow:evaluate expression="enqcont.bind"/>
+            <webflow:evaluate expression="enqcont.addEnquiryDetails"/>
+        </webflow:transition>
+           <webflow:transition on="closeenq" to="entersearch" >
+           <webflow:evaluate expression="enqcont.bind"/>
+            <webflow:evaluate expression="enqcont.closeEnquiry"/>
+        </webflow:transition>
+    </webflow:view-state> 
+<webflow:view-state id="addview" view="enq.addview">
+        <webflow:transition on="addEnqData" to="entersearch">
+            <webflow:evaluate expression="enqcont.bind"/>
+            <webflow:evaluate expression="enqcont.addEnquiryMaster"/>
+        </webflow:transition>
+    </webflow:view-state>
+
+<webflow:exception-handler bean="exceptionresol"/>
+</webflow:flow>

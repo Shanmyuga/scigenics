@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+ <!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+	<!-- DEFAULT MAIN TEMPLATE -->
+
+  
+  <definition name="myrole.display" extends="mainlayout">
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/layout/body.jsp" />
+  </definition>
+   <definition name="user.addUser" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer">
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/user/addUser.jsp" />
+  </definition>
+   <definition name="user.addconfirm" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer">
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/user/addconfirm.jsp" />
+  </definition>
+</tiles-definitions>

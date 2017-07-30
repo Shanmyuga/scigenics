@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<webflow:flow xmlns:webflow="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="entersearch">
+<webflow:on-start>
+        <webflow:evaluate expression="pocont.setupForm"/>
+<!-- WARNING: parameter-type is no longer supported.  Use <set name="temp" value="'purstats_key'" type="string" /> to convert the type before the evaluate action. -->
+<webflow:evaluate expression="lookupbean.getDropDownList('vendor_key')" result="flowScope.vendorlist"/>
+    </webflow:on-start>
+<webflow:view-state id="entersearch" view="add.invoice">
+       <webflow:on-entry>
+       <webflow:evaluate expression="pocont.loadInvoiceDetails"></webflow:evaluate>
+       </webflow:on-entry>
+        <webflow:transition on="addInvoiceDetail" to="entersearch">
+            <webflow:evaluate expression="pocont.bind"/>
+            <webflow:evaluate expression="pocont.addInvoiceDetails"/>
+        </webflow:transition>
+         <webflow:transition on="loadPOID" to="entersearch">
+            <webflow:evaluate expression="pocont.bind"/>
+            <webflow:evaluate expression="pocont.loadPODetailsForVendor"/>
+        </webflow:transition>
+    </webflow:view-state>
+<webflow:view-state id="createPOview" view="po.view">
+        <webflow:on-entry>
+            <webflow:evaluate expression="pocont.setupForm"/>
+        </webflow:on-entry>
+        <webflow:transition on="addPO" to="addPOsucces">
+            <webflow:evaluate expression="pocont.bind"/>
+            <webflow:evaluate expression="pocont.addNewPO"/>
+        </webflow:transition>
+    </webflow:view-state>
+<webflow:view-state id="addPOsucces" view="poadd.success"/>
+<webflow:view-state id="viewPDFPage" view="po.pdfview"/>
+<webflow:exception-handler bean="exceptionresol"/>
+</webflow:flow>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+    http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd" version="1.0">
+    
+	<persistence-unit name="ScigenicsDBPU"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>com.sci.bpm.db.model.ScigenicsRoleMaster</class>
+		<class>com.sci.bpm.db.model.ScigenicsUserMaster</class>
+		<class>com.sci.bpm.db.model.SciFermJobDetails</class>
+		
+		<class>com.sci.bpm.db.model.SciWorkInspection</class>
+		<class>com.sci.bpm.db.model.SciLookupMaster</class>
+		<class>com.sci.bpm.db.model.SciWorkorderMaster</class>
+		<class>com.sci.bpm.db.model.SciWorkInspectionId</class>
+		<class>com.sci.bpm.db.model.SciWorkDeliInst</class>
+		<class>com.sci.bpm.db.model.SciWorkDeliInstId</class>
+			<class>com.sci.bpm.db.model.SciMatindMaster</class>
+		<class>com.sci.bpm.db.model.SciPurchItemMaster</class>
+		<class>com.sci.bpm.db.model.SciPurchaseMast</class>
+		<class>com.sci.bpm.db.model.SciItemmiDetails</class>
+			<class>com.sci.bpm.db.model.SciWorkAmendments</class>
+				<class>com.sci.bpm.db.model.SciBulletinBoard</class>
+		<class>com.sci.bpm.db.model.SciIssueDetails</class>
+		<class>com.sci.bpm.db.model.SciDrawingRef</class>
+		<class>com.sci.bpm.db.model.SciDrwingDetails</class>
+			<class>com.sci.bpm.db.model.SciStoreMaster</class>
+		<class>com.sci.bpm.db.model.SciQcMaster</class>
+		<class>com.sci.bpm.db.model.SciMasterItem</class>
+		<class>com.sci.bpm.db.model.SciStoreissueMaster</class>
+		<class>com.sci.bpm.db.model.SciFermJobDetails</class>
+		<class>com.sci.bpm.db.model.SciProductMaster</class>
+		<class>com.sci.bpm.db.model.SciMatspecMaster</class>
+		<class>com.sci.bpm.db.model.SciMatcatMaster</class>
+		<class>com.sci.bpm.db.model.SciMattypeMaster</class>
+		<class>com.sci.bpm.db.model.SciDesignDocMaster</class>
+		<class>com.sci.bpm.db.model.SciInstruDetails</class>
+		<class>com.sci.bpm.db.model.SciWorkordDet</class>
+		<class>com.sci.bpm.db.model.SciWorkordInst</class>
+		<class>com.sci.bpm.db.model.SciStoreMiMaster</class>
+		<class>com.sci.bpm.db.model.SciQcMiMaster</class>
+		<class>com.sci.bpm.db.model.SciAvailableMaterials</class>
+		<class>com.sci.bpm.db.model.SciRecdMaterials</class>
+		<class>com.sci.bpm.db.model.SciStoresRequest</class>
+		<properties>
+			<property name="hibernate.connection.driver_class"
+				value="oracle.jdbc.driver.OracleDriver" />
+			<property name="hibernate.connection.url"
+				value="jdbc:oracle:thin:@localhost:1521:xe" />
+			<property name="hibernate.connection.username"
+				value="scigenics" />
+			<property name="hibernate.connection.password"
+				value="scigenics" />
+				<property name="hibernate.show_sql"
+				value="true" />
+				<property name="hibernate.dialect"  value="org.hibernate.dialect.Oracle10gDialect"/>
+		</properties>
+	
+	</persistence-unit>
+
+</persistence>

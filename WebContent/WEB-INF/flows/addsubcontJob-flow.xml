@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<webflow:flow xmlns:webflow="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="entersearch">
+<webflow:on-start>
+        <webflow:evaluate expression="searchworkcont.setupForm"/>
+        <webflow:evaluate expression="searchworkcont.searchWorkOrder"/>
+        <webflow:evaluate expression="lookupbean.getDropDownList('vendor_key')" result="flowScope.vendordata"/>
+        <webflow:evaluate expression="lookupbean.getDropDownList('vessel_access')" result="flowScope.vesseljobcodeitems"/>
+        <webflow:evaluate expression="lookupbean.getDropDownList('agitator_acess')" result="flowScope.agigjobcodeitems"/>
+        <webflow:evaluate expression="lookupbean.getDropDownList('operation_status')" result="flowScope.operationStatuscodes"/>
+           <webflow:evaluate expression="micont.setupForm"/>
+           
+    </webflow:on-start>
+<webflow:view-state id="entersearch" view="workorder.subcontview">
+        <webflow:transition on="addSubCont" to="addSubContView">
+            <webflow:evaluate expression="searchworkcont.bind"/>
+            <webflow:evaluate expression="searchworkcont.selectWorder"/>
+        </webflow:transition>
+        
+          <webflow:transition on="loadDesignSpecs" to="entersearch">
+            <webflow:evaluate expression="searchworkcont.bind"/>
+            <webflow:evaluate expression="searchworkcont.selectWorder"/>
+            <webflow:evaluate expression="drawcont.loadAppdrawingList"/>
+        </webflow:transition>
+    </webflow:view-state>
+<webflow:view-state id="addSubContView" view="subcont.add">
+       <webflow:on-entry>
+       <webflow:evaluate expression="micont.loadAlljobs"></webflow:evaluate>
+       </webflow:on-entry>
+        <webflow:transition on="loadjobcode" to="addSubContView">
+            <webflow:evaluate expression="micont.bind"/>
+           <webflow:evaluate expression="micont.routeSame"/>
+        </webflow:transition>
+        
+         <webflow:transition on="addJobStatus" to="addSubContView">
+            <webflow:evaluate expression="micont.bind"/>
+           <webflow:evaluate expression="micont.addJobStatus"/>
+        </webflow:transition>
+       <webflow:transition on="loaddetails" to="updateSubContView">
+            <webflow:evaluate expression="micont.bind"/>
+           <webflow:evaluate expression="micont.loadDetailsJobs"/>
+        </webflow:transition>
+       
+    </webflow:view-state>
+<webflow:view-state id="updateSubContView" view="subcont.update">
+      
+       
+        
+         <webflow:transition on="updateJobStatus" to="addSubContView">
+            <webflow:evaluate expression="micont.bind"/>
+           <webflow:evaluate expression="micont.updateSubContStatus"/>
+        </webflow:transition>
+      
+       
+         <webflow:transition on="back" to="addSubContView">
+           
+        </webflow:transition>
+    </webflow:view-state>
+<webflow:exception-handler bean="exceptionresol"/>
+</webflow:flow>

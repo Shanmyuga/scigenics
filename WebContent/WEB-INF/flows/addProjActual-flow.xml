@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<webflow:flow xmlns:webflow="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="entersearch">
+<webflow:on-start>
+        <webflow:evaluate expression="searchworkcont.setupForm"/>
+        <webflow:evaluate expression="searchworkcont.searchWorkOrder"/>
+           <webflow:evaluate expression="lookupbean.getDropDownList('phase_detail_key')" result="flowScope.phaseslist"/>
+            <webflow:evaluate expression="lookupbean.getDropDownList('total_phases')" result="flowScope.totphaseslist"/>
+    </webflow:on-start>
+<webflow:view-state id="entersearch" view="workorder.scheduleview">
+
+        <webflow:transition on="addProjsche" to="addProjsche">
+            <webflow:evaluate expression="searchworkcont.bind"/>
+            <webflow:evaluate expression="searchworkcont.selectWorder"/>
+        </webflow:transition>
+        
+      
+    </webflow:view-state>
+    
+
+<webflow:view-state id="addProjsche" view="projest.addActualview">
+
+
+        <webflow:on-entry>
+            <webflow:evaluate expression="projtrack.setupForm"/>
+            <webflow:evaluate expression="projtrack.loadProjectPhases"/>
+        </webflow:on-entry>
+        <webflow:transition on="addProj" to="addProjsche">
+            <webflow:evaluate expression="projtrack.bind"/>
+            <webflow:evaluate expression="projtrack.addProjectPhase"/>
+        </webflow:transition>
+          <webflow:transition on="loadsubphase" to="addProjsche">
+            <webflow:evaluate expression="projtrack.bind"/>
+            <webflow:evaluate expression="projtrack.loadSubPhase"/>
+        </webflow:transition>
+            <webflow:transition on="loadsubtasks" to="addProjsche">
+            <webflow:evaluate expression="projtrack.bind"/>
+            <webflow:evaluate expression="projtrack.loadsubtasks"/>
+        </webflow:transition>
+             <webflow:transition on="updateActual" to="addProjsche">
+            <webflow:evaluate expression="projtrack.bind"/>
+            <webflow:evaluate expression="projtrack.updateActualDates"/>
+        </webflow:transition>
+    </webflow:view-state>
+<webflow:exception-handler bean="exceptionresol"/>
+</webflow:flow>

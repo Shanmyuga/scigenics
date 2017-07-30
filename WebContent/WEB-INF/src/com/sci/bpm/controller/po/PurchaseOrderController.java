@@ -1,0 +1,647 @@
+package com.sci.bpm.controller.po;
+
+import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.webflow.execution.Event;
+import org.springframework.webflow.execution.RequestContext;
+import org.tempuri.po.Items;
+import org.tempuri.po.ObjectFactory;
+import org.tempuri.po.PurchaseOrderType;
+
+import com.sci.bpm.command.mi.MatindCommand;
+import com.sci.bpm.command.po.POCollectionCommand;
+import com.sci.bpm.command.po.POCommand;
+import com.sci.bpm.controller.base.SciBaseController;
+import com.sci.bpm.db.model.SciPaymentDetails;
+import com.sci.bpm.db.model.SciPurchItemMaster;
+import com.sci.bpm.db.model.SciPurchaseItemdetails;
+import com.sci.bpm.db.model.SciPurchaseMast;
+import com.sci.bpm.db.model.SciRejectMaterialAudit;
+import com.sci.bpm.db.model.SciRejectedMaterials;
+import com.sci.bpm.db.model.SciVendorInvoiceMaster;
+import com.sci.bpm.db.model.SciVendorMaster;
+import com.sci.bpm.db.model.SciVendorPurchaseCost;
+import com.sci.bpm.service.po.PurchaseOrderService;
+import com.sci.bpm.service.product.ProductMasterService;
+
+@Controller("pocont")
+public class PurchaseOrderController extends SciBaseController {
+
+	@Autowired
+	private PurchaseOrderService service;
+	@Autowired
+	private ProductMasterService prservice;
+
+	@Override
+	public Event setupForm(RequestContext context) throws Exception {
+		setFormObjectClass(POCommand.class);
+		setFormObjectName("pocommand");
+		return super.setupForm(context);
+	}
+
+	public Event addNewPO(RequestContext context) throws Exception {
+		POCommand command = (POCommand) getFormObject(context);
+		SciPurchaseMast purchmaster = new SciPurchaseMast();
+		BeanUtils.copyProperties(purchmaster, command);
+		String supportdocs = StringUtils.join(command.getSupportDocuments(),
+				",");
+		purchmaster.setSupportDocuments(supportdocs);
+		List<SciPurchItemMaster> itemlist = (List) context.getFlowScope().get(
+				"poItemlist");
+		List<SciVendorMaster> master = (List<SciVendorMaster>) context
+				.getFlowScope().get("vendordata");
+		SciVendorMaster vendorDetail = getVendorMaster(master,
+				command.getSeqVendorId());
+		// purchmaster.setSeqVendorID(vendorDetail.getSeqVendorId());
+		purchmaster.setSciVendorMaster(vendorDetail);
+		purchmaster.setVendorOrder(vendorDetail.getVendorName());
+		System.out.println(vendorDetail.getVendorAddress());
+		String vendorcity = "";
+		if(StringUtils.isNotBlank(vendorDetail.getVendorCity())) {
+			vendorcity = vendorDetail.getVendorCity();
+		}
+		purchmaster.setVendorAddress(vendorDetail.getVendorAddress()+ "   " + vendorcity);
+		
+		float totalcost = 0;
+		for (SciPurchItemMaster im : itemlist) {
+			im.setItemStatus(getLookupservice().loadIDData("PITEM_INPURCHASE"));
+			im.setUpdatedBy(getUserPreferences().getUserID());
+			im.setUpdatedDate(new java.util.Date());
+			totalcost = totalcost + im.getItemEstimatedCost().floatValue();
+			SciPurchaseItemdetails itemdetails = new SciPurchaseItemdetails();
+			itemdetails.setSeqItemId(im.getSeaPuritemId());
+
+			itemdetails.setSciPurchaseMast(purchmaster);
+			purchmaster.addItemDetail(itemdetails);
+		}
+		purchmaster.setTotalCost(new Float(totalcost));
+
+		double itemtotalcost = purchmaster.getTotalCost().doubleValue();
+		purchmaster.setItemTotalCost(new Double(itemtotalcost));
+		itemtotalcost = itemtotalcost
+				+ purchmaster.getPackingFrwdCharges().doubleValue();
+
+		purchmaster.setExciseCharges((purchmaster.getExcisePercent()
+				.doubleValue() * itemtotalcost) / 100);
+		itemtotalcost = itemtotalcost
+				+ purchmaster.getExciseCharges().doubleValue();
+
+		purchmaster
+				.setVatCharges((purchmaster.getVatPercentage().doubleValue() * itemtotalcost) / 100);
+		
+		
+		itemtotalcost = itemtotalcost + purchmaster.getVatCharges();
+		
+		purchmaster
+		.setGstCharges((purchmaster.getGst().doubleValue() * itemtotalcost) / 100);
+		itemtotalcost = itemtotalcost + purchmaster.getGstCharges();
+		purchmaster.setPoTotalcost(itemtotalcost);
+		purchmaster.setPurchaseStatus(getLookupservice().loadIDData(
+				"PO_CREATED"));
+		purchmaster.setUpdatedBy(getUserPreferences().getUserID());
+		purchmaster.setUpdatedDate(new java.util.Date());
+		purchmaster.setInsertedBy(getUserPreferences().getUserID());
+		purchmaster.setInsertedDate(new java.util.Date());
+		purchmaster.setPurchaseCreatedDt(new java.util.Date());
+		service.addPurchOrder(purchmaster, itemlist, getLookupservice()
+				.loadIDData("MI_PURCHASE_CREATED"));
+		return success();
+	}
+
+	public Event searchPO(RequestContext context) throws Exception {
+
+		POCommand command = (POCommand) getFormObject(context);
+		List<SciPurchaseMast> masterlist = service.searchPOs(command);
+		context.getFlowScope().put("pomastlist", masterlist);
+		return success();
+	}
+
+	public Event checkStatus(RequestContext context) throws Exception {
+
+		POCommand command = (POCommand) getFormObject(context);
+		List<SciPurchaseMast> master = (List<SciPurchaseMast>) context
+				.getFlowScope().get("pomastlist");
+		SciPurchaseMast selected = selectedPO(master, command.getScipurchID());
+		if (selected.getPurchaseStatus().intValue() == getLookupservice()
+				.loadIDData("PO_CREATED").intValue()) {
+			context.getFlowScope().put("OPENSTATUS", "Y");
+		}
+		loadPOStoresStatus(context);
+
+		return success();
+	}
+
+	public Event selectPO(RequestContext context) throws Exception {
+
+		POCommand command = (POCommand) getFormObject(context);
+		List<SciPurchaseMast> master = (List<SciPurchaseMast>) context
+				.getFlowScope().get("pomastlist");
+		SciPurchaseMast selected = selectedPO(master, command.getScipurchID());
+		List<SciPurchItemMaster> podetails = service.loadPODetails(selected);
+		context.getFlowScope().put("podetails", podetails);
+		context.getFlowScope().put("selectedPO", selected);
+		return success();
+	}
+
+	private SciPurchaseMast selectedPO(List<SciPurchaseMast> polist,
+			Long seqPuchId) {
+		SciPurchaseMast selected = null;
+		for (SciPurchaseMast m : polist) {
+			if (m.getSeqPurchId().intValue() == seqPuchId.intValue()) {
+				selected = m;
+				break;
+			}
+		}
+		return selected;
+	}
+	
+	private SciRejectedMaterials selectedreject(
+			List<SciRejectedMaterials> rejlist, Long seqRejectid) {
+		SciRejectedMaterials selected = null;
+		for (SciRejectedMaterials m : rejlist) {
+			if (m.getSeqRejdId().intValue() == seqRejectid.intValue()) {
+				selected = m;
+				break;
+			}
+		}
+		return selected;
+	}
+
+	public Event updateRejectStatus(RequestContext context) throws Exception {
+		POCommand command = (POCommand) getFormObject(context);
+		List<SciRejectedMaterials> master = (List<SciRejectedMaterials>) context
+				.getFlowScope().get("rejectedList");
+		SciRejectedMaterials selected = selectedreject(master,
+				command.getSeqRejectid());
+		selected.setUpdatedBy(getUserPreferences().getUserID());
+		selected.setUpdatedDate(new java.util.Date());
+		selected.setRejectStatus(command.getRejectStatus());
+		selected.setRemarks(command.getRejectremarks());
+		SciRejectMaterialAudit audit = new SciRejectMaterialAudit();
+		audit.setSeqRejectId(selected.getSeqRejdId());
+		audit.setInsertedBy(getUserPreferences().getUserID());
+		audit.setInsertedDate(new Date());
+		audit.setRejectDate(new Date());
+		audit.setRejectStatus(command.getRejectStatus());
+		selected.setUpdatedBy(getUserPreferences().getUserID());
+		selected.setUpdatedDate(new Date());
+		service.updateReject(selected, audit);
+		viewRejected(context);
+		command.setRejectremarks(null);
+		return success();
+	}
+
+	public Event updatePOStatus(RequestContext context) throws Exception {
+
+		POCommand command = (POCommand) getFormObject(context);
+		List<SciPurchaseMast> master = (List<SciPurchaseMast>) context
+				.getFlowScope().get("pomastlist");
+		SciPurchaseMast selected = selectedPO(master, command.getScipurchID());
+		selected.setPurchaseStatus(getLookupservice().loadIDData("PO_SENT"));
+		selected.setUpdatedBy(getUserPreferences().getUserID());
+		selected.setUpdatedDate(new Date());
+		service.updatePOStatus(selected,
+				getLookupservice().loadIDData("MI_PO_ORDERED"));
+		context.getFlowScope().remove("pomastlist");
+		context.getFlowScope().remove("postorelist");
+		resetForm(context);
+		return success();
+	}
+	
+	public Event updatePOItemDesc(RequestContext context) throws Exception {
+
+		POCommand command = (POCommand) getFormObject(context);
+		List<SciPurchItemMaster> master = (List<SciPurchItemMaster>) context
+				.getFlowScope().get("podetails");
+		List<POCollectionCommand> pilist = command.getPoitemList();
+		System.out.println(pilist);
+		
+		return success();
+	}
+
+	public Event closePo(RequestContext context) throws Exception {
+
+		POCommand command = (POCommand) getFormObject(context);
+		List<SciPurchaseMast> master = (List<SciPurchaseMast>) context
+				.getFlowScope().get("pomastlist");
+		SciPurchaseMast selected = selectedPO(master, command.getScipurchID());
+		selected.setPurchaseStatus(getLookupservice().loadIDData("PO_CLOSED"));
+		selected.setUpdatedBy(getUserPreferences().getUserID());
+		selected.setUpdatedDate(new Date());
+		service.updatePOStatus(selected);
+		context.getFlowScope().remove("pomastlist");
+		resetForm(context);
+		return success();
+	}
+
+	public Event viewPOPDF(RequestContext context) throws Exception {
+
+		POCommand command = (POCommand) getFormObject(context);
+		List<SciPurchaseMast> master = (List<SciPurchaseMast>) context
+				.getFlowScope().get("pomastlist");
+		SciPurchaseMast selected = selectedPO(master, command.getScipurchID());
+		List<SciPurchItemMaster> itemlist = service.loadPODetails(selected);
+
+		SimpleDateFormat dateformat = new SimpleDateFormat("dd.MM.yyyy");
+		HashMap<String, String> headerkeymap = new HashMap();
+		HashMap<String, String> commankeymap = new HashMap();
+		JAXBContext jcontext = JAXBContext.newInstance("org.tempuri.po");
+		ObjectFactory factory = new ObjectFactory();
+		PurchaseOrderType ptype = factory.createPurchaseOrderType();
+		ptype.setPonumber(selected.getSeqPurchId().toString());
+		ptype.setPoDate(selected.getPurchaseCreatedDt().toString());
+		ptype.setExciseAmount(selected.getExciseCharges().toString());
+		ptype.setExcisePecentage(selected.getExcisePercent().toString());
+		ptype.setInsurance(selected.getInsurance());
+		ptype.setPaymentTerms(selected.getPaymentTerms());
+		ptype.setModeOfDispatch(selected.getModeOfDispatch());
+		ptype.setPackingForwarding(selected.getPackingFrwdCharges().toString());
+		ptype.setVatAmount(selected.getVatCharges().toString());
+		ptype.setGst(selected.getGst().toString());
+		ptype.setGstAmount(selected.getGstCharges().toString());
+		ptype.setVatPercentage(selected.getVatPercentage().toString());
+		ptype.setSupportDocuments(selected.getSupportDocuments());
+		ptype.setSpecialConditions(selected.getSpecialCondition());
+		ptype.setTotalCost(selected.getTotalCost().toString());
+		ptype.setItemtotal(selected.getItemTotalCost().toString());
+		ptype.setRefDate(selected.getRefDate()!=null?selected.getRefDate().toString():"");
+		ptype.setQutrefno(selected.getQutRefNo());
+		System.out.println(selected.getVendorAddress());
+		System.out.println(selected.getVendorOrder());
+		
+		ptype.setVendorDetails(selected.getVendorOrder()+" | "+ selected.getVendorAddress());
+		ptype.setDeliveryDate(selected.getDeliverySchedule() + " - " +  dateformat.format(selected.getPurchaseDueDate()));
+
+		headerkeymap.put("PO.DATE",
+				dateformat.format(selected.getPurchaseCreatedDt()));
+		float itemtotal = 0;
+		headerkeymap.put("CUST.INFO", selected.getVendorOrder()
+				+ selected.getSciVendorMaster().getVendorAddress()!=null?selected.getSciVendorMaster().getVendorAddress():"");
+		List poitemlist = new ArrayList();
+		int idx = 1;
+		HashMap<String, String> itemkeymap = new HashMap();
+		for (int count = 1; count <= itemlist.size(); count++) {
+			SciPurchItemMaster itemmaster = itemlist.get(count - 1);
+
+			Items items = new Items();
+			
+			items.setDescription("("+itemmaster.getItemCode()+") "+itemmaster.getItemDescription());
+			items.setQuantity(Float.parseFloat(itemmaster.getItemQty()));
+			items.setSno(String.valueOf(count));
+			items.setDenom(itemmaster.getItemDenom());
+			itemkeymap.put("ITEM.INFO" + String.valueOf(idx),
+					itemmaster.getItemDescription());
+
+			String[] estimatedCost = StringUtils.splitByWholeSeparator(
+					String.valueOf(itemmaster.getItemEstimatedCost()), ".");
+			System.out.println(estimatedCost.length);
+			System.out.println(itemmaster.getItemEstimatedCost());
+			if (estimatedCost.length > 1) {
+				items.setTotalcost(estimatedCost[0]);
+				if (estimatedCost[1].length() == 1) {
+					estimatedCost[1] = estimatedCost[1] + "0";
+				}
+				items.setTotalcostpaise(estimatedCost[1]);
+			} else if (estimatedCost.length == 1) {
+				items.setTotalcost(estimatedCost[0]);
+				items.setTotalcostpaise("00");
+			}
+			System.out.println(itemmaster.getItemEstimatedCost());
+			System.out.println(itemmaster.getItemQty());
+			Float itemunitCost = itemmaster.getItemEstimatedCost()
+					/ Float.parseFloat(itemmaster.getItemQty());
+			String[] unitcost = StringUtils.splitByWholeSeparator(
+					String.valueOf(itemunitCost), ".");
+			if (unitcost.length > 1) {
+				items.setUnitprice(unitcost[0]);
+				if (unitcost[1].length() == 1) {
+					unitcost[1] = unitcost[1] + "0";
+				}
+				items.setUnitpricepaise(unitcost[1]);
+			} else if (unitcost.length == 1) {
+				items.setUnitprice(unitcost[0]);
+				items.setUnitpricepaise("00");
+			}
+
+			if (idx == 3) {
+				itemkeymap.put("S.N0" + String.valueOf(idx),
+						String.valueOf(count));
+			} else {
+				itemkeymap.put("S.NO" + String.valueOf(idx),
+						String.valueOf(count));
+			}
+
+			itemkeymap.put("QTY." + String.valueOf(idx),
+					itemmaster.getItemQty());
+			idx = idx + 1;
+			if (count % 3 == 0) {
+				poitemlist.add(itemkeymap);
+
+				itemkeymap = new HashMap();
+				idx = 1;
+
+			}
+			ptype.getItems().add(items);
+
+		}
+		if (idx > 1) {
+			poitemlist.add(itemkeymap);
+		}
+
+		if (selected.getItemTotalCost() != null) {
+			String[] itemTotalCost = StringUtils.splitByWholeSeparator(
+					String.valueOf(selected.getItemTotalCost()), ".");
+			if (itemTotalCost.length > 1) {
+				ptype.setItemtotal(itemTotalCost[0]);
+				if (itemTotalCost[1].length() == 1) {
+					itemTotalCost[1] = itemTotalCost[1] + "0";
+				}
+				ptype.setItemtotalpaise(itemTotalCost[1]);
+			} else if (itemTotalCost.length == 1) {
+				ptype.setItemtotal(itemTotalCost[0]);
+				ptype.setItemtotalpaise("00");
+			}
+		}
+		if (selected.getPoTotalcost() != null) {
+			String[] poTotalCost = StringUtils.splitByWholeSeparator(
+					String.valueOf(selected.getPoTotalcost()), ".");
+			if (poTotalCost.length > 1) {
+				ptype.setTotalCost(poTotalCost[0]);
+				if (poTotalCost[1].length() == 1) {
+					poTotalCost[1] = poTotalCost[1] + "0";
+				}
+				ptype.setTotalCostpaise(poTotalCost[1]);
+			} else if (poTotalCost.length == 1) {
+				ptype.setTotalCost(poTotalCost[0]);
+				ptype.setTotalCostpaise("00");
+			}
+		}
+		if (selected.getVatCharges() != null) {
+			String[] vatTotalCost = StringUtils.splitByWholeSeparator(
+					String.valueOf(selected.getVatCharges()), ".");
+			if (vatTotalCost.length > 1) {
+				ptype.setVatAmount(vatTotalCost[0]);
+				if (vatTotalCost[1].length() == 1) {
+					vatTotalCost[1] = vatTotalCost[1] + "0";
+				}
+				ptype.setVatAmountpaise(vatTotalCost[1]);
+			} else if (vatTotalCost.length == 1) {
+				ptype.setVatAmount(vatTotalCost[0]);
+				ptype.setVatAmountpaise("00");
+			}
+		}
+		
+		if (selected.getGstCharges() != null) {
+			String[] gstTotalCost = StringUtils.splitByWholeSeparator(
+					String.valueOf(selected.getGstCharges()), ".");
+			if (gstTotalCost.length > 1) {
+				ptype.setGstAmount(gstTotalCost[0]);
+				if (gstTotalCost[1].length() == 1) {
+					gstTotalCost[1] = gstTotalCost[1] + "0";
+				}
+				ptype.setGstAmountpaise(gstTotalCost[1]);
+			} else if (gstTotalCost.length == 1) {
+				ptype.setGstAmount(gstTotalCost[0]);
+				ptype.setGstAmountpaise("00");
+			}
+		}
+		if (selected.getExciseCharges() != null) {
+			String[] exciseCost = StringUtils.splitByWholeSeparator(
+					String.valueOf(selected.getExciseCharges()), ".");
+			if (exciseCost.length > 1) {
+				ptype.setExciseAmount(exciseCost[0]);
+				if (exciseCost[1].length() == 1) {
+					exciseCost[1] = exciseCost[1] + "0";
+				}
+				ptype.setExciseAmountpaise(exciseCost[1]);
+			} else if (exciseCost.length == 1) {
+				ptype.setExciseAmount(exciseCost[0]);
+				ptype.setExciseAmountpaise("00");
+			}
+		}
+
+		if (selected.getPackingFrwdCharges() != null) {
+			String[] packcost = StringUtils.splitByWholeSeparator(
+					String.valueOf(selected.getPackingFrwdCharges()), ".");
+			if (packcost.length > 1) {
+				ptype.setPackingForwarding(packcost[0]);
+				if (packcost[1].length() == 1) {
+					packcost[1] = packcost[1] + "0";
+				}
+				ptype.setPackingForwardingpaise(packcost[1]);
+			} else if (packcost.length == 1) {
+
+				ptype.setPackingForwarding(packcost[0]);
+				ptype.setPackingForwardingpaise("00");
+			}
+		}
+		System.out.println(poitemlist.size());
+		ByteArrayOutputStream outstream = new ByteArrayOutputStream();
+		Marshaller marshaller = jcontext.createMarshaller();
+		
+		marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.valueOf(true));
+		
+		marshaller.marshal(factory.createPurchaseOrder(ptype), outstream);
+		String poxml = new String(outstream.toByteArray());
+		int idlx = poxml.indexOf("<vendorDetails>");
+		poxml = poxml.substring(idlx, poxml.length());
+		
+System.out.println("poxml - " +poxml);
+		context.getExternalContext().getSessionMap()
+				.put("poxml", "<purchaseOrder>"+poxml);
+		
+		return success();
+	}
+
+	public Event cancelPO(RequestContext context) throws Exception {
+
+		POCommand command = (POCommand) getFormObject(context);
+		List<SciPurchaseMast> master = (List<SciPurchaseMast>) context
+				.getFlowScope().get("pomastlist");
+		SciPurchaseMast selected = selectedPO(master, command.getScipurchID());
+		selected.setPurchaseStatus(getLookupservice()
+				.loadIDData("PO_CANCELLED"));
+		selected.setUpdatedBy(getUserPreferences().getUserID());
+		selected.setUpdatedDate(new Date());
+		service.cancelPO(selected);
+		context.getFlowScope().remove("pomastlist");
+		resetForm(context);
+		return success();
+	}
+
+	
+
+	public Event despatchPO(RequestContext context) throws Exception {
+
+		POCommand command = (POCommand) getFormObject(context);
+		List<SciPurchaseMast> master = (List<SciPurchaseMast>) context
+				.getFlowScope().get("pomastlist");
+		SciPurchaseMast selected = selectedPO(master, command.getScipurchID());
+		selected.setPurchaseStatus(getLookupservice()
+				.loadIDData("PO_DESPATCHED"));
+		selected.setUpdatedBy(getUserPreferences().getUserID());
+		selected.setUpdatedDate(new Date());
+		selected.setPurchaseCreatedDt(new Date());
+		service.despatchPO(selected);
+		context.getFlowScope().remove("pomastlist");
+		resetForm(context);
+		return success();
+	}
+
+	public Event cancelPOStatus(RequestContext context) throws Exception {
+
+		POCommand command = (POCommand) getFormObject(context);
+		List<SciPurchaseMast> master = (List<SciPurchaseMast>) context
+				.getFlowScope().get("pomastlist");
+		SciPurchaseMast selected = selectedPO(master, command.getScipurchID());
+		selected.setPurchaseStatus(getLookupservice().loadIDData("PO_SENT"));
+		selected.setUpdatedBy(getUserPreferences().getUserID());
+		selected.setUpdatedDate(new Date());
+		service.updatePOStatus(selected);
+		context.getFlowScope().remove("pomastlist");
+		resetForm(context);
+		return success();
+	}
+
+	private SciVendorMaster getVendorMaster(List<SciVendorMaster> master,
+			Long seqVendorID) {
+
+		SciVendorMaster vendordetail = null;
+		for (SciVendorMaster vm : master) {
+			if (vm.getSeqVendorId().intValue() == seqVendorID.intValue()) {
+				vendordetail = vm;
+				break;
+			}
+
+		}
+		return vendordetail;
+	}
+
+	public Event loadPOStoresStatus(RequestContext context) throws Exception {
+		POCommand command = (POCommand) getFormObject(context);
+		List<SciPurchaseMast> master = (List<SciPurchaseMast>) context
+				.getFlowScope().get("pomastlist");
+		SciPurchaseMast selected = selectedPO(master, command.getScipurchID());
+		command.setScipurchID(selected.getSeqPurchId());
+		List postorelist = service.closePO(command);
+		context.getFlowScope().put("postorelist", postorelist);
+		return success();
+	}
+
+	public Event viewRejected(RequestContext context) throws Exception {
+		POCommand command = (POCommand) getFormObject(context);
+
+		List rejectedList = service.viewRejected(command);
+		context.getFlowScope().put("rejectedList", rejectedList);
+		return success();
+	}
+	
+	public Event addInvoiceDetails(RequestContext context) throws Exception {
+		POCommand command = (POCommand) getFormObject(context);
+
+		SciVendorInvoiceMaster vInvoice = new SciVendorInvoiceMaster();
+		BeanUtils.copyProperties(vInvoice, command);
+		vInvoice.setInsertedBy(getUserPreferences().getUserID());
+		SciVendorMaster master = service.loadSciVendorMaster(command.getSeqVendorId());
+		vInvoice.setSciVendorMaster(master);
+		if(vInvoice.getPoId() == null) {
+			vInvoice.setPoId(0L);
+		}
+		vInvoice.setFinalAmount(vInvoice.getBillAmount());
+		vInvoice.setUpdatedBy(getUserPreferences().getUserID());
+		vInvoice.setUpdatedDate(new Date());
+		vInvoice.setInsertedDate(new Date());
+		service.addInvoiceDetails(vInvoice);
+		loadInvoiceDetails(context);
+		return success();
+	}
+	
+	
+	public Event addVendorPurchCost(RequestContext context) throws Exception {
+		POCommand command = (POCommand) getFormObject(context);
+		
+		SciVendorPurchaseCost puchaseCost = new SciVendorPurchaseCost();
+		BeanUtils.copyProperties(puchaseCost, command);
+		
+		SciVendorMaster master = service.loadSciVendorMaster(command.getSeqVendorId());
+		puchaseCost.setSciVendorMaster(master);
+		puchaseCost.setUpdatedBy(getUserPreferences().getUserID());
+		puchaseCost.setUpdatedDate(new Date());
+		service.addPurchaseVendorCost(puchaseCost);
+		loadQuotationsDetails(context);
+		return success();
+	}
+	
+	
+	public Event loadInvoiceDetails(RequestContext context) throws Exception {
+		
+
+		List<SciVendorInvoiceMaster> details  = service.loadInvoiceDetails();
+		context.getFlowScope().put("invoiceItemlist", details);
+		return success();
+	}
+	
+	
+public Event loadQuotationsDetails(RequestContext context) throws Exception {
+	POCommand command = (POCommand) getFormObject(context);
+
+		List<SciVendorPurchaseCost> details  = service.loadQuotations(command.getMatDept(), command.getMatCategory());
+		context.getFlowScope().put("quotationsList", details);
+		return success();
+	}
+	
+	public Event loadPODetailsForVendor(RequestContext context) throws Exception {
+		
+		POCommand command = (POCommand) getFormObject(context);
+		List<SciPurchaseMast> details  = service.loadPODetails(command.getSeqVendorId());
+		context.getFlowScope().put("poDetailsList", details);
+		return success();
+	}
+	public Event addPayMentDetails(RequestContext context) throws Exception {
+		POCommand command = (POCommand) getFormObject(context);
+
+		SciPaymentDetails payment = new SciPaymentDetails();
+		BeanUtils.copyProperties(payment, command);
+		payment.setInsertedBy(getUserPreferences().getUserID());
+		SciVendorMaster master = service.loadSciVendorMaster(command.getSeqVendorId());
+		payment.setSciVendorMaster(master);
+		payment.setInsertedDate(new Date());
+		service.addPaymentDetails(payment);
+		loadPayMentDetails(context);
+		return success();
+	}
+	
+	public Event loadPayMentDetails(RequestContext context) throws Exception {
+		
+		List<SciPaymentDetails> details  = service.loadPaymentDetails();
+		context.getFlowScope().put("paymentItemlist", details);
+		return success();
+	}
+	
+public Event loadbillDetails(RequestContext context) throws Exception {
+	POCommand command = (POCommand) getFormObject(context);
+
+
+		List<SciVendorInvoiceMaster> list = service.loadbillNo(command.getSeqVendorId());
+		context.getFlowScope().put("billdetails", list);
+		return success();
+	}
+	public Event loadMatCatItems(RequestContext context) throws Exception {
+		POCommand command = (POCommand) getFormObject(context);
+		List matcatlist = prservice.selectCategory(command.getMatDept());
+		context.getFlowScope().put("matcatitems", matcatlist);
+		return success();
+	}
+}

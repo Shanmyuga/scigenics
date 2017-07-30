@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<webflow:flow xmlns:webflow="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="entersearch">
+<webflow:on-start>
+        <webflow:evaluate expression="searchworkcont.setupForm"/>
+        <webflow:evaluate expression="searchworkcont.searchWorkOrder"/>
+        <webflow:evaluate expression="lookupbean.getDropDownList('matdept_key')" result="flowScope.matdeptlist"/>
+    </webflow:on-start>
+<webflow:view-state id="entersearch" view="workorder.miqcupdate">
+        <webflow:transition on="updateMI" to="updateMI">
+            <webflow:evaluate expression="searchworkcont.bind"/>
+            <webflow:evaluate expression="searchworkcont.selectWorder"/>
+            <webflow:evaluate expression="micont.setupForm"/>
+        </webflow:transition>
+    </webflow:view-state>
+<webflow:view-state id="updateMI" view="miqc.update">
+       
+        <webflow:transition on="loadCategory" to="updateMI">
+            <webflow:evaluate expression="micont.bind"/>
+            <webflow:evaluate expression="micont.loadMatCatItems"/>
+        </webflow:transition>
+         <webflow:transition on="searchMI" to="updateMI">
+            <webflow:evaluate expression="micont.bind"/>
+            <webflow:evaluate expression="micont.searchMIForQC"/>
+        </webflow:transition>
+       
+        <webflow:transition on="updateRemarks" to="updateMI">
+            <webflow:evaluate expression="micont.bind"/>
+            <webflow:evaluate expression="micont.updateOldQCID"/>
+        </webflow:transition>
+    </webflow:view-state>
+<webflow:exception-handler bean="exceptionresol"/>
+</webflow:flow>

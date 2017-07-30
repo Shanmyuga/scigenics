@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:webflow="http://www.springframework.org/schema/webflow-config"
+       xmlns:faces="http://www.springframework.org/schema/faces-config"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:web="http://www.springframework.org/schema/webflow-config"
+       
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+                      http://www.springframework.org/schema/faces-config
+           http://www.springframework.org/schema/faces-config/spring-faces-config-2.0.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security-2.0.xsd">
+
+
+	
+	<bean name="/springtest.htm" class="org.springframework.webflow.mvc.servlet.FlowController">
+    <property name="flowExecutor" ref="flowExecutor" />
+    <property name="flowUrlHandler" ref="myhandler"></property>
+    <property name="ajaxHandler" ref="springjavas" ></property>
+</bean>
+<bean id="springjavas" class="org.springframework.js.ajax.SpringJavascriptAjaxHandler">
+
+</bean>
+
+    <bean id="myhandler" class="com.sci.bpm.flow.ScigenicsFlowHandler" />
+
+    
+	<!-- Resolves flow view names to .jsp templates -->
+	<bean id="viewResolver" class="com.sci.bpm.view.resolver.SciViewResolver">
+		
+		<property name="viewClass" value="org.springframework.webflow.mvc.view.FlowAjaxTilesView"></property>
+		<property name="order" value="1"></property>
+	</bean>
+<bean id="jasperviewResolver" class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
+		
+		<property name="basename" value="reportviews"></property>
+		
+	</bean>
+
+	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/defs/main-definitions.xml</value>
+				<value>/WEB-INF/defs/role-definitions.xml</value>
+				<value>/WEB-INF/defs/user-definitions.xml</value>
+				<value>/WEB-INF/defs/workorder-definitions.xml</value>
+					<value>/WEB-INF/defs/home-definitions.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	
+	<bean id="multipartResolver"
+    class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+
+    <!-- one of the properties available; the maximum file size in bytes -->
+    
+</bean>
+
+
+
+	
+	
+</beans>

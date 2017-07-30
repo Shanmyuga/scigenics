@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<webflow:flow xmlns:webflow="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="entersearch">
+<webflow:on-start>
+        <webflow:evaluate expression="storecont.setupForm"/>
+    </webflow:on-start>
+<webflow:view-state id="entersearch" view="stores.retdata">
+        <webflow:on-entry>
+            <webflow:evaluate expression="storecont.loadReturnUpdate"/>
+        </webflow:on-entry>
+        <webflow:transition on="addReturnResult" to="entersearch">
+            <webflow:evaluate expression="storecont.bind"/>
+            <webflow:evaluate expression="storecont.addReturnUpdates"/>
+        </webflow:transition>
+        <webflow:transition on="loadavail" to="entersearch">
+            <webflow:evaluate expression="storecont.bind"/>
+            <webflow:evaluate expression="storecont.loadAvailReturn"/>
+        </webflow:transition>
+    </webflow:view-state>
+<webflow:exception-handler bean="exceptionresol"/>
+</webflow:flow>

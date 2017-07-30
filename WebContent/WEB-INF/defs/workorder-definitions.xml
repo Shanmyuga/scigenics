@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+ <!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+	
+  
+  <definition name="workorder.display"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/workorder/addWorkOrder.jsp" />
+  </definition>
+   <definition name="workorder.downdetails"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/workorder/addWorkOrder.jsp" />
+  </definition>
+  
+   <definition name="workorder.fermdetails"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+
+  <put-attribute name="body"
+  	value="/WEB-INF/jsp/workorder/fermdetails.jsp" />
+   </definition>
+    <definition name="workorder.markview"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+
+  <put-attribute name="body"
+  	value="/WEB-INF/jsp/workorder/searchworkamend.jsp" />
+   </definition>
+     <definition name="workorder.addamend"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+
+  <put-attribute name="body"
+  	value="/WEB-INF/jsp/workorder/addAmend.jsp" />
+   </definition>
+   <definition name="workorder.success"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+
+  <put-attribute name="body"
+  	value="/WEB-INF/jsp/workorder/addSuccess.jsp" />
+   </definition>
+   <definition name="workorder.sparesdetails"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/workorder/addWorkOrder.jsp" />
+  </definition>
+   <definition name="workorder.mixingdetails"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/workorder/addWorkOrder.jsp" />
+  </definition>
+   <definition name="workorder.servicesdetails"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/workorder/addWorkOrder.jsp" />
+  </definition>
+  <definition name="workorder.search"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="workorder.search.body" />
+      
+  </definition>
+  
+  <definition name="workorder.search.body"  template="/WEB-INF/jsp/workorder/searchworkorder.jsp" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+     
+      <put-attribute name="body1" value="/WEB-INF/jsp/workorder/searchworkorder_frag1.jsp" />
+  </definition>
+   <definition name="desgworkorder.search"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/design/searchworkorder.jsp" />
+  </definition>
+  <definition name="mi.add"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="mi.add.body" />
+  </definition>
+  
+    <definition name="mi.add.body" template="/WEB-INF/jsp/mi/addMaterialIndent.jsp" >
+ 
+     
+      <put-attribute name="body1" value="/WEB-INF/jsp/mi/addmi_frag.jsp" />
+  </definition>
+   <definition name="mi.viewmatspec"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/mi/viewMatSpecs.jsp" />
+  </definition>
+  <definition name="mi.viewmilist"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/mi/viewmilist.jsp" />
+  </definition>
+    <definition name="mi.updatemicost"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/mi/updatemicost.jsp" />
+  </definition>
+   <definition name="mi.viewstreqlist"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/mi/viewstoresrequestlist.jsp" />
+  </definition>
+  <definition name="mi.search"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/mi/searchMI.jsp" />
+  </definition>
+  
+   <definition name="mi.issueAcceptList"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/mi/viewissuelist.jsp" />
+  </definition>
+  <definition name="mi.approvemi"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/mi/approveMI.jsp" />
+  </definition>
+  <definition name="item.add"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/item/addPurchaseItem.jsp" />
+  </definition>
+   <definition name="itemadd.success"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/item/addItemConfirm.jsp" />
+  </definition>
+   <definition name="item.search"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/item/search-item.jsp" />
+  </definition>
+   <definition name="po.add"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/po/addPurchaseOrder.jsp" />
+  </definition>
+   <definition name="po.search"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/po/searchPO.jsp" />
+  </definition>
+    <definition name="po.view"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/po/viewPODetails.jsp" />
+  </definition>
+  <definition name="poadd.success"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/po/addPOConfirm.jsp" />
+  </definition>
+  <definition name="po.pdfview"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/po/pdfview.jsp" />
+  </definition>
+  <definition name="po.viewrecdlist"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/po/viewRejectedList.jsp" />
+  </definition>
+   <definition name="workorder.miupdate"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/mi/searchupdatemi.jsp" />
+  </definition>
+     <definition name="workorder.miqcupdate"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/mi/searchupdatemiqc.jsp" />
+  </definition>
+  <definition name="stworkorder.search"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/mi/stworkorder.jsp" />
+  </definition>
+  <definition name="mi.update"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/mi/updatemi.jsp" />
+  </definition>
+  <definition name="miqc.update"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/mi/updateqcmi.jsp" />
+  </definition>
+   <definition name="mi.storesrequest"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/mi/storerequest.jsp" />
+  </definition>
+  
+  <definition name="mi.storesrequestIssue"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/mi/storerequestIssue.jsp" />
+  </definition>
+   <definition name="workorder.desview"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/design/searchworkorder.jsp" />
+  </definition>
+   <definition name="workorder.subcontview"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/workorder/searchworkorderSubcont.jsp" />
+  </definition>
+     <definition name="workorder.jdrview"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/workorder/searchworkorderjdr.jsp" />
+  </definition>
+   <definition name="workorder.wocloseview"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/workorder/searchworkorderclose.jsp" />
+  </definition>
+  <definition name="jdr.add"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/workorder/addJdrWork.jsp" />
+  </definition>
+   <definition name="design.add"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/design/addDesignDocuments.jsp" />
+  </definition>
+   <definition name="design.addrev"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/design/addRevDocuments.jsp" />
+  </definition>
+   <definition name="designplan.add"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/design/adddesgnPlan.jsp" />
+  </definition>
+   <definition name="dddoc.add"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/design/addDesgDocumentMaster.jsp" />
+  </definition>
+    <definition name="design.approve"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/designsup/approveDocuments.jsp" />
+  </definition>
+      <definition name="workorder.appdesview"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/designsup/searchworkorder.jsp" />
+  </definition>
+   <definition name="stores.viewpo"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/stores/selectPO.jsp" />
+  </definition>
+   <definition name="stores.returnview"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/stores/returnissue.jsp" />
+  </definition>
+     <definition name="stores.viewlist"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/stores/viewstoreslist.jsp" />
+  </definition>
+ <definition name="stores.viewrecdlist"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/stores/viewrecdlist.jsp" />
+  </definition>
+    <definition name="stores.addsucces"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/stores/addSuccess.jsp" />
+  </definition>
+   <definition name="stores.issuesucces"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/stores/issuesuccess.jsp" />
+  </definition>
+      <definition name="stores.issuemi"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/stores/searchIssueMI.jsp" />
+  </definition>
+   <definition name="stores.viewissuelist"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/stores/viewissuelist.jsp" />
+  </definition>
+  <definition name="stores.qcdata"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/stores/updateQCResults.jsp" />
+  </definition>
+   <definition name="stores.retdata"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/stores/updateReturnResults.jsp" />
+  </definition>
+   <definition name="itemtype.add" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/item/addLookupItem.jsp" />
+  </definition>
+   <definition name="itemtype.success" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/item/addSuccess.jsp" />
+  </definition>
+   <definition name="qc.items" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/qc/search-item.jsp" />
+  </definition>
+    <definition name="qcitems.docview" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/qc/addQCdocs.jsp" />
+  </definition>
+  <definition name="genqcitems.docview" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/qc/viewQCdocs.jsp" />
+  </definition>
+    <definition name="genqcissueitems.docview" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/qc/viewIssuedQCdocs.jsp" />
+  </definition>
+   <definition name="qcitems.approveiew" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/qc/approveQCdocs.jsp" />
+  </definition>
+   <definition name="workorder.desgspec" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/workorder/jobdetails_design.jsp" />
+  </definition>
+  
+   <definition name="workorder.vesselspec" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/workorder/jobdetail_vesselspecs.jsp" />
+  </definition>
+   <definition name="workorder.piperackspec" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/workorder/jobdetail_piperack.jsp" />
+  </definition>
+   <definition name="workorder.instru1spec" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/workorder/jobdetail_instrument1.jsp" />
+  </definition>
+    <definition name="workorder.instru2spec" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/workorder/jobdetail_instrument2.jsp" />
+  </definition>
+     <definition name="workorder.instru3spec" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/workorder/jobdetail_instrument3.jsp" />
+  </definition>
+    <definition name="workorder.instru4spec" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/workorder/jobdetail_instrument4.jsp" />
+  </definition>
+   <definition name="workorder.utilityspec" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/workorder/jobdetail_utilities.jsp" />
+  </definition>
+   <definition name="workorder.view" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/workorder/viewworkOrder.jsp" />
+  </definition>
+  <definition name="workorder.scheduleview" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/workorder/searchworkordersched.jsp" />
+  </definition>
+   <definition name="workorder.worksuccess" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/workorder/addSuccess.jsp" />
+  </definition>
+   <definition name="enq.loadview" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/workorder/loadEnquiryDetails.jsp" />
+  </definition>
+   <definition name="enq.addview" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/workorder/addEnquiryMaster.jsp" />
+  </definition>
+   <definition name="projest.addview" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/proj/addProjSchedule.jsp" />
+  </definition>
+   <definition name="projest.addActualview" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/proj/addProjActualsSchedule.jsp" />
+  </definition>
+   <definition name="projest.addProjecCostview" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/proj/addProjCost.jsp" />
+  </definition>
+  
+   <definition name="schedule.add" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/lookup/addNewReport.jsp" />
+  </definition>
+  <definition name="add.payment" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/po/addPaymentDetails.jsp" />
+  </definition>
+    <definition name="add.invoice" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/po/addInvoiceDetails.jsp" />
+  </definition>
+  
+   <definition name="subcont.add" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/mi/addSubContJob.jsp" />
+  </definition>
+   <definition name="subcont.update" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/mi/updateSubCont.jsp" />
+  </definition>
+  
+   <definition name="add.purchVendor" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="/WEB-INF/jsp/po/addVendorPurch.jsp" />
+  </definition>
+</tiles-definitions>

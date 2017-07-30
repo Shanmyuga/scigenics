@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<webflow:flow xmlns:webflow="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="viewhomepage">
+<webflow:view-state id="viewhomepage" view="home.hometask">
+        <webflow:on-entry>
+            <webflow:evaluate expression="bulletinController.searchBulletin()" result="flowScope.bulletinitems"/>
+            <webflow:evaluate expression="taskcontroller.searchMyTasks()" result="flowScope.taskItems"/>
+            <webflow:evaluate expression="taskcontroller.setupForm"/>
+        </webflow:on-entry>
+        <webflow:transition on="addnewnews" to="addnewnews">
+            <webflow:evaluate expression="bulletinController.setupForm"/>
+        </webflow:transition>
+        <webflow:transition on="addnewTask" to="addnewTask"/>
+        <webflow:transition on="forwardTask" to="forwardTask">
+            <webflow:evaluate expression="taskcontroller.bind"/>
+            <webflow:evaluate expression="taskcontroller.loadTaskDetail"/>
+        </webflow:transition>
+        <webflow:transition on="closeTask" to="closeTask">
+            <webflow:evaluate expression="taskcontroller.bind"/>
+        </webflow:transition>
+    </webflow:view-state>
+<webflow:view-state id="addnewTask" view="home.addNewTask">
+        <webflow:on-entry>
+            <webflow:evaluate expression="taskcontroller.setupForm"/>
+<!-- WARNING: parameter-type is no longer supported.  Use <set name="temp" value="'userlist_key'" type="string" /> to convert the type before the evaluate action. --><webflow:evaluate expression="lookupbean.getDropDownList('userlist_key')" result="flowScope.userlistitems"/>
+        </webflow:on-entry>
+        <webflow:transition on="submit" to="addActionState">
+            <webflow:evaluate expression="taskcontroller.bind"/>
+        </webflow:transition>
+    </webflow:view-state>
+<webflow:view-state id="addnewnews" view="home.addbulletin">
+        <webflow:transition on="addnews" to="addnews">
+            <webflow:evaluate expression="bulletinController.bind"/>
+        </webflow:transition>
+        <webflow:transition on="cancel" to="viewhomepage"/>
+    </webflow:view-state>
+<webflow:action-state id="addnews">
+        <webflow:evaluate expression="bulletinController.addBulletin"/>
+        <webflow:transition on="success" to="viewhomepage"/>
+    </webflow:action-state>
+<webflow:action-state id="addActionState">
+        <webflow:evaluate expression="taskcontroller.addNewTasks"/>
+        <webflow:transition on="success" to="viewhomepage"/>
+    </webflow:action-state>
+<webflow:view-state id="forwardTask" view="home.forwardTask">
+        <webflow:on-entry>
+            <webflow:evaluate expression="taskcontroller.setupForm"/>
+<!-- WARNING: parameter-type is no longer supported.  Use <set name="temp" value="'userlist_key'" type="string" /> to convert the type before the evaluate action. --><webflow:evaluate expression="lookupbean.getDropDownList('userlist_key')" result="flowScope.userlistitems"/>
+        </webflow:on-entry>
+        <webflow:transition on="updatetask" to="updateTask">
+            <webflow:evaluate expression="taskcontroller.bind"/>
+        </webflow:transition>
+    </webflow:view-state>
+<webflow:action-state id="updateTask">
+        <webflow:evaluate expression="taskcontroller.updateTask"/>
+        <webflow:transition on="success" to="viewhomepage"/>
+    </webflow:action-state>
+<webflow:action-state id="closeTask">
+        <webflow:evaluate expression="taskcontroller.closeTask"/>
+        <webflow:transition on="success" to="viewhomepage"/>
+    </webflow:action-state>
+<webflow:exception-handler bean="exceptionresol"/>
+</webflow:flow>

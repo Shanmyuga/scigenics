@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<webflow:flow xmlns:webflow="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="entersearch">
+<webflow:on-start>
+        <webflow:evaluate expression="searchworkcont.setupForm"/>
+        <webflow:evaluate expression="searchworkcont.searchWorkOrder"/>
+        <!-- WARNING: parameter-type is no longer supported.  Use <set name="temp" value="'matstats_key'" type="string" /> to convert the type before the evaluate action. --><webflow:evaluate expression="lookupbean.getDropDownList('matstats_key')" result="flowScope.matstatitems"/>
+        <webflow:evaluate expression="lookupbean.getDropDownList('mi_fortype_status')" result="flowScope.matfortypeitems"/>
+    </webflow:on-start>
+<webflow:view-state id="entersearch" view="workorder.search">
+        <webflow:transition on="addMI" to="addMI">
+            <webflow:evaluate expression="searchworkcont.bind"/>
+            <webflow:evaluate expression="searchworkcont.selectWorder"/>
+            <webflow:evaluate expression="micont.setupForm"/>
+            <webflow:evaluate expression="micont.loadProducts"/>
+        </webflow:transition>
+        <webflow:transition on="loadDesignSpecs" to="entersearch">
+            <webflow:evaluate expression="searchworkcont.bind"/>
+            <webflow:evaluate expression="searchworkcont.selectWorder"/>
+            <webflow:evaluate expression="drawcont.loadAppdrawingList"/>
+        </webflow:transition>
+    </webflow:view-state>
+<webflow:view-state id="addMI" view="mi.add">
+        <webflow:on-entry>
+          <webflow:evaluate expression="micont.loadDrawingList"/>
+            <webflow:evaluate expression="lookupbean.getDropDownList('matdept_key')" result="flowScope.matdeptlist"/>
+        </webflow:on-entry>
+        <webflow:transition on="addMaterialMI" to="addMI">
+            <webflow:evaluate expression="micont.bind"/>
+            <webflow:evaluate expression="micont.addnewMI"/>
+            <webflow:evaluate expression="micont.resetForm"/>
+        </webflow:transition>
+        <webflow:transition on="storerequest" to="addMI">
+            <webflow:evaluate expression="micont.bind"/>
+            <webflow:evaluate expression="micont.createStoreRequest"/>
+        </webflow:transition>
+        <webflow:transition on="loadSpecs" to="viewMispecs">
+            <webflow:evaluate expression="micont.bind"/>
+            <webflow:evaluate expression="micont.loadProductspecs"/>
+        </webflow:transition>
+        <webflow:transition on="loadCats" to="addMI">
+            <webflow:evaluate expression="micont.bind"/>
+            <webflow:evaluate expression="micont.loadCatProducts"/>
+        </webflow:transition>
+          <webflow:transition on="loadCategory" to="addMI">
+            <webflow:evaluate expression="micont.bind"/>
+            <webflow:evaluate expression="micont.loadMatCatItems"/>
+        </webflow:transition>
+          <webflow:transition on="searchMI" to="addMI">
+            <webflow:evaluate expression="micont.bind"/>
+            <webflow:evaluate expression="micont.searchMIWorkOrder"/>
+        </webflow:transition>
+    </webflow:view-state>
+    <webflow:view-state id="viewMispecs" view="mi.viewmatspec"  >
+    <webflow:transition on="selectspec" to="addMI" >
+    <webflow:evaluate expression="micont.bind"/>
+            <webflow:evaluate expression="micont.selectSpecs"/>
+    </webflow:transition>
+    </webflow:view-state>
+<webflow:view-state id="viewmipage" view="mi.add"/>
+<webflow:exception-handler bean="exceptionresol"/>
+</webflow:flow>

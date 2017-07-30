@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:webflow="http://www.springframework.org/schema/webflow-config"
+	xmlns:faces="http://www.springframework.org/schema/faces-config"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:web="http://www.springframework.org/schema/webflow-config"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+
+
+	xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+           http://www.springframework.org/schema/webflow-config
+           http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.0.xsd
+           http://www.springframework.org/schema/faces-config
+           http://www.springframework.org/schema/faces-config/spring-faces-config-2.0.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security-2.0.xsd
+           http://www.springframework.org/schema/aop 
+           http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+
+
+	<!-- Activates annotation-based bean configuration -->
+	<context:annotation-config />
+
+	<!-- Scans for application @Components to deploy -->
+	<context:component-scan base-package="com.sci.bpm" />
+	<bean name="exampleJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass" value="com.sci.bpm.service.task.EscalationService" />
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="tservice" value-ref="taskservice" />
+			</map>
+		</property>
+	</bean>
+	<bean name="reportCountJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass" value="com.sci.bpm.service.task.ReportCountService" />
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="tservice" value-ref="taskservice" />
+			</map>
+		</property>
+	</bean>
+
+	<bean name="reportQueryJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass" value="com.sci.bpm.service.task.ReportQueryService" />
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="tservice" value-ref="taskservice" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean name="reportWeeklyQueryJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass" value="com.sci.bpm.service.task.ReportQueryWeeklyService" />
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="tservice" value-ref="taskservice" />
+			</map>
+		</property>
+	</bean>
+	<bean name="diskjob" class="com.sci.bpm.service.task.DiskWriterJob">
+		<property name="host" value="localhost"></property>
+		<property name="port" value="1521"></property>
+		<property name="diskfileloc" value="/home/oracle/datafolder/"></property>
+	</bean>
+
+	<bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="exampleJob" />
+		<property name="startDelay" value="10000" />
+		<property name="repeatInterval" value="300000" />
+	</bean>
+	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+
+		<property name="jobDetail" ref="reportCountJob" />
+		<property name="cronExpression" value="0 0 12 * * ?" />
+		<!-- <property name="cronExpression" value="0 0/10 * * * ?" /> -->
+	</bean>
+	<bean id="dailycronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+
+		<property name="jobDetail" ref="reportQueryJob" />
+		<property name="cronExpression" value="0 0 12 * * ?" />
+		<!--<property name="cronExpression" value="*/5 * * * * ?" /> -->
+	</bean>
+	<bean id="WeeklycronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+
+		<property name="jobDetail" ref="reportWeeklyQueryJob" />
+		<property name="cronExpression" value="0 18 * * 6 ?" />
+		<!--<property name="cronExpression" value="*/5 * * * * ?" /> -->
+	</bean>
+	
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+
+				<ref bean="simpleTrigger" />
+				<ref bean="cronTrigger" />
+				<ref bean="dailycronTrigger" />
+					<ref bean="WeeklycronTrigger" />
+			</list>
+		</property>
+
+	</bean>
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
+		<property name="persistenceUnitName" value="ScigenicsDBPU" />
+	</bean>
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename">
+			<value>message</value>
+		</property>
+	</bean>
+
+	<bean
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor">
+
+	</bean>
+	<tx:annotation-driven />
+
+	<bean id="userPreferences" class="com.sci.bpm.command.user.UserPreference"
+		scope="session">
+
+		<aop:scoped-proxy />
+
+	</bean>
+	<bean id="propertyEditorRegistrar" class="com.sci.bpm.controller.base.DatePropertyEditorRegistrar" />
+	<bean id="exceptionresol" class="com.sci.bpm.controller.base.Scigenics" />
+
+	<bean id="docfilelocation" class="com.sci.bpm.command.design.DocPropery">
+		 <property name="docfilelocation" value="/home/oracle/datafolder/"></property>
+		
+		<!-- <property name="docfilelocation" value="d:/datafolder/"></property>-->
+		
+		
+	</bean>
+</beans>
+	
+	

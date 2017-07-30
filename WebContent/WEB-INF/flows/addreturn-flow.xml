@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<webflow:flow xmlns:webflow="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="entersearch">
+<webflow:on-start>
+<webflow:evaluate expression="searchworkcont.setupForm"/>
+
+        <webflow:evaluate expression="searchworkcont.searchWorkOrder"/>
+        <webflow:evaluate expression="storecont.setupForm"/>
+         <webflow:evaluate expression="lookupbean.getDropDownList('workorder_key')" result="flowScope.workmastlist"/>
+        <webflow:evaluate expression="lookupbean.getDropDownList('matdept_key')" result="flowScope.matdeptlist"/>
+    </webflow:on-start>
+    
+    
+      <webflow:view-state id="entersearchwork" view="stworkorder.search">
+        <webflow:transition on="loadstoresRequest" to="entersearch">
+            <webflow:evaluate expression="searchworkcont.bind"/>
+            <webflow:evaluate expression="searchworkcont.selectWorder"/>
+            <webflow:evaluate expression="storeRequestCont.setupForm"/>
+             <webflow:evaluate expression="lookupbean.getDropDownList('matdept_key')" result="flowScope.matdeptlist"/>
+        </webflow:transition>
+       
+    </webflow:view-state>
+<webflow:view-state id="entersearch" view="stores.returnview">
+         <webflow:transition on="searchstoresreq" to="entersearch">
+         <webflow:evaluate expression="storecont.bind"/>
+            <webflow:evaluate expression="storecont.searchIssueListForReturn"/>
+      
+       </webflow:transition>
+         <webflow:transition on="loadCategory" to="entersearch">
+            <webflow:evaluate expression="storecont.bind"/>
+            <webflow:evaluate expression="storecont.loadMatCatItems"/>
+        </webflow:transition>
+         <webflow:transition on="returnItem" to="entersearch">
+            <webflow:evaluate expression="storecont.bind"/>
+            <webflow:evaluate expression="storecont.addReturnRequest"/>
+        </webflow:transition>
+    </webflow:view-state>
+
+<webflow:exception-handler bean="exceptionresol"/>
+</webflow:flow>

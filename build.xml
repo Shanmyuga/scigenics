@@ -1,0 +1,86 @@
+<project name="Scigenics" default="mail" basedir=".">
+    <description>
+        simple example build file
+    </description>
+  <!-- set global properties for this build -->
+  <property name="src" location="src"/>
+  <property name="build" location="build"/>
+  <property name="dist"  location="dist"/>
+
+  <target name="init" depends="clean">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build}"/>
+  	 <mkdir dir="WebContent/WEB-INF/src"/>
+  	
+  </target>
+
+  <target name="copywardata" depends="compile"
+        description="compile the source " >
+    <!-- Compile the java code from ${src} into ${build} -->
+   <copy todir="WebContent/WEB-INF/src" >
+   	<fileset dir="src"  ></fileset>
+  	</copy>
+  </target>
+
+  <target name="dist" depends="copywardata"
+        description="generate the distribution" >
+    <!-- Create the distribution directory -->
+  
+
+    <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
+    <war   destfile="${dist}/Scigenics${DSTAMP}.war" webxml="WebContent/WEB-INF/web.xml">
+    <fileset dir="WebContent">
+    	<exclude name="**/lib/*.jar" />
+    
+    </fileset>
+    	
+    	 <classes dir="${build}"/>
+    </war>
+	
+</target>
+	<target name="mail" depends="dist">
+		<mail enableStartTLS="true" ssl="true" mailhost="smtp.gmail.com" mailport="465" messagemimetype="application/x-zip" user="sundaraswamy@gmail.com" password="thennavan" subject="Scigenics latest war">
+		  <from address="sundaraswamy@gmail.com"/>
+		  <replyto address="smswamy2001@gmail.com"/>
+		  <to address="smswamy2001@gmail.com"/>
+		  <message>The ${buildname} War file</message>
+		  <attachments>
+		    <fileset dir="dist">
+		      <include name="**/*.war"/>
+		    </fileset>
+		  </attachments>
+		</mail>
+	</target>
+		
+		
+	<target name="compile" depends="init">
+		<javac srcdir="${src}"
+		         destdir="${build}"
+		         fork="true"
+		         source="1.6"
+		         target="1.6"
+			
+			
+		  >
+			<classpath refid="classpath" />
+			</javac>
+	</target>
+		
+		<path id="classpath">
+			 <fileset dir="WebContent/WEB-INF/lib">
+			    <include name="**/*.jar" />
+			  </fileset>
+			
+			 <fileset dir="jee_lib">
+						    <include name="**/*.jar" />
+						  </fileset>
+		  </path>
+  <target name="clean" description="clean up" >
+    <!-- Delete the ${build} and ${dist} directory trees -->
+    <delete dir="${build}"/>
+  	<delete dir="WebContent/WEB-INF/src"/>
+ 	<delete dir="dist"/>
+  </target>
+</project>
