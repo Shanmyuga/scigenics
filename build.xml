@@ -41,7 +41,7 @@
 	
 </target>
 	<target name="mail" depends="dist">
-		<mail enableStartTLS="true" ssl="true" mailhost="smtp.gmail.com" mailport="465" messagemimetype="application/x-zip" user="sundaraswamy@gmail.com" password="thennavan" subject="Scigenics latest war">
+		<mail enableStartTLS="true" ssl="true" mailhost="smtp.gmail.com" mailport="465" messagemimetype="application/x-zip" user="sundaraswamy@gmail.com" password="" subject="Scigenics latest war">
 		  <from address="sundaraswamy@gmail.com"/>
 		  <replyto address="smswamy2001@gmail.com"/>
 		  <to address="smswamy2001@gmail.com"/>
