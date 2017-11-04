@@ -12,6 +12,8 @@ Data</font></p>
 
 
 <div width="787px"  style="float:left;">
+
+
 <form:form commandName="lookupvalbean" name="lookupvalbean" >
 
 <table border="0" width="100%" cellpadding="10x" height="70px">
@@ -57,6 +59,21 @@ Data</font></p>
 
 
 <div width="787px" style="float:left">
+
+        <label for="tags">Report Filter: </label>
+        <form:input path="reportFilter" size="100" />
+
+        <p><input type="button" value="Filter report" onclick="eventdirect('filterReport')"/>&nbsp;&nbsp;</p>
+
+   <br/>
+    <br/>
+    <br/>
+
+    <br/>
+    <br/><br/>
+    <br/>
+
+
 <p> List of Reports</p>
 <c:if test="${fn:length(reportsdata) > 0 }">
 <display:table export="true" sort="list"   pagesize="10" name="reportsdata"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
@@ -102,3 +119,12 @@ document.lookupvalbean.submit();
 }
 
 </script>
+    <script>
+        $( function() {
+            var temp = "<c:out value='${reportNames}'/>";
+            var availableTags =temp.split('|');
+            $( "#reportFilter" ).autocomplete({
+                source: availableTags
+            });
+        } );
+    </script>

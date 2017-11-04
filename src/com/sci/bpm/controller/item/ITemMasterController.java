@@ -76,7 +76,7 @@ public class ITemMasterController extends SciBaseController {
 			else if(estquant.doubleValue() < m.getMatQty().doubleValue()) {
 			double value = m.getMatQty().doubleValue()-estquant.doubleValue();
 				SciMatindMaster remain = new SciMatindMaster();
-				BeanUtilsBean.getInstance().getConvertUtils().register(false, false, 0);
+				//BeanUtilsBean.getInstance().getConvertUtils().re
 				BeanUtilsBean.getInstance().copyProperties(remain, m);
 				remain.setSeqMiId(null);
 				remain.setMatQty(new BigDecimal(value));

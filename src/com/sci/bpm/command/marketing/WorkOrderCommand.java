@@ -7,14 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class WorkOrderCommand implements Serializable {
 
-	
+
 	private String oldWordId;
 	private Date workCreateDt;
 	private String clientDetails;
 	private String deliveryAdd;
 	private String preparedBy;
 	private String approvedBy;
-	
+
 	private String wordOrderType;
 	private String jobDesc;
 	private String poDatestr;
@@ -24,15 +24,18 @@ public class WorkOrderCommand implements Serializable {
 	private Date poDate;
 	private String seqworkid;
 	private String windex;
-	
+
 	private String entryTax;
 	private String frieght;
 	private String transportation;
+
+
+
 	private String octroi;
-	
+	private String reportFilter;
 	private String amendDetails;
-	
-	
+
+
 	private String insurance;
 	private String roadPermit;
 	private String exciseDuty;
@@ -42,7 +45,7 @@ public class WorkOrderCommand implements Serializable {
 	private Date datePerPo;
 	private String inspectionBy;
 	private String basis;
-	
+
 	private Long seqCustId;
 	public String getAmendDetails() {
 		return amendDetails;
@@ -119,13 +122,13 @@ public class WorkOrderCommand implements Serializable {
 	public String getOldWordId() {
 		return oldWordId;
 	}
-	
-	
+
+
 
 	public void setOldWordId(String oldWordId) {
 		this.oldWordId = oldWordId;
 	}
-	
+
 	public String getClientDetails() {
 		return clientDetails;
 	}
@@ -150,7 +153,7 @@ public class WorkOrderCommand implements Serializable {
 	public void setApprovedBy(String approvedBy) {
 		this.approvedBy = approvedBy;
 	}
-	
+
 	public String getWordOrderType() {
 		return wordOrderType;
 	}
@@ -246,6 +249,12 @@ public class WorkOrderCommand implements Serializable {
 	public void setSeqCustId(Long seqCustId) {
 		this.seqCustId = seqCustId;
 	}
-	
-	
+
+	public String getReportFilter() {
+		return reportFilter;
+	}
+
+	public void setReportFilter(String reportFilter) {
+		this.reportFilter = reportFilter;
+	}
 }

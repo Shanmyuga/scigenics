@@ -1,9 +1,11 @@
 package com.sci.bpm.controller.lookup;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.webflow.execution.Event;
@@ -23,13 +25,13 @@ import com.sci.bpm.service.task.TaskService;
 @Controller("lookupcontbean")
 public class LookupValueController extends SciBaseController {
 
-	
+
 	@Autowired
 	private LookUpValueService service;
-	
+
 	@Autowired
 	private TaskService taskService;
-	
+
 	public Event addNewValue(RequestContext context) throws Exception {
 		LookupValueBean value = (LookupValueBean)getFormObject(context);
 		SciLookupMaster master = new SciLookupMaster();
@@ -47,97 +49,112 @@ public class LookupValueController extends SciBaseController {
 		}
 		return success();
 	}
-	
+
 	public Event addNewItemValue(RequestContext context) throws Exception {
 		LookupValueBean value = (LookupValueBean)getFormObject(context);
 		SciMasterItem master = new SciMasterItem();
-		
-			master.setItemType(value.getLovType());
-			master.setItemDescription(value.getLovDescription());
-			master.setUpdatedDt(new java.util.Date());
-			master.setUpdatedBy(getUserPreferences().getUserID());
-			service.addNewItemValue(master);
-	
+
+		master.setItemType(value.getLovType());
+		master.setItemDescription(value.getLovDescription());
+		master.setUpdatedDt(new java.util.Date());
+		master.setUpdatedBy(getUserPreferences().getUserID());
+		service.addNewItemValue(master);
+
 		return success();
 	}
 	public Event addNewCustomer(RequestContext context) throws Exception {
 		LookupValueBean value = (LookupValueBean)getFormObject(context);
 		SciCustomerMaster master = new SciCustomerMaster();
-		
-			BeanUtils.copyProperties(master, value);
-			master.setUpdatedDate(new java.util.Date());
-			master.setUpdatedBy(getUserPreferences().getUserID());
-			service.addNewCustomer(master);
-	
+
+		BeanUtils.copyProperties(master, value);
+		master.setUpdatedDate(new java.util.Date());
+		master.setUpdatedBy(getUserPreferences().getUserID());
+		service.addNewCustomer(master);
+
 		return success();
 	}
 	public Event addNewVendor(RequestContext context) throws Exception {
 		LookupValueBean value = (LookupValueBean)getFormObject(context);
 		SciVendorMaster master = new SciVendorMaster();
-		
+
 		BeanUtils.copyProperties(master, value);
 		master.setUpdatedDate(new java.util.Date());
 		master.setUpdatedBy(getUserPreferences().getUserID());
 		service.addNewVendor(master);
-	
+
 		return success();
 	}
 	public Event addNewMatSpec(RequestContext context) throws Exception {
 		LookupValueBean value = (LookupValueBean)getFormObject(context);
 		SciMatspecMaster master = new SciMatspecMaster();
-		
+
 		BeanUtils.copyProperties(master, value);
 		master.setMaterialSpec(value.getMatSpecDesc());
 		master.setUpdatedDate(new java.util.Date());
 		master.setMatcatCode(value.getSpecCode().substring(0,2));
 		master.setUpdatedBy(getUserPreferences().getUserID());
-			service.addNewMatSpec(master);
-	       
+		service.addNewMatSpec(master);
+
 		return success();
 	}
 	public Event addNewReport(RequestContext context) throws Exception {
 		LookupValueBean value = (LookupValueBean)getFormObject(context);
 		SciReportConfiguration master = new SciReportConfiguration();
-		
+
 		BeanUtils.copyProperties(master, value);
 		master.setReportStatus("A");
 		master.setInsertedDate(new java.util.Date());
 		master.setUpdatedDate(new java.util.Date());
 		master.setInsertedBy(getUserPreferences().getUserID());
 		master.setUpdatedBy(getUserPreferences().getUserID());
-			service.addNewReport(master);
-	       resetForm(context);
-	       List<SciReportConfiguration> reports = loadReports(context);
-	       context.getFlowScope().put("reportsdata", reports);
-	       
+		service.addNewReport(master);
+		resetForm(context);
+		List<SciReportConfiguration> reports = loadReports(context);
+		context.getFlowScope().put("reportsdata", reports);
+
 		return success();
 	}
-	
+
 	public Event deactivateStatus(RequestContext context) throws Exception {
 		LookupValueBean value = (LookupValueBean)getFormObject(context);
 		List<SciReportConfiguration> reports = (List<SciReportConfiguration>) context.getFlowScope().get("reportsdata");
-		
-	     SciReportConfiguration config=   selectReport(reports, new Long(value.getSeqReportID()));
-	     config.setReportStatus("D");
-	     config.setUpdatedBy(getUserPreferences().getUserID());
-	     config.setUpdatedDate(new java.util.Date());
-	     service.updateStatus(config);
-	     List<SciReportConfiguration> reportsdata = loadReports(context);
-	       context.getFlowScope().put("reportsdata", reportsdata);
-	       
+
+		SciReportConfiguration config=   selectReport(reports, new Long(value.getSeqReportID()));
+		config.setReportStatus("D");
+		config.setUpdatedBy(getUserPreferences().getUserID());
+		config.setUpdatedDate(new java.util.Date());
+		service.updateStatus(config);
+		List<SciReportConfiguration> reportsdata = loadReports(context);
+		context.getFlowScope().put("reportsdata", reportsdata);
+
 		return success();
 	}
-	
+
+	public Event filterReport(RequestContext context) throws Exception {
+		LookupValueBean value = (LookupValueBean)getFormObject(context);
+		List<SciReportConfiguration> reports = loadReports(context);
+		List<SciReportConfiguration> reportsdata = null;
+		if(!StringUtils.isEmpty(value.getReportFilter())) {
+			reportsdata = selectReportBysubject(reports, value.getReportFilter());
+		}
+		else {
+			reportsdata = loadReports(context);
+		}
+		context.getFlowScope().put("reportsdata", reportsdata);
+
+		return success();
+	}
+
 	public Event runSelectedReport(RequestContext context) throws Exception {
 		LookupValueBean value = (LookupValueBean)getFormObject(context);
-		List<SciReportConfiguration> reports = (List<SciReportConfiguration>) context.getFlowScope().get("reportsdata");
-		
-	     SciReportConfiguration config=   selectReport(reports, new Long(value.getSeqReportID()));
-	    taskService.runSelectedReport(config);
-	       
+		List<SciReportConfiguration> reports = loadReports(context);
+
+		SciReportConfiguration config=   selectReport(reports, new Long(value.getSeqReportID()));
+		taskService.runSelectedReport(config);
+
 		return success();
 	}
-	
+
 	private SciReportConfiguration selectReport(List<SciReportConfiguration> master,Long seqReportId) {
 		SciReportConfiguration selected = null;
 		for(SciReportConfiguration m : master) {
@@ -145,20 +162,36 @@ public class LookupValueController extends SciBaseController {
 				selected = m;
 			}
 		}
-		
+
 		return selected;
+	}
+
+	private List<SciReportConfiguration> selectReportBysubject(List<SciReportConfiguration> master,String reportSubject) {
+		System.out.println("filter " + reportSubject);
+		List<SciReportConfiguration> configurationList = new ArrayList<SciReportConfiguration>();
+		for(SciReportConfiguration m : master) {
+			if(m.getReportSubject().matches(".*"+reportSubject+".*")) {
+				configurationList.add(m);
+			}
+		}
+
+		return configurationList;
 	}
 	public List loadReports(RequestContext context) throws Exception {
 		List<SciReportConfiguration> reports =service.loadReports();
-	      
+
+
+
 		return reports;
 	}
 
+
+
 	@Override
 	public Event setupForm(RequestContext context) throws Exception {
-	setFormObjectClass(LookupValueBean.class);
-	
-	setFormObjectName("lookupvalbean");
+		setFormObjectClass(LookupValueBean.class);
+
+		setFormObjectName("lookupvalbean");
 		return super.setupForm(context);
 	}
 }

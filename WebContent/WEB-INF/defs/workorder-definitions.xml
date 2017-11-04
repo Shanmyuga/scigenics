@@ -102,6 +102,12 @@
      
       <put-attribute name="body" value="/WEB-INF/jsp/mi/updatemicost.jsp" />
   </definition>
+
+    <definition name="mi.projectpropcost"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+        <put-attribute name="menu" value="usermenu.jsp" />
+
+        <put-attribute name="body" value="/WEB-INF/jsp/mi/projectpropcost.jsp" />
+    </definition>
    <definition name="mi.viewstreqlist"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
   <put-attribute name="menu" value="usermenu.jsp" />
      

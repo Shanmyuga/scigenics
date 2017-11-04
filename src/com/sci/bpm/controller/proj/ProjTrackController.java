@@ -212,11 +212,11 @@ if(detail.getTaskDesc() == null || "".equals(detail.getTaskDesc())) {
 				"wophases");
 		SciWoTrackMaster master = selectWoTrack(wophases, command.getPhaseidx());
 		if(master.getActualEnddate() == null){
-		context.getFlashScope()
+		context.getFlowScope()
 				.put("subphaseTasks", master.getSciWoTrkDetails());
 		}
 		else {
-			context.getFlashScope()
+			context.getFlowScope()
 			.put("completeTask","Y");
 		}
 		return success();

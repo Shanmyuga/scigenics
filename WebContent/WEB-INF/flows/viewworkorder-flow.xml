@@ -12,6 +12,18 @@
             <webflow:evaluate expression="drawcont.loadAppdrawingList"/>
              <webflow:evaluate expression="drawcont.loadPendingList"/>
         </webflow:transition>
+
+    <webflow:transition on="filterReport" to="entersearch">
+        <webflow:evaluate expression="searchworkcont.bind"/>
+        <webflow:evaluate expression="searchworkcont.filterReport"/>
+
+    </webflow:transition>
+
+    <webflow:transition on="filterReport" to="entersearch">
+        <webflow:evaluate expression="searchworkcont.bind"/>
+        <webflow:evaluate expression="searchworkcont.filterReport"/>
+
+    </webflow:transition>
     </webflow:view-state>
 <webflow:exception-handler bean="exceptionresol"/>
 </webflow:flow>

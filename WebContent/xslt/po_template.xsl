@@ -79,8 +79,7 @@
 										border-width="1pt" number-columns-spanned="2">
 										<fo:block line-height="12pt" font-size="10pt"
 											space-before.optimum="1.5pt" space-after.optimum="1.5pt"
-											keep-together="always" text-align="center">TIN No.:33550924587, CST No.:842434, dated 24.01.1992, ECC No.AAA CS 8529 HXM001
-										</fo:block>
+											keep-together="always" text-align="center">TIN No.:33550924587, GSTNo.: 33AAACS8529H1ZB </fo:block>
 									</fo:table-cell>
 								</fo:table-row>
 							</fo:table-body>

@@ -90,7 +90,7 @@
 	<bean id="WeeklycronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 
 		<property name="jobDetail" ref="reportWeeklyQueryJob" />
-		<property name="cronExpression" value="0 18 * * 6 ?" />
+		<property name="cronExpression" value="0 0 12 ? * SUN *" />
 		<!--<property name="cronExpression" value="*/5 * * * * ?" /> -->
 	</bean>
 	

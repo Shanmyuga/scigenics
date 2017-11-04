@@ -3,7 +3,9 @@
 <webflow:on-start>
         <webflow:evaluate expression="lookupcontbean.setupForm"/>
          <webflow:evaluate expression="lookupbean.loadReports()" result="flowScope.reportsdata"/>
-    </webflow:on-start>
+    <webflow:evaluate expression="lookupbean.loadReportNames()" result="flowScope.reportNames"/>
+
+</webflow:on-start>
 <webflow:view-state id="addReport" view="schedule.add">
         <webflow:transition on="addNewReport" to="addReport">
             <webflow:evaluate expression="lookupcontbean.bind"/>
@@ -19,6 +21,11 @@
             <webflow:evaluate expression="lookupcontbean.runSelectedReport"/>
             
         </webflow:transition>
+    <webflow:transition on="filterReport" to="addReport">
+        <webflow:evaluate expression="lookupcontbean.bind"/>
+        <webflow:evaluate expression="lookupcontbean.filterReport"/>
+
+    </webflow:transition>
     </webflow:view-state>
 <webflow:view-state id="addsuccess" view="lookup.success"/>
 <webflow:exception-handler bean="exceptionresol"/>

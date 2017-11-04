@@ -19,6 +19,10 @@
                  <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addjdr-flow">Add JDR Docs</a></td>
               </tr>
+
+              <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addprojprop-flow">Add Project  Proposals</a></td>
+              </tr>
                <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewstreqIssue-flow">View Store Issues for a WorkOrder</a></td>
               </tr>

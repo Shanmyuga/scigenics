@@ -9,12 +9,20 @@
 <webflow:on-entry>
 
     <webflow:evaluate expression="searchworkcont.searchWorkOrder"/>
+    <webflow:evaluate expression="searchworkcont.filterReport"/>
 </webflow:on-entry>
         <webflow:transition on="closeWo" to="entersearch">
             <webflow:evaluate expression="searchworkcont.bind"/>
             <webflow:evaluate expression="searchworkcont.selectWorder"/>
                         <webflow:evaluate expression="searchworkcont.closeWO"/>
         </webflow:transition>
+
+
+    <webflow:transition on="filterReport" to="entersearch">
+        <webflow:evaluate expression="searchworkcont.bind"/>
+
+
+    </webflow:transition>
         <webflow:transition on="dormantWo" to="entersearch">
             <webflow:evaluate expression="searchworkcont.bind"/>
             <webflow:evaluate expression="searchworkcont.selectWorder"/>

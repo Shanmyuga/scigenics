@@ -21,7 +21,7 @@ public class LookupValueBean implements Serializable{
 	private String customerEmail;
 	private String customerContact;
 	private Long customerState;
-	
+
 	private String customerCountry;
 	
 	
@@ -39,11 +39,14 @@ public class LookupValueBean implements Serializable{
 	private String reportQuery;
 	private String reportSubject;
 	private String reportEmail;
+
+
+
 	private String reportSchedule;
 	private String reportStatus;
-	
-	
-	 private String matcatCode;
+
+	private String reportFilter;
+	private String matcatCode;
      private String matSpecDesc;
      private String materialSpec;
      private String specCode;
@@ -231,7 +234,13 @@ public class LookupValueBean implements Serializable{
 	public void setCustomerCountry(String customerCountry) {
 		this.customerCountry = customerCountry;
 	}
-	
-	
+
+	public String getReportFilter() {
+		return reportFilter;
+	}
+
+	public void setReportFilter(String reportFilter) {
+		this.reportFilter = reportFilter;
+	}
 
 }
