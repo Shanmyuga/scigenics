@@ -16,11 +16,7 @@
         <webflow:transition on="loadDesignSpecs" to="entersearch">
             <webflow:evaluate expression="searchworkcont.bind"/>
             <webflow:evaluate expression="searchworkcont.selectWorder"/>
-            <webflow:evaluate <webflow:transition on="filterReport" to="entersearch">
-            <webflow:evaluate expression="searchworkcont.bind"/>
-            <webflow:evaluate expression="searchworkcont.filterReport"/>
-
-        </webflow:transition> expression="drawcont.loadAppdrawingList"/>
+            <webflow:evaluate expression="drawcont.loadAppdrawingList"/>
         </webflow:transition>
     <webflow:transition on="filterReport" to="entersearch">
         <webflow:evaluate expression="searchworkcont.bind"/>
