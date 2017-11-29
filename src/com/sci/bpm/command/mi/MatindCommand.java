@@ -71,6 +71,13 @@ public class MatindCommand implements Serializable {
 	public String[] purStatusarr;
 	private Date sentDate;
 	private Date receivedDate;
+
+
+
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
+	}
+
 	private Date estimatedReturnDate;
 	private String remarksColumn;
 	private Long seqVendorID;
@@ -79,13 +86,15 @@ public class MatindCommand implements Serializable {
 	private Long cancelStatusLov;
 	private String filterIssued;
 	private String filterRejected;
+	private String reportFilter;
     private Double quantity;
-	
+
+
 	private String moc;
 	private Integer noOfDays;
 	private String operationStatus;
 	private Long operation;
-	
+	private String matDescription;
 	public String getProdAppStatus() {
 		return prodAppStatus;
 	}
@@ -662,6 +671,21 @@ public class MatindCommand implements Serializable {
 		this.filterRejected = filterRejected;
 	}
 
-	
+	public String getReportFilter() {
+		return reportFilter;
+	}
+
+	public void setReportFilter(String reportFilter) {
+		this.reportFilter = reportFilter;
+	}
+
+
+	public String getMatDescription() {
+		return matDescription;
+	}
+
+	public void setMatDescription(String matDescription) {
+		this.matDescription = matDescription;
+	}
 
 }

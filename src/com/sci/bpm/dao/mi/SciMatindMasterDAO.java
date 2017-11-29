@@ -139,6 +139,11 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 			whereClause = whereClause + " and m.insertedBy = :createdUser ";
 			parameters.put("createdUser", command.getCreatedByUser());
 		}
+
+		if (command.getMatDescription() != null && !"".equals(command.getMatDescription().trim()) ) {
+			whereClause = whereClause + " and m.matSpec like :matSpec ";
+			parameters.put("matSpec", "%"+command.getMatDescription()+"%");
+		}
 		if (command.getSeqMatindid() != null)  {
 			whereClause = whereClause + " and m.seqMiId = :seqMiId ";
 			parameters.put("seqMiId", command.getSeqMatindid());

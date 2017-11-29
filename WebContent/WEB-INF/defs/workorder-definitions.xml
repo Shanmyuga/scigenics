@@ -102,11 +102,37 @@
      
       <put-attribute name="body" value="/WEB-INF/jsp/mi/updatemicost.jsp" />
   </definition>
+    <definition name="mi.proposalcost"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+        <put-attribute name="menu" value="usermenu.jsp" />
 
+        <put-attribute name="body" value="/WEB-INF/jsp/mi/miproposalcost.jsp" />
+    </definition>
+    <definition name="mi.editproposalcost"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+        <put-attribute name="menu" value="usermenu.jsp" />
+
+        <put-attribute name="body" value="/WEB-INF/jsp/mi/editmiproposalcost.jsp" />
+    </definition>
+    <definition name="mi.addProposal"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+        <put-attribute name="menu" value="usermenu.jsp" />
+
+        <put-attribute name="body" value="/WEB-INF/jsp/mi/addProposal.jsp" />
+    </definition>
+
+    <definition name="propadd.success"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+        <put-attribute name="menu" value="usermenu.jsp" />
+
+        <put-attribute name="body" value="/WEB-INF/jsp/mi/addProposalSuccess.jsp" />
+    </definition>
     <definition name="mi.projectpropcost"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
         <put-attribute name="menu" value="usermenu.jsp" />
 
         <put-attribute name="body" value="/WEB-INF/jsp/mi/projectpropcost.jsp" />
+    </definition>
+
+    <definition name="mi.viewproplist"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+        <put-attribute name="menu" value="usermenu.jsp" />
+
+        <put-attribute name="body" value="/WEB-INF/jsp/mi/viewproposalDetails.jsp" />
     </definition>
    <definition name="mi.viewstreqlist"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
   <put-attribute name="menu" value="usermenu.jsp" />

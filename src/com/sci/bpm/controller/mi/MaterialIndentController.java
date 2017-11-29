@@ -1,14 +1,9 @@
 package com.sci.bpm.controller.mi;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.StringTokenizer;
+import java.util.*;
 
+import com.sci.bpm.db.model.*;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,19 +19,6 @@ import com.sci.bpm.command.user.UserPreference;
 import com.sci.bpm.constants.SciDataConstans;
 import com.sci.bpm.controller.base.DatePropertyEditorRegistrar;
 import com.sci.bpm.controller.base.SciBaseController;
-import com.sci.bpm.db.model.SciDrawingRef;
-import com.sci.bpm.db.model.SciDrwingDetails;
-import com.sci.bpm.db.model.SciIssueDetails;
-import com.sci.bpm.db.model.SciIssueMaster;
-import com.sci.bpm.db.model.SciLookupMaster;
-import com.sci.bpm.db.model.SciMatindMaster;
-import com.sci.bpm.db.model.SciQcMiMaster;
-import com.sci.bpm.db.model.SciStoresRequest;
-import com.sci.bpm.db.model.SciSubcontJobstatus;
-import com.sci.bpm.db.model.SciVendorMaster;
-import com.sci.bpm.db.model.SciWorkorderMaster;
-import com.sci.bpm.db.model.ScigenicsRoleMaster;
-import com.sci.bpm.db.model.ScigenicsUserMaster;
 import com.sci.bpm.service.mi.MaterialIndentService;
 import com.sci.bpm.service.product.ProductMasterService;
 import com.sci.bpm.service.role.RoleService;
@@ -138,6 +120,8 @@ public class MaterialIndentController extends SciBaseController {
 		 * context.getFlowScope().put("pcatmap", mymaps[0]);
 		 * context.getFlowScope().put("pspecmap", mymaps[1]);
 		 */
+
+		Collections.sort(milist,new SortComparator());
 		context.getFlowScope().put("milist", milist);
 		context.getFlowScope().put("approveMI",
 				getLookupservice().loadIDData("MI_APPROVED"));
@@ -246,6 +230,28 @@ public class MaterialIndentController extends SciBaseController {
 		}
 		context.getFlowScope().put("itemdesc", matSpec);
 		context.getFlowScope().put("itemmilist", itemmilist);
+		return success();
+	}
+
+
+	public Event selectPropMI(RequestContext context) throws Exception {
+		MatindCommand command = (MatindCommand) getFormObject(context);
+		List propMIList = (List) context.getFlowScope().get("propMIList");
+		if(propMIList == null) {
+			propMIList = new ArrayList();
+		}
+
+		List<MatCollectionCommand> matlist = command.getMatList();
+
+		List fullmilist = (List) context.getFlowScope().get("milist");
+		for (MatCollectionCommand colmi : matlist) {
+
+				if(colmi.getMatindex() != null) {
+					propMIList.add(fullmilist.get(Integer.parseInt(colmi.getMatindex()) - 1));
+				}
+		}
+		context.getFlowScope().remove("milist");
+		context.getFlowScope().put("propMIList", propMIList);
 		return success();
 	}
 	public Event selectItemMIforStock(RequestContext context) throws Exception {
@@ -702,7 +708,14 @@ public class MaterialIndentController extends SciBaseController {
 		context.getFlowScope().put("matcatitems",matcatlist);
 		return success();
 	}
+	public Event loadDescriptions(RequestContext context) throws Exception {
+		MatindCommand command = (MatindCommand) getFormObject(context);
+		List<SciMatspecMaster> matcatlist = prservice.selectProducts(command.getMatCategory(),command.getMatDept());
+	StringBuilder builder = new StringBuilder();
 
+		context.getFlowScope().put("matDescriptions",matcatlist);
+		return success();
+	}
 	
 	public Event addNewSubContractDetail(RequestContext context) throws Exception {
 		

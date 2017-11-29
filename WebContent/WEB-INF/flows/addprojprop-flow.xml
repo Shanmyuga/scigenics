@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<webflow:flow xmlns:webflow="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="entersearch">
+<webflow:on-start>
+        <webflow:evaluate expression="micont.setupForm"/>
+    <webflow:evaluate expression="propcont.setupForm"/>
+        
+       
+
+<webflow:evaluate expression="lookupbean.getDropDownList('matdept_key')" result="flowScope.matdeptlist"/>
+<webflow:evaluate expression="lookupbean.getDropDownList('matstats_key')" result="flowScope.matstatitems"/>
+<webflow:evaluate expression="lookupbean.getDropDownList('workorder_key')" result="flowScope.workmastlist"/>
+    <webflow:evaluate expression="lookupbean.getDropDownList('customer_key')" result="flowScope.customerData"/>
+    </webflow:on-start>
+  
+<webflow:view-state id="entersearch" view="mi.proposalcost">
+<webflow:transition on="loadCategory" to="entersearch">
+            <webflow:evaluate expression="micont.bind"/>
+            <webflow:evaluate expression="micont.loadMatCatItems"/>
+        </webflow:transition>
+
+    <webflow:transition on="loadDescription" to="entersearch">
+        <webflow:evaluate expression="micont.bind"/>
+        <webflow:evaluate expression="micont.loadDescriptions"/>
+    </webflow:transition>
+        <webflow:transition on="displaysubmit" to="entersearch">
+            <webflow:evaluate expression="micont.bind"/>
+            
+        </webflow:transition>
+         <webflow:transition on="searchMI" to="entersearch">
+            <webflow:evaluate expression="micont.bind"/>
+            <webflow:evaluate expression="micont.searchMI"/>
+        </webflow:transition>
+        
+        <webflow:transition on="selectPropMI" to="entersearch">
+            <webflow:evaluate expression="micont.bind"/>
+            <webflow:evaluate expression="micont.selectPropMI"/>
+        </webflow:transition>
+
+    <webflow:transition on="addprops" to="addproposal">
+
+
+    </webflow:transition>
+</webflow:view-state>
+    <webflow:view-state id="addproposal" view="mi.addProposal">
+        <webflow:transition on="createProp" to="addPropsucces">
+            <webflow:evaluate expression="propcont.bind"/>
+            <webflow:evaluate expression="propcont.addProposal"/>
+        </webflow:transition>
+
+    </webflow:view-state>
+
+    <webflow:view-state id="addPropsucces" view="propadd.success"/>
+<webflow:exception-handler bean="exceptionresol"/>
+</webflow:flow>
