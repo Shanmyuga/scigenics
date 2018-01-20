@@ -68,6 +68,18 @@
 
     </display:column>
 
+    <display:column sortable="true"  title="Quantity"  >
+
+        <form:input path="matList[${row_rowNum%10}].matQty" />
+
+    </display:column>
+    <display:column sortable="true"  title="Estimated unit cost"  >
+
+        <form:input path="matList[${row_rowNum%10}].matEstUnitCost" />
+
+    </display:column>
+
+
 </display:table>
 </div>
  <input type="hidden" name="_flowExecutionKey" value='<c:out value="${flowExecutionKey}"/>'>

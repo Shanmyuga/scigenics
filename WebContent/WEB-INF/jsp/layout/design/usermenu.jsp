@@ -19,6 +19,11 @@
             <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=searchwork-flow">WO MI</a></td>
               </tr>
+
+              <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewmiitems-flow">View MI</a></td>
+
+              </tr>
                 <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=adddesdocmaster-flow">Add New Document Type</a></td>
               </tr>

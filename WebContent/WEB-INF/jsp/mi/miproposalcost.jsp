@@ -114,13 +114,7 @@
 <display:column sortable="true"  title="Estimated  Unit Cost"  property="estUnintCost" >
 
 </display:column>
-<c:if test="${row.tempestCost == 0}">
-<display:column sortable="true"  title="Estimated unit cost"  >
 
-<form:input path="matList[${row_rowNum%10}].matEstUnitCost" />
-
-</display:column>
-</c:if>
 </display:table>
 
 <input type="hidden" name="_flowExecutionKey"  value="<c:out value="${flowExecutionKey}"/>" />

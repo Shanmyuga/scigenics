@@ -46,11 +46,7 @@
    <td> Proposal Created Date</td>
    <td><c:out value="${propsMaster.insertedDate}"/> </td>
   </tr>
-  <tr>
-   <td colspan="4"></td>
-       <input type="button"  value="Edit Proposal " onclick="eventdirect('editprops')"/>
 
-  </tr>
  </c:if>
 </table>
 
@@ -72,6 +68,8 @@
 
 <display:column sortable="true"   title="Material Spec" property="matSpec"  >
 </display:column>
+    <display:column sortable="true"   title="Quantity" property="quantity"  >
+    </display:column>
 <display:column sortable="true"   title="matCost" property="matCost"  >
 </display:column>
 

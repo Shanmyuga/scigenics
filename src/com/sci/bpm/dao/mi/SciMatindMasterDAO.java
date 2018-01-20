@@ -141,7 +141,7 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 		}
 
 		if (command.getMatDescription() != null && !"".equals(command.getMatDescription().trim()) ) {
-			whereClause = whereClause + " and m.matSpec like :matSpec ";
+			whereClause = whereClause + " and UPPER(m.matSpec) like UPPER(:matSpec) ";
 			parameters.put("matSpec", "%"+command.getMatDescription()+"%");
 		}
 		if (command.getSeqMatindid() != null)  {

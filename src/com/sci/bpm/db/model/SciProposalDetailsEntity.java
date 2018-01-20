@@ -15,7 +15,7 @@ public class SciProposalDetailsEntity implements Serializable {
     private Float matCost;
     private Date insertedDate;
     private String insertedBy;
-
+    private Float quantity;
 
 
     private String updatedBy;
@@ -165,5 +165,15 @@ public class SciProposalDetailsEntity implements Serializable {
 
     public void setInsertedBy(String insertedBy) {
         this.insertedBy = insertedBy;
+    }
+
+    @Basic
+    @Column(name = "QUANTITY", nullable = true, precision = 7,scale = 2)
+    public Float getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Float quantity) {
+        this.quantity = quantity;
     }
 }
