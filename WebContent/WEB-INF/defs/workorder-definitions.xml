@@ -246,6 +246,12 @@
      
       <put-attribute name="body" value="/WEB-INF/jsp/workorder/searchworkorderSubcont.jsp" />
   </definition>
+
+    <definition name="weeklystatus.view"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+        <put-attribute name="menu" value="usermenu.jsp" />
+
+        <put-attribute name="body" value="/WEB-INF/jsp/workorder/viewWeeklyReport.jsp" />
+    </definition>
      <definition name="workorder.jdrview"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
   <put-attribute name="menu" value="usermenu.jsp" />
      

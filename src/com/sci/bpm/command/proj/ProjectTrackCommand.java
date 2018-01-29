@@ -15,7 +15,14 @@ public class ProjectTrackCommand implements Serializable {
 	private Date estEnddate;
 	private Date actualStdate;
 	private Date actualEnddate;
+
+	private Long seqWorkId;
+
 	private Long phaseOrder;
+
+	private Date fromdate;
+
+	private Date todate;
 	
 	private String subPhaseName;
 	
@@ -173,6 +180,28 @@ public class ProjectTrackCommand implements Serializable {
 	public void setApprovedBy(String approvedBy) {
 		this.approvedBy = approvedBy;
 	}
-	
-	
+
+	public Date getFromdate() {
+		return fromdate;
+	}
+
+	public void setFromdate(Date fromdate) {
+		this.fromdate = fromdate;
+	}
+
+	public Date getTodate() {
+		return todate;
+	}
+
+	public void setTodate(Date todate) {
+		this.todate = todate;
+	}
+
+	public Long getSeqWorkId() {
+		return seqWorkId;
+	}
+
+	public void setSeqWorkId(Long seqWorkId) {
+		this.seqWorkId = seqWorkId;
+	}
 }

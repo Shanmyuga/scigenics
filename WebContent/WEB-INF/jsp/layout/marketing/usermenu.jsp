@@ -45,7 +45,11 @@
                 <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewstores-flow">View Stores List</a></td>
               </tr>
-              <tr> 
+              <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewweeklystatus-flow">View Weekly Status Report</a></td>
+              </tr>
+
+              <tr>
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=updatewo-flow">Close WO </a></td>
               </tr>
                <tr> 

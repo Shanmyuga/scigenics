@@ -222,6 +222,13 @@ if(detail.getTaskDesc() == null || "".equals(detail.getTaskDesc())) {
 		return success();
 	}
 
+
+	public Event reportProjectStatus(RequestContext context) throws Exception {
+
+		ProjectTrackCommand command = (ProjectTrackCommand) getFormObject(context);
+
+		return  success();
+	}
 	
 	public Event addProjectCosts(RequestContext context) throws Exception {
 		ProjectTrackCommand command = (ProjectTrackCommand) getFormObject(context);

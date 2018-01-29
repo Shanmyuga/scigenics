@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<webflow:flow xmlns:webflow="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="entersearch">
+<webflow:on-start>
+    <webflow:evaluate expression="projtrack.setupForm"/>
+        <webflow:evaluate expression="searchworkcont.setupForm"/>
+        <webflow:evaluate expression="searchworkcont.searchWorkOrder"/>
+    </webflow:on-start>
+<webflow:view-state id="entersearch" view="weeklystatus.view">
+        <webflow:transition on="viewworkdocs" to="entersearch">
+            <webflow:evaluate expression="searchworkcont.bind"/>
+            <webflow:evaluate expression="searchworkcont.selectWorder"/>
+            <webflow:evaluate expression="jdrcont.loadJdrList"/>
+            <webflow:evaluate expression="drawcont.loadAppdrawingList"/>
+             <webflow:evaluate expression="drawcont.loadPendingList"/>
+        </webflow:transition>
+
+    <webflow:transition on="filterReport" to="entersearch">
+        <webflow:evaluate expression="searchworkcont.bind"/>
+        <webflow:evaluate expression="searchworkcont.filterReport"/>
+
+    </webflow:transition>
+
+    <webflow:transition on="filterReport" to="entersearch">
+        <webflow:evaluate expression="searchworkcont.bind"/>
+        <webflow:evaluate expression="searchworkcont.filterReport"/>
+
+    </webflow:transition>
+    </webflow:view-state>
+<webflow:exception-handler bean="exceptionresol"/>
+</webflow:flow>
