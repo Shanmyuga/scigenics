@@ -50,26 +50,38 @@
             </div>
 
 
-            <div style="float:left;width:750px;padding:10px;margin-top:50px">
+            <div width="787px"  style="float:left">
 
-                <display:table export="true" sort="list"   pagesize="10" name="subphaseTasks"  id="row1"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
+                <display:table export="true" sort="list"   pagesize="10" name="reportTasks"  id="row1"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
 
-                    <display:column sortable="true"   title="Sub Task Phase"  property="subPhaseName">
-
-                    </display:column>
-                    <display:column sortable="true"  title="Actuak Man hrs entry "  property="actManhours">
+                    <display:column sortable="true"   title="Year"  property="year">
 
                     </display:column>
-                    <display:column sortable="true"  title="Task completion date "  property="subActEnd">
+                    <display:column sortable="true"  title="Month "  property="month">
 
                     </display:column>
-                    <display:column sortable="true"  title="Updated Date"  property="updatedDate">
+                    <display:column sortable="true"  title="Week Start Date "  property="weekStartDate">
 
                     </display:column>
-                    <display:column sortable="true"  title="Task Description"  property="taskDesc">
+                    <display:column sortable="true"  title="Week End Date"  property="weekEndDate">
 
                     </display:column>
-                    <display:column sortable="true"  title="Updated By"  property="updatedBy">
+                    <display:column sortable="true"  title="Client Details"  property="clientDesc">
+
+                    </display:column>
+                    <display:column sortable="true"  title="Job Desc"  property="jobDesc">
+
+                    </display:column>
+
+                    <display:column sortable="true"  title="Phase detail"  property="phaseDetail">
+
+                    </display:column>
+
+                    <display:column sortable="true"  title="Total Estimated Man hrs"  property="totalEstimatedManhours">
+
+                    </display:column>
+
+                    <display:column sortable="true"  title="Total Actual Man hrs"  property="totalActualManHours">
 
                     </display:column>
                 </display:table>
@@ -94,6 +106,6 @@
 
         document.getElementById('_eventId').value = event;
 
-        document.storesbean.submit();
+        document.projschebean.submit();
     }
 </script>

@@ -3,6 +3,8 @@ package com.sci.bpm.service.proj;
 import java.util.Date;
 import java.util.List;
 
+import com.sci.bpm.command.proj.ProjectReportView;
+import com.sci.bpm.command.proj.ProjectTrackCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,6 +63,11 @@ public class ProjTrackServiceImpl implements ProjTrackService {
 	public List loadProjectCost(SciWorkorderMaster wmaster) {
 		// TODO Auto-generated method stub
 		return daoimpl.loadProjectCost(wmaster);
+	}
+
+	@Override
+	public List<ProjectReportView> reportTasks(ProjectTrackCommand command) {
+		return daoimpl.reportTasks(command);
 	}
 
 	public void addProjectCost(SciProjectCostMaster costmaster) {

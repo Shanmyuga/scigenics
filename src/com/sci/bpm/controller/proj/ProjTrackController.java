@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import com.sci.bpm.command.proj.ProjectReportView;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -226,7 +227,8 @@ if(detail.getTaskDesc() == null || "".equals(detail.getTaskDesc())) {
 	public Event reportProjectStatus(RequestContext context) throws Exception {
 
 		ProjectTrackCommand command = (ProjectTrackCommand) getFormObject(context);
-
+List<ProjectReportView> reports = service.reportTasks(command);
+context.getFlowScope().put("reportTasks",reports);
 		return  success();
 	}
 	
