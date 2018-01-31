@@ -121,7 +121,7 @@ public class MaterialIndentController extends SciBaseController {
 		 * context.getFlowScope().put("pspecmap", mymaps[1]);
 		 */
 
-		Collections.sort(milist,new SortComparator());
+		//Collections.sort(milist,new SortComparator());
 		context.getFlowScope().put("milist", milist);
 		context.getFlowScope().put("approveMI",
 				getLookupservice().loadIDData("MI_APPROVED"));

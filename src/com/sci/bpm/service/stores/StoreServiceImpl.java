@@ -251,15 +251,10 @@ public class StoreServiceImpl implements StoreService {
 		dao.updateIssueMaster(issuemaster);
 	}
 
-
-
-
-
-
-
-
-
-
+	@Override
+	public void cancelStoresRequest(SciStoresRequest request) {
+		dao.cancelStoresRequest(request);
+	}
 
 
 }

@@ -3,7 +3,8 @@
 <webflow:on-start>
         <webflow:evaluate expression="storecont.setupForm"/>
         <webflow:evaluate expression="lookupbean.getDropDownList('matdept_key')" result="flowScope.matdeptlist"/>
-       
+    <webflow:evaluate expression="searchworkcont.setupForm"/>
+    <webflow:evaluate expression="searchworkcont.searchWorkOrder"/>
     </webflow:on-start>
 <webflow:view-state id="entersearch" view="stores.issuemi">
         <webflow:transition on="viewbyMI" to="entersearch">
@@ -35,6 +36,11 @@
             <webflow:evaluate expression="storecont.bind"/>
             <webflow:evaluate expression="storecont.issueItem"/>
         </webflow:transition>
+
+    <webflow:transition on="cancelStoresRequest" to="entersearch">
+        <webflow:evaluate expression="storecont.bind"/>
+        <webflow:evaluate expression="storecont.cancelStoresRequest"/>
+    </webflow:transition>
     </webflow:view-state>
 <webflow:view-state id="itemsadded" view="stores.issuesucces">
         <webflow:transition on="back" to="entersearch"/>

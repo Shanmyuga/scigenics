@@ -311,6 +311,24 @@ public class StoresManagerController extends SciBaseController {
 		return success();
 	}
 
+	public Event cancelStoresRequest(RequestContext context) throws Exception {
+
+		StoresBean bean = (StoresBean) getFormObject(context);
+
+		List streqList = (List) context.getFlowScope().get("openstreq");
+		SciStoresRequest request = selectRequest(streqList, bean
+				.getSeqSelectMIID());
+
+		request.setUpdatedBy(getUserPreferences().getUserID());
+		request.setUpdatedDt(new Date());
+		request.setRequestStatus("C");
+		request.setProdRemarks(bean.getCancelReason());
+		service.cancelStoresRequest(request);
+		resetForm(context);
+		context.getFlowScope().remove("openstreq");
+		return success();
+	}
+
 	public Event issueItem(RequestContext context) throws Exception {
 		StoresBean bean = (StoresBean) getFormObject(context);
 		List<SciAvailableMaterials> masterlist = (List<SciAvailableMaterials>) context

@@ -31,6 +31,10 @@
            <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewstreq-flow">View Store Request</a></td>
               </tr>
+
+              <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewstoreissues-flow">View Issue List</a></td>
+              </tr>
                <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewissueqcresults-flow">View Issued QC Docs for  WorkOrder</a></td>
               </tr>

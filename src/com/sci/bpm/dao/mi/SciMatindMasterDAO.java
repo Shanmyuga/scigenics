@@ -172,10 +172,10 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 		Query wquery = null;
 		if (parameters.size() > 0) {
 			wquery = em.createQuery(query
-					+ whereClause.replaceAll("where and", "where"));
+					+ whereClause.replaceAll("where and", "where") + " order by m.insertedDate desc ");
 		} else {
 			System.out.println("myquery " + query);
-			wquery = em.createQuery(query);
+			wquery = em.createQuery(query + " order by m.insertedDate desc ");
 		}
 		Iterator keyset = parameters.keySet().iterator();
 

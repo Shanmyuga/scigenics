@@ -43,4 +43,6 @@ public void addStoreReturns(SciReturnitemsRequest request,SciStoreissueMaster  s
 public void addReturntoStores(SciAvailableMaterials availmat,SciReturnitemsRequest request);
 public List viewStorereqIssues(SciStoresRequest request);
 public void addDamagedMaterial(SciRejectedMaterials dmater,SciReturnitemsRequest request);
+    public void cancelStoresRequest(SciStoresRequest request);
+
 }

@@ -38,6 +38,7 @@ public interface StoreService {
 	public List loadReturnRequest(StoresBean bean);
 	public List loadissueAcceptance();
 	public void updateIssueMaster(SciStoreissueMaster issuemaster);
+	public void cancelStoresRequest(SciStoresRequest request);
 	public List loadReturnupdates();
 	public void addReturntoStores(SciAvailableMaterials availmat,SciReturnitemsRequest request);
 	public void addStoreReturns(SciReturnitemsRequest request,SciStoreissueMaster  stissue);

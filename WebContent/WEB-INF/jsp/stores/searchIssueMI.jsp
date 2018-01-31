@@ -57,11 +57,17 @@ document.storesbean.submit();
 </td>
 </tr>
 <tr>
+ <td>Work Order</td>
+ <td><form:select path="seqWorkId"    >
+  <form:option value="">All</form:option>
+  <form:options items="${workorderlist}" itemLabel="jobDesc" itemValue="seqWorkId"/>
+ </form:select>
 
-<td colspan="4"> <input  type="button" value="Search Stores Request" onclick="eventdirect('searchstoresreq')"/> </td>
+ </td>
+<td colspan="2"> <input  type="button" value="Search Stores Request" onclick="eventdirect('searchstoresreq')"/> </td>
 
 </tr>
- 
+
 
 </table>
 
@@ -110,10 +116,20 @@ document.storesbean.submit();
 <c:out value='${row.sciMiMaster.sciWorkorderMaster.sciCustomerMaster.customerName}'/>
 </display:column>
 </display:table>
+
+ <p>
+
+Cancellation Reason :
+
+  <input type = "text" id="cancelReason" name="cancelReason"/>
+
+ </p>
  <p>
  
   <input type="button" value="Search Stores with Mi/MatCode" onclick="eventdirect('viewbyMI')">
-  </p>
+  <input type="button"  value="Cancel  Stores Request" onclick="eventdirect('cancelStoresRequest')"/>
+
+ </p>
   
   <br/>
   <div style="float:left;width:750px;padding:10px;">
@@ -205,7 +221,6 @@ document.storesbean.submit();
 </table>
 
  <input type="button"  value="Issue  Item" onclick="eventdirect('issueItem')"/>
-
  </c:if>
 
  </div>

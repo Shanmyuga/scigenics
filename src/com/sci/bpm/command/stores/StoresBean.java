@@ -64,7 +64,7 @@ public class StoresBean implements Serializable {
 	private int searchMax =1000;
 	private String returnCriteria;
 	private String isScrap;
-	
+	private String cancelReason;
 	public Long getSeqVendorID() {
 		return seqVendorID;
 	}
@@ -488,11 +488,11 @@ public class StoresBean implements Serializable {
 		this.isScrap = isScrap;
 	}
 
+	public String getCancelReason() {
+		return cancelReason;
+	}
 
-
-	
-
-	
-	
-
+	public void setCancelReason(String cancelReason) {
+		this.cancelReason = cancelReason;
+	}
 }

@@ -320,6 +320,10 @@ public class StoreDAOImpl implements StoresDAO {
 			whereClause = whereClause + " and mt.matDept = :matdept ";
 			parameters.put("matdept", command.getMatDept());
 		}
+		if (command.getSeqWorkId() != null && command.getSeqWorkId() != 0) {
+			whereClause = whereClause + " and m.sciMiMaster.sciWorkorderMaster.seqWorkId = :wm ";
+			parameters.put("wm", command.getSeqWorkId());
+		}
 		Query wquery = null;
 		if (parameters.size() > 0) {
 			wquery = em.createQuery(query
@@ -595,6 +599,12 @@ public class StoreDAOImpl implements StoresDAO {
 		em.merge(request);
 		em.persist(dmater);
 		
+	}
+
+	@Override
+	public void cancelStoresRequest(SciStoresRequest request) {
+
+	em.merge(request);
 	}
 
 	public List viewStorereqIssues(SciStoresRequest request) {
