@@ -76,7 +76,9 @@
                     <display:column sortable="true"  title="Phase detail"  property="phaseDetail">
 
                     </display:column>
+                    <display:column sortable="true"  title="Phase Desc"  property="phaseDesc">
 
+                    </display:column>
                     <display:column sortable="true"  title="Total Estimated Man hrs"  property="totalEstimatedManhours">
 
                     </display:column>

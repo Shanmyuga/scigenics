@@ -16,11 +16,13 @@ public class ProjectReportView implements Serializable {
 
     private String jobDesc;
 
+    private String phaseDesc;
+
     public String getYear() {
         return year;
     }
 
-    public ProjectReportView(String year, String month, String weekStartDate, String weekEndDate, String clientDesc, String jobDesc, String phaseDetail, String totalEstimatedManhours, String totalActualManHours) {
+    public ProjectReportView(String year, String month, String weekStartDate, String weekEndDate, String clientDesc, String jobDesc, String phaseDetail,String phaseDesc, String totalEstimatedManhours, String totalActualManHours) {
         this.year = year;
         this.month = month;
         this.weekStartDate = weekStartDate;
@@ -30,6 +32,7 @@ public class ProjectReportView implements Serializable {
         this.phaseDetail = phaseDetail;
         this.totalEstimatedManhours = totalEstimatedManhours;
         this.totalActualManHours = totalActualManHours;
+        this.phaseDesc = phaseDesc;
     }
 
     public void setYear(String year) {
@@ -98,6 +101,14 @@ public class ProjectReportView implements Serializable {
 
     public void setTotalActualManHours(String totalActualManHours) {
         this.totalActualManHours = totalActualManHours;
+    }
+
+    public String getPhaseDesc() {
+        return phaseDesc;
+    }
+
+    public void setPhaseDesc(String phaseDesc) {
+        this.phaseDesc = phaseDesc;
     }
 
     private String phaseDetail;

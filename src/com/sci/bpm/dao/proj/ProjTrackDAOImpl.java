@@ -82,7 +82,7 @@ public class ProjTrackDAOImpl implements ProjTrackDao {
 
 
     public List<ProjectReportView> reportTasks(ProjectTrackCommand command) {
-        String query = "select to_char(wtd.inserted_date,'YYYY') as YEAR, to_char(wtd.inserted_date,'MM') as Month,to_char(TRUNC(wtd.inserted_date, 'iw'),'dd-mm-yyyy')  AS iso_week_start_date, to_char(TRUNC(wtd.inserted_date, 'iw') + 7 - 1/86400,'dd-mm-yyyy') AS iso_week_end_date , wm.CLIENT_DETAILS,wm.JOB_DESC,wt.phase_detail, to_char(sum(wt.est_man_hours))  as estimated_hours,to_char(sum(wtd.actual_man_hours)) as actual_hours  from SCI_WO_TRACK_MASTER wt,SCI_WORKORDER_MASTER wm ,SCI_WO_TRK_DETAIL wtd where wt.SEQ_WO_TRK_ID = wtd.SEQ_WO_TRK_ID and wt.SEQ_WORK_ID = wm.SEQ_WORK_ID   ";
+        String query = "select to_char(wtd.inserted_date,'YYYY') as YEAR, to_char(wtd.inserted_date,'MM') as Month,to_char(TRUNC(wtd.inserted_date, 'iw'),'yyyymmdd')  AS iso_week_start_date, to_char(TRUNC(wtd.inserted_date, 'iw') + 7 - 1/86400,'yyyymmdd') AS iso_week_end_date , wm.CLIENT_DETAILS,wm.JOB_DESC,wt.phase_detail, wt.phase_desc,to_char(wt.est_man_hours)  as estimated_hours,to_char(sum(wtd.actual_man_hours)) as actual_hours  from SCI_WO_TRACK_MASTER wt,SCI_WORKORDER_MASTER wm ,SCI_WO_TRK_DETAIL wtd where wt.SEQ_WO_TRK_ID = wtd.SEQ_WO_TRK_ID and wt.SEQ_WORK_ID = wm.SEQ_WORK_ID   ";
         Map<String,Object> parameters = new HashMap<String,Object>();
         if(command.getFromdate() != null) {
             query = query + " AND wtd.inserted_Date >= :fromdate";
@@ -96,7 +96,7 @@ public class ProjTrackDAOImpl implements ProjTrackDao {
             query = query + " AND wm.seq_work_id = :seq_work_id";
             parameters.put("seq_work_id",command.getSeqWorkId());
         }
-        query = query + " group by  to_char(wtd.inserted_date,'YYYY'),to_char(wtd.inserted_date,'MM'), to_char(TRUNC(wtd.inserted_date, 'iw'),'dd-mm-yyyy')  ,to_char(TRUNC(wtd.inserted_date, 'iw') + 7 - 1/86400,'dd-mm-yyyy'), wm.CLIENT_DETAILS,wm.JOB_DESC,wt.phase_detail having sum(wtd.actual_man_hours) > 0 order by 1,2,3,4,5 desc";
+        query = query + " group by  to_char(wtd.inserted_date,'YYYY'),to_char(wtd.inserted_date,'MM'), to_char(TRUNC(wtd.inserted_date, 'iw'),'yyyymmdd') ,to_char(TRUNC(wtd.inserted_date, 'iw') + 7 - 1/86400,'yyyymmdd'), wm.CLIENT_DETAILS,wm.JOB_DESC,wt.phase_detail,wt.phase_desc,to_char(wt.est_man_hours) having sum(wtd.actual_man_hours) > 0 order by iso_week_start_date desc\n";
         Query qry = em
                 .createNativeQuery(query)
 
@@ -114,7 +114,7 @@ List<ProjectReportView> views = new ArrayList<ProjectReportView>();
 
 for(int idx=0;idx <results.size();idx++) {
     Object[] array = results.get(idx);
-    views.add(new ProjectReportView((String)array[0],(String)array[1],(String)array[2],(String)array[3],(String)array[4],(String)array[5],(String)array[6],(String)array[7],(String)array[8]));
+    views.add(new ProjectReportView((String)array[0],(String)array[1],(String)array[2],(String)array[3],(String)array[4],(String)array[5],(String)array[6],(String)array[7],(String)array[8],(String)array[9]));
 }
 
 
