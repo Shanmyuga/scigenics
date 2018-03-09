@@ -238,8 +238,9 @@ context.getFlowScope().put("reportTasks",reports);
 				.getFlowScope().get("selectedwo");
 		
 		SciProjectCostMaster costmaster = new SciProjectCostMaster();
-		costmaster.setSeqWorkId(wmaster.getSeqWorkId());
+
 		BeanUtils.copyProperties(costmaster, command);
+		costmaster.setSeqWorkId(wmaster.getSeqWorkId());
 		costmaster.setInsertedBy(getUserPreferences().getUserID());
 		costmaster.setInsertDate(new Date());
 		costmaster.setUpdatedBy(getUserPreferences().getUserID());
