@@ -38,6 +38,9 @@
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewmiitems-flow">View MI</a></td>
                 
               </tr>
+              <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addjdr-flow">Add Workorder Docs</a></td>
+              </tr>
                 <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewstores-flow">View Stores List</a></td>
               </tr>

@@ -28,13 +28,13 @@
 <tr>
 
 
-<td  align="left" class="datatext">Job Description Document </td>
+<td  align="left" class="datatext">Document Description file </td>
 <td ><input type="file" name="filedoc" id="filedoc"/><span style="color:red;">*</span></td>
 <td colspan="2">&nbsp</td>
 </tr>
 
 <tr>
-<td align="right" class="datatext">JDR Description</td>
+<td align="right" class="datatext">Document  Description</td>
 <td ><form:textarea path="jdrDesc" /><span style="color:red;">*</span></td>
 <td colspan="2">&nbsp</td>
 </tr>
@@ -43,6 +43,19 @@
 <td ><form:input path="docVersion" size="3"  maxlength="3"/><span style="color:red;">*</span></td>
 <td colspan="2">&nbsp</td>
 </tr>
+
+ <tr>
+  <td align="right" class="datatext">Document Type</td>
+  <td ><form:select path="docType">
+
+   <form:option value="JDR">JDR</form:option>
+   <form:option value="QC">Quality Control</form:option>
+   <form:option value="QA">Quality Assurance</form:option>
+   <form:option value="Purchase">Purchase</form:option>
+   <form:option value="Production">Production</form:option>
+  </form:select></td>
+  <td colspan="2">&nbsp</td>
+ </tr>
 <tr>
 
 
@@ -72,7 +85,9 @@
 <display:column sortable="true"  title="Document Version" property="docVersion"  >
 
 </display:column>
+ <display:column sortable="true"  title="Document Type" property="docType"  >
 
+ </display:column>
 <display:column sortable="true"  title="Uploaded File"   >
 <a href="javascript:openfile('<c:out value="${row.seqJdrId}"/>')"><c:out value="${row.originalDoc}" /></a>
 </display:column>

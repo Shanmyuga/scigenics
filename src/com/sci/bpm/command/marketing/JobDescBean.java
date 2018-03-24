@@ -10,9 +10,12 @@ public class JobDescBean implements Serializable {
 	private transient MultipartFile filedoc;
 	private String jdrDocName;
 	private String docVersion;
+	private String docType;
 	public String getJdrDesc() {
 		return jdrDesc;
 	}
+
+
 	public void setJdrDesc(String jdrDesc) {
 		this.jdrDesc = jdrDesc;
 	}
@@ -34,8 +37,15 @@ public class JobDescBean implements Serializable {
 	public void setDocVersion(String docVersion) {
 		this.docVersion = docVersion;
 	}
-	
-	
-	
+
+	public String getDocType() {
+		return docType;
+	}
+
+	public void setDocType(String docType) {
+		this.docType = docType;
+	}
+
+
 
 }

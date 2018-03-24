@@ -17,7 +17,7 @@
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addamend-flow">Search Work Order</a></td>
               </tr>
                  <tr> 
-                <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addjdr-flow">Add JDR Docs</a></td>
+                <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addjdr-flow">Add Workorder Docs</a></td>
               </tr>
 
               <tr>
