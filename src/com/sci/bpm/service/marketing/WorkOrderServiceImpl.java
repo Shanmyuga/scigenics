@@ -3,6 +3,7 @@ package com.sci.bpm.service.marketing;
 import java.util.List;
 import java.util.Map;
 
+import com.sci.bpm.chart.model.ChartModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -76,6 +77,11 @@ public class WorkOrderServiceImpl implements WorkOrderService {
 	public void closeWO(SciWorkorderMaster wm,Long seqLovID) {
 		// TODO Auto-generated method stub
 		daoimpl.updateWO(wm,seqLovID);
+	}
+
+	@Override
+	public List<ChartModel> getWorkOrderCostStats(Long seqWorkId) {
+		return daoimpl.getWorkOrderCostStats(seqWorkId);
 	}
 
 }

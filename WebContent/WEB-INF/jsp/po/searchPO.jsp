@@ -150,6 +150,8 @@
 <div style="padding-left:10px;width:787px;float:left">
  <input type="button"  value="View Purchase Order " onclick="eventdirect('openPurchaseOrder')"/>
 <input type="button"  value="Generate Purchase Order PDF" onclick="eventdirect('generatePDF')"/>
+
+    <input type="button"  value="Send email Purchase Order PDF" onclick="eventdirect('generateEmail')"/>
    <input type="button"  value="Close Purchase Order " onclick="eventdirect('closePo')"/>
    <input type="button"  value="Cancel PO " onclick="eventdirect('cancelPO')"/>  
    <input type="button"  value="Despatch PO " onclick="eventdirect('despatchPO')"/>  

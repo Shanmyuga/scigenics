@@ -2,6 +2,7 @@ package com.sci.bpm.service.user;
 
 import java.util.List;
 
+import com.sci.bpm.db.model.ScigenicsRoleMaster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +38,13 @@ public class UserServiceImpl implements UserService {
 		daoimpl.update(user);
 		return true;
 	}
-	
+
+	@Override
+	public ScigenicsRoleMaster generateRole(Long roleID) {
+
+		return daoimpl.selectRole(roleID);
+	}
+
 	public List selectUserList() {
 		// TODO Auto-generated method stub
 		return daoimpl.selectUserList();

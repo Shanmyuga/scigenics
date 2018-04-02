@@ -91,6 +91,11 @@ public class UserMasterDAO implements IScigenicsUserMasterDAO {
 		return users;
 	}
 
+	@Override
+	public ScigenicsRoleMaster selectRole(Long roleId) {
+		return em.find(ScigenicsRoleMaster.class,roleId);
+	}
+
 	public ScigenicsUserMaster findUser(String userID) {
 		// TODO Auto-generated method stub
 		Query qp = em.createQuery("from ScigenicsUserMaster  um where um.userId =:userID");

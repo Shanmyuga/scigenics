@@ -3,6 +3,7 @@ package com.sci.bpm.controller.task;
 import java.util.List;
 import java.util.prefs.PreferenceChangeEvent;
 
+import com.sci.bpm.db.model.ScigenicsRoleMaster;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -77,10 +78,15 @@ public class TaskProcessController extends SciBaseController {
 		List mylist = null;
 		try{
 			 UserPreference userobject = getUserPreferences();
-			 
+
 			 mylist = taskService.searchTasks(SciDataConstans.TASK_OPEN_STATUS, 0,userobject.getUserID());
 			 System.out.println("tasks" + mylist.size());
-			
+			for(ScigenicsRoleMaster roleMaster:userobject.getRolemasterset()) {
+				List roletasklist = taskService.searchTasks(SciDataConstans.TASK_OPEN_STATUS, 0,roleMaster.getRoleName());
+				if(roletasklist.size() > 0) {
+					mylist.addAll(roletasklist);
+				}
+			}
 		}
 		catch(Exception e) {
 			

@@ -12,6 +12,7 @@ import javax.xml.bind.Marshaller;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
+import org.omg.PortableServer.REQUEST_PROCESSING_POLICY_ID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.webflow.execution.Event;
@@ -464,6 +465,21 @@ System.out.println("poxml - " +poxml);
 		context.getExternalContext().getSessionMap()
 				.put("poxml", "<purchaseOrder>"+poxml);
 		
+		return success();
+	}
+
+	public Event selectVendorEmailId(RequestContext context) throws Exception {
+		POCommand command = (POCommand) getFormObject(context);
+		List<SciPurchaseMast> master = (List<SciPurchaseMast>) context
+				.getFlowScope().get("pomastlist");
+		SciPurchaseMast selected = selectedPO(master, command.getScipurchID());
+		String emailId = selected.getSciVendorMaster().getEmailId();
+		if(emailId == null) {
+			throw new Exception("Vendor EMAIL ID is null");
+		}
+		context.getExternalContext().getSessionMap()
+				.put("vendorEmailID", emailId);
+
 		return success();
 	}
 

@@ -15,7 +15,7 @@
 <tr>
 <td align="right" class="datatext">Client Details</td>
 <td ><form:select path="seqCustomerId" >
-<form:options items="${custstats}" itemLabel="customerDetails" itemValue="seqCustId"/>
+    <form:options items="${custstats}" itemLabel="customerDetails" itemValue="seqCustId"/>
 </form:select>
 
 <span style="color:red;">*</span></td></tr>
@@ -49,14 +49,31 @@
 
 <span style="color:red;">*</span></td>
 </tr>
-<tr>
-<td align="right" class="datatext">Enquiry Category</td>
-<td ><form:select path="enqCategory" >
-<form:options items="${enqCategories}" itemLabel="lovDescription" itemValue="seqLovId"/>
-</form:select>
 
-<span style="color:red;">*</span></td>
-</tr>
+    <tr>
+        <td align="right" class="datatext">Enquiry Priority</td>
+        <td ><form:select path="enqPriority" >
+            <form:options items="${enqpriorities}" itemLabel="lovDescription" itemValue="seqLovId"/>
+        </form:select>
+
+            <span style="color:red;">*</span></td>
+    </tr>
+    <tr>
+        <td align="right" class="datatext">Enquiry Category</td>
+        <td ><form:select path="enqCategory" >
+            <form:options items="${enqCategories}" itemLabel="lovDescription" itemValue="seqLovId"/>
+        </form:select>
+
+            <span style="color:red;">*</span></td>
+    </tr>
+
+    <tr>
+        <td align="right" class="datatext">Enquiry Follow up Date</td>
+        <td ><form:input path="enqFollowUpDate" />
+            <a href="javascript:show_calendar('document.enqbean.enqFollowUpDate', document.enqbean.enqFollowUpDate.value);"><img src="images/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>
+        </td>
+    </tr>
+
 <tr>
 <td align="right" class="datatext">Enquiry Source</td>
 <td ><form:input path="enqSource" /></td>
@@ -103,6 +120,7 @@
 function changeDtd(event) {
 
 document.enqbean._eventId.value=event;
+alert("hi")
 document.enqbean.submit();
 
 }

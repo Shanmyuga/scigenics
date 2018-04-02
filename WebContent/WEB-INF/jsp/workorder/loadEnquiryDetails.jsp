@@ -28,7 +28,17 @@
 <form:option value="C">Close</form:option>
 </form:select>
 </td>
+ <td>Enquiry ID</td>
+ <td  ><form:input path="seqEnqMasterId" id="seqEnqMasterId"></form:input>
+ </td>
 
+ <td align="right" class="datatext">Enquiry Priority</td>
+ <td ><form:select path="enqPriority" >
+  <form:option value="">Select</form:option>
+  <form:options items="${enqpriorities}" itemLabel="lovDescription" itemValue="seqLovId"/>
+ </form:select>
+
+  <span style="color:red;">*</span></td>
 </tr>
 
 <tr>
@@ -50,6 +60,10 @@
 <form:radiobutton path="seqenqmasterid"  value="${row1.seqEnqryId}" onclick="eventdirect('loadEnqDetails') "/>
 
 </display:column>
+
+ <display:column sortable="true"  property="seqEnqryId" title="Enquiry ID">
+
+ </display:column>
 <display:column sortable="true"  property="enqDetails" >
 
 </display:column>
@@ -78,6 +92,14 @@
 <display:column sortable="true"  title="EnqType" >
 <c:out value='${lovmap[row1.enqType]}'/>
 </display:column>
+
+    <display:column sortable="true"  title="EnqPriority" >
+        <c:out value='${lovmap[row1.enqPriority]}'/>
+    </display:column>
+    <display:column sortable="true"  property="enqFollowUpDate" >
+
+</display:column>
+
 <display:column sortable="true"  property="enqStatus" >
 
 </display:column>

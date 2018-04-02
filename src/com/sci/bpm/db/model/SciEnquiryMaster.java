@@ -41,12 +41,12 @@ public class SciEnquiryMaster implements java.io.Serializable {
 	private Date closeDate;
 	private String enqSource;
 	private String enqStatus;
-	
+	private Long enqPriority;
 	
 	private Long enqCategory;
 	
 	private Long customerDept;
-	
+	private Date enqFollowUpDate;
 	
 	private String customerContact;
 	private Set<SciEnquiryDetails> sciEnquiryDetailses = new HashSet<SciEnquiryDetails>(
@@ -244,4 +244,24 @@ public class SciEnquiryMaster implements java.io.Serializable {
 		this.customerDept = customerDept;
 	}
 
+
+	@Column(name = "ENQUIRY_PRIORITY",  precision = 9, scale = 0)
+	public Long getEnqPriority() {
+		return enqPriority;
+	}
+
+	public void setEnqPriority(Long enqPriority) {
+		this.enqPriority = enqPriority;
+	}
+
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "ENQUIRY_FOLLOWUP_DATE", length = 7)
+	public Date getEnqFollowUpDate() {
+		return enqFollowUpDate;
+	}
+
+	public void setEnqFollowUpDate(Date enqFollowUpDate) {
+		this.enqFollowUpDate = enqFollowUpDate;
+	}
 }

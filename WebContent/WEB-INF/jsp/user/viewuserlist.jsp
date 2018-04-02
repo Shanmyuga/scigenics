@@ -14,7 +14,7 @@
 <form:form commandName="userbean" name="userbean" >
 <display:table export="true" sort="list"   pagesize="10" name="userlist"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
 <display:column sortable="true"  title="Select" media="html" >
-<form:radiobutton path="selectedUserID"  value='${row.seqUserId}'></form:radiobutton>
+<form:radiobutton path="selectedUserID"  value='${row.seqUserId}' onclick="eventdirect('loadRoleData')"></form:radiobutton>
 
 </display:column>
 
@@ -53,6 +53,13 @@
 
 <td><form:checkbox path="userStatus" value="N"/></td>
 </tr>
+
+    <tr>
+        <td align="right" class="datatext">New Roles</td>
+        <td ><form:select path="roleID" multiple="true" >
+
+            <form:options items="${roleitems}" itemValue="seqRoleId" itemLabel="roleName"/>
+        </form:select> </td></tr>
 <tr>
 <td colspan="4" align="left">
   <input type="submit" value="Update User" /></td>
@@ -79,4 +86,14 @@ function openfile(idkeyval) {
 document.myloginform.idkey.value=idkeyval;
 document.myloginform.submit();
 }
+</script>
+
+<script language="javascript">
+
+    function eventdirect(event) {
+
+        document.getElementById('_eventId').value = event;
+
+        document.userbean.submit();
+    }
 </script>

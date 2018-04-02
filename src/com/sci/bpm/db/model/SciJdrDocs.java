@@ -33,7 +33,7 @@ public class SciJdrDocs implements java.io.Serializable {
 	private Date updatedDate;
 	private String docVersion;
 	private String originalDoc;
-	private String docType;
+	private Long docType;
 
 
 
@@ -160,11 +160,11 @@ public class SciJdrDocs implements java.io.Serializable {
 		this.docCnttype = docCnttype;
 	}
 	@Column(name = "DOC_TYPE", nullable = true, length = 20)
-	public String getDocType() {
+	public Long getDocType() {
 		return docType;
 	}
 
-	public void setDocType(String docType) {
+	public void setDocType(Long docType) {
 		this.docType = docType;
 	}
 

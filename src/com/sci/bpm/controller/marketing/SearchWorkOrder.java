@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sci.bpm.chart.model.ChartModel;
 import com.sci.bpm.command.LookupValueBean;
 import com.sci.bpm.db.model.SciReportConfiguration;
+import com.sci.bpm.service.lookup.LookUpValueService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -64,6 +68,45 @@ public class SearchWorkOrder extends SciBaseController{
 			wrkcommand.setJobDesc(wmaster.getJobDesc());
 			context.getFlowScope().put("workorderbean", wrkcommand);
 			context.getFlowScope().put("selectedwo", wmaster);
+
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+		return success();
+	}
+
+	public Event selectWorderChart(RequestContext context) {
+
+		try {
+			WorkOrderCommand wrkcommand = (WorkOrderCommand)context.getFlowScope().get("workorderbean");
+			List wlist = (List)context.getFlowScope().get("workorderlist");
+
+			SciWorkorderMaster wmaster = (SciWorkorderMaster) wlist.get(Integer.parseInt(wrkcommand.getWindex())-1);
+			wrkcommand.setClientDetails(wmaster.getClientDetails());
+			wrkcommand.setJobDesc(wmaster.getJobDesc());
+			context.getFlowScope().put("workorderbean", wrkcommand);
+			context.getFlowScope().put("selectedwo", wmaster);
+			List<ChartModel> charts = service.getWorkOrderCostStats(wmaster.getSeqWorkId());
+			ObjectMapper mapper = new ObjectMapper();
+
+			String chartJSON = mapper.writeValueAsString(charts);
+			chartJSON = chartJSON.replaceAll("\"type\"","type");
+			chartJSON = chartJSON.replaceAll("\"name\"","name");
+			chartJSON = chartJSON.replaceAll("\"legendText\"","legendText");
+			chartJSON = chartJSON.replaceAll("\"showInLegend\"","showInLegend");
+			chartJSON = chartJSON.replaceAll("\"dataPoints\"","dataPoints");
+			chartJSON = chartJSON.replaceAll("\"label\"","label");
+			chartJSON = chartJSON.replaceAll("\"y\"","y");
+
+
+			System.out.println(chartJSON);
+			context.getFlowScope().put("chartData",chartJSON);
+			context.getFlowScope().put("selectedwo", wmaster);
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -145,4 +188,8 @@ public class SearchWorkOrder extends SciBaseController{
 		return success();
 
 	}
+
+
+
+
 }

@@ -2,6 +2,7 @@ package com.sci.bpm.dao.user;
 
 import java.util.List;
 
+import com.sci.bpm.db.model.ScigenicsRoleMaster;
 import com.sci.bpm.db.model.ScigenicsUserMaster;
 
 /**
@@ -142,5 +143,7 @@ public interface IScigenicsUserMasterDAO {
 	 */
 	public ScigenicsUserMaster findUser(String userID);
 	public List selectUserList();
+
+	public ScigenicsRoleMaster selectRole(Long roleId);
 	public List<ScigenicsUserMaster> findAll(int... rowStartIdxAndCount);
 }

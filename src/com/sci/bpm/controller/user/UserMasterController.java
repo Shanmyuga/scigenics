@@ -1,5 +1,6 @@
 package com.sci.bpm.controller.user;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -61,10 +62,36 @@ public class UserMasterController extends SciBaseController {
 		return super.setupForm(context);
 	}
 
-	public Event loadUserData(RequestContext context) {
-
+	public Event loadUserData(RequestContext context)throws Exception {
+		UserMasterBean mybean = (UserMasterBean) getFormObject(context);
 		List userlist = this.userService.selectUserList();
 		context.getFlowScope().put("userlist", userlist);
+
+		return success();
+	}
+
+	public Event loadRoleForUser(RequestContext context) throws Exception {
+		UserMasterBean mybean = (UserMasterBean) getFormObject(context);
+		String userid = mybean.getSelectedUserID();
+		List<ScigenicsUserMaster> userlist = (List) context.getFlowScope().get(
+				"userlist");
+		ScigenicsUserMaster userbean = null;
+		for (ScigenicsUserMaster um : userlist) {
+			if (um.getSeqUserId().toString().equals(userid)) {
+				userbean = um;
+
+				break;
+			}
+		}
+List<String> roles = new ArrayList<String>();
+		if(userbean != null) {
+
+			for(ScigenicsRoleMaster role: userbean.getScigenicsRoleMasters()) {
+				roles.add(String.valueOf(role.getSeqRoleId()));
+			}
+		}
+		String [] roleNAmes = roles.toArray(new String[roles.size()]);
+		mybean.setRoleID(roleNAmes);
 		return success();
 	}
 
@@ -87,6 +114,16 @@ public class UserMasterController extends SciBaseController {
 		if ("N".equals(mybean.getUserStatus())) {
 			userbean.setUserStatus("N");
 		}
+		Set<ScigenicsRoleMaster> rolemasterset = new HashSet<ScigenicsRoleMaster>();
+
+		String roleidp[] = mybean.getRoleID();
+		for (int idx = 0; idx < roleidp.length; idx++) {
+			ScigenicsRoleMaster rolemaster = userService.generateRole(Long.parseLong(roleidp[idx]));
+
+			rolemasterset.add(rolemaster);
+
+		}
+		userbean.setScigenicsRoleMasters(rolemasterset);
 		userService.updateUser(userbean);
 		mybean.setUserStatus("");
 		return success();

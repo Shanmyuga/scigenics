@@ -44,6 +44,7 @@ public class EnquiryController extends SciBaseController {
 	}
 	
 	public Event addEnquiryMaster(RequestContext context) throws Exception {
+		System.out.println("inside enquiry master");
 		EnqBean bean = (EnqBean) getFormObject(context);
 		SciEnquiryMaster emaster = new SciEnquiryMaster();
 		BeanUtils.copyProperties(emaster, bean);
@@ -59,7 +60,13 @@ public class EnquiryController extends SciBaseController {
 		if(StringUtils.isBlank(emaster.getEnqAttendee()) || emaster.getEnqDate() == null ) {
 			throw new Exception();
 		}
-		service.addNewEnqMaster(emaster);
+		boolean isTaskRequired = false;
+		Long lovID = getLookupservice().loadIDData("ENQ_PRIORITY_HOT");
+		if(lovID.longValue() == emaster.getEnqPriority().longValue()) {
+			isTaskRequired = true;
+		}
+
+		service.addNewEnqMaster(emaster,isTaskRequired);
 		
 		
 		return success();

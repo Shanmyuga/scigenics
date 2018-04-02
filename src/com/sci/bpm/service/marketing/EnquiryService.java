@@ -10,7 +10,7 @@ public interface EnquiryService {
 
 	public List loadOpenEnquiry(EnqBean bean);
 	
-	public void addNewEnqMaster(SciEnquiryMaster master);
+	public void addNewEnqMaster(SciEnquiryMaster master,boolean isTaskRequired);
 	
 	public void addNewEnquiryDetail(SciEnquiryDetails details,SciEnquiryMaster master);
 	

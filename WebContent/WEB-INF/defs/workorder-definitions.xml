@@ -53,6 +53,12 @@
      
       <put-attribute name="body" value="/WEB-INF/jsp/workorder/addWorkOrder.jsp" />
   </definition>
+
+    <definition name="workorder.statsview" extends="mainlayout"  preparer="com.sci.bpm.view.TilesViewPreparer">
+        <put-attribute name="menu" value="usermenu.jsp" />
+
+        <put-attribute name="body" value="/WEB-INF/jsp/workorder/viewworkOrderStats.jsp" />
+    </definition>
    <definition name="workorder.servicesdetails"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
   <put-attribute name="menu" value="usermenu.jsp" />
      
@@ -195,6 +201,11 @@
      
       <put-attribute name="body" value="/WEB-INF/jsp/po/pdfview.jsp" />
   </definition>
+    <definition name="po.emailview"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+        <put-attribute name="menu" value="usermenu.jsp" />
+
+        <put-attribute name="body" value="/WEB-INF/jsp/po/emailpoview.jsp" />
+    </definition>
   <definition name="po.viewrecdlist"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
   <put-attribute name="menu" value="usermenu.jsp" />
      

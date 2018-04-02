@@ -35,6 +35,11 @@
             <webflow:evaluate expression="pocont.bind"/>
             <webflow:evaluate expression="pocont.viewPOPDF"/>
         </webflow:transition>
+    <webflow:transition on="generateEmail" to="viewEmailPOPage">
+        <webflow:evaluate expression="pocont.bind"/>
+        <webflow:evaluate expression="pocont.viewPOPDF"/>
+        <webflow:evaluate expression="pocont.selectVendorEmailId"/>
+    </webflow:transition>
         <webflow:transition on="checkstatus" to="entersearch">
             <webflow:evaluate expression="pocont.bind"/>
             <webflow:evaluate expression="pocont.checkStatus"/>
@@ -51,5 +56,7 @@
     </webflow:view-state>
 <webflow:view-state id="addPOsucces" view="poadd.success"/>
 <webflow:view-state id="viewPDFPage" view="po.pdfview"/>
-<webflow:exception-handler bean="exceptionresol"/>
+    <webflow:view-state id="viewEmailPOPage" view="po.emailview"/>
+
+    <webflow:exception-handler bean="exceptionresol"/>
 </webflow:flow>

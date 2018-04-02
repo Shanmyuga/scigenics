@@ -83,7 +83,12 @@
     <servlet-name>POFopProcessorServlet</servlet-name>
     <servlet-class>com.sci.bpm.controller.po.POFopProcessorServlet</servlet-class>
   </servlet>
-
+	<servlet>
+		<description>This is the description of my J2EE component</description>
+		<display-name>This is the display name of my J2EE component</display-name>
+		<servlet-name>POEmailProcessorServlet</servlet-name>
+		<servlet-class>com.sci.bpm.controller.po.POEmailProcessorServlet</servlet-class>
+	</servlet>
 
 	<!--
 		Map all /resources requests to the Resource Servlet for handling
@@ -132,6 +137,10 @@
     <servlet-name>POFopProcessorServlet</servlet-name>
     <url-pattern>/servlet/POFopProcessorServlet</url-pattern>
   </servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>POEmailProcessorServlet</servlet-name>
+		<url-pattern>/servlet/POEmailProcessorServlet</url-pattern>
+	</servlet-mapping>
 	<mime-mapping>
 		<extension>css</extension>
 		<mime-type>text/css</mime-type>

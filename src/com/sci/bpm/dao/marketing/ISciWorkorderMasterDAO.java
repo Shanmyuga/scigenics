@@ -3,6 +3,7 @@ package com.sci.bpm.dao.marketing;
 import java.util.List;
 import java.util.Map;
 
+import com.sci.bpm.chart.model.ChartModel;
 import com.sci.bpm.db.model.SciAmendmentMaster;
 import com.sci.bpm.db.model.SciCustomerMaster;
 import com.sci.bpm.db.model.SciJdrDocs;
@@ -148,4 +149,8 @@ public interface ISciWorkorderMasterDAO {
 	public SciCustomerMaster loadCustomer(Long seqCustID);
 	
 	public void updateWO(SciWorkorderMaster wm,Long seqLovID);
+
+	public List<ChartModel> getWorkOrderCostStats(Long seqWorkId);
+
+
 }
