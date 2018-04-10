@@ -84,6 +84,38 @@ public class LookupValueController extends SciBaseController {
 
 		return success();
 	}
+	public Event editVendor(RequestContext context) throws Exception {
+		LookupValueBean value = (LookupValueBean)getFormObject(context);
+		SciVendorMaster vendorMaster = (SciVendorMaster) context.getFlowScope().get("selectedVendor");
+		BeanUtils.copyProperties(vendorMaster,value);
+		service.updateVendor(vendorMaster);
+		return success();
+	}
+
+	public Event editCustomer(RequestContext context) throws Exception {
+		LookupValueBean value = (LookupValueBean)getFormObject(context);
+		SciCustomerMaster customerMaster = (SciCustomerMaster) context.getFlowScope().get("selectedCustomer");
+		BeanUtils.copyProperties(customerMaster,value);
+		service.updateCustomer(customerMaster);
+		return success();
+	}
+	public Event selectVendor(RequestContext context) throws Exception {
+		LookupValueBean value = (LookupValueBean)getFormObject(context);
+		List<SciVendorMaster> vendors = (List<SciVendorMaster>) context.getFlowScope().get("vendordroplist");
+		SciVendorMaster vendorMaster = filterVendor(vendors,value.getSeqVendorId());
+		BeanUtils.copyProperties(value,vendorMaster);
+		context.getFlowScope().put("selectedVendor",vendorMaster);
+		return success();
+	}
+
+	public Event selectCustomer(RequestContext context) throws Exception {
+		LookupValueBean value = (LookupValueBean)getFormObject(context);
+		List<SciCustomerMaster> customers = (List<SciCustomerMaster>) context.getFlowScope().get("customerList");
+		SciCustomerMaster customerMaster = filterCustomer(customers,value.getSeqCustId());
+		BeanUtils.copyProperties(value,customerMaster);
+		context.getFlowScope().put("selectedCustomer",customerMaster);
+		return success();
+	}
 	public Event addNewMatSpec(RequestContext context) throws Exception {
 		LookupValueBean value = (LookupValueBean)getFormObject(context);
 		SciMatspecMaster master = new SciMatspecMaster();
@@ -145,6 +177,8 @@ public class LookupValueController extends SciBaseController {
 		return success();
 	}
 
+
+
 	public Event runSelectedReport(RequestContext context) throws Exception {
 		LookupValueBean value = (LookupValueBean)getFormObject(context);
 		List<SciReportConfiguration> reports = loadReports(context);
@@ -166,6 +200,28 @@ public class LookupValueController extends SciBaseController {
 		return selected;
 	}
 
+
+	private SciVendorMaster filterVendor(List<SciVendorMaster> master,Long seqVendorId) {
+		SciVendorMaster selected = null;
+		for(SciVendorMaster m : master) {
+			if(m.getSeqVendorId().intValue() == seqVendorId.intValue()) {
+				selected = m;
+			}
+		}
+
+		return selected;
+	}
+
+	private SciCustomerMaster filterCustomer(List<SciCustomerMaster> master,Long seqCustomerId) {
+		SciCustomerMaster selected = null;
+		for(SciCustomerMaster m : master) {
+			if(m.getSeqCustId().intValue() == seqCustomerId.intValue()) {
+				selected = m;
+			}
+		}
+
+		return selected;
+	}
 	private List<SciReportConfiguration> selectReportBysubject(List<SciReportConfiguration> master,String reportSubject) {
 		System.out.println("filter " + reportSubject);
 		List<SciReportConfiguration> configurationList = new ArrayList<SciReportConfiguration>();

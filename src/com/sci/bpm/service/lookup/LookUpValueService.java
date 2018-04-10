@@ -22,6 +22,9 @@ public interface LookUpValueService {
 	public void addNewMatSpec(SciMatspecMaster specmaster);
 	public void addNewCustomer(SciCustomerMaster custmaster);
 	public void addNewVendor(SciVendorMaster vendorMaster);
+	public void updateVendor(SciVendorMaster vendorMaster);
+	public void updateCustomer(SciCustomerMaster customerMaster);
+	public  SciVendorMaster loadVendor(Long seqVendorId);
 	public void addNewReport(SciReportConfiguration reportConfig);
 	public List<SciReportConfiguration> loadReports();
 	public void updateStatus(SciReportConfiguration config);

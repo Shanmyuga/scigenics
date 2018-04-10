@@ -68,6 +68,22 @@ public class LookupValueServiceImpl implements LookUpValueService {
 		daoimpl.addNewVendor(vendorMaster);
 	}
 
+	@Override
+	public void updateVendor(SciVendorMaster vendorMaster) {
+		daoimpl.updateVendor(vendorMaster);
+	}
+
+	@Override
+	public void updateCustomer(SciCustomerMaster customerMaster) {
+		daoimpl.updateCustomer(customerMaster);
+	}
+
+	@Override
+	public SciVendorMaster loadVendor(Long seqVendorId) {
+
+		return daoimpl.loadVendor(seqVendorId);
+	}
+
 	public void addNewReport(SciReportConfiguration reportConfig) {
 		// TODO Auto-generated method stub
 		daoimpl.addNewReport(reportConfig);

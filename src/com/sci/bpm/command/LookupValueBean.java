@@ -12,7 +12,7 @@ public class LookupValueBean implements Serializable{
 	private String lovName;
 	private String lovType;
 	private String lovDescription;
-	
+	private Long seqCustId;
 	private String customerName;
 	private String customerAddress;
 	private String customerAddress1;
@@ -24,7 +24,7 @@ public class LookupValueBean implements Serializable{
 
 	private String customerCountry;
 	
-	
+	private Long seqVendorId;
 	private String vendorName;
 	private String vendorAddress1;
 	private String phoneNumber;
@@ -243,4 +243,19 @@ public class LookupValueBean implements Serializable{
 		this.reportFilter = reportFilter;
 	}
 
+	public Long getSeqVendorId() {
+		return seqVendorId;
+	}
+
+	public void setSeqVendorId(Long seqVendorId) {
+		this.seqVendorId = seqVendorId;
+	}
+
+	public Long getSeqCustId() {
+		return seqCustId;
+	}
+
+	public void setSeqCustId(Long seqCustId) {
+		this.seqCustId = seqCustId;
+	}
 }

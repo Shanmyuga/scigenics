@@ -26,4 +26,9 @@ public interface LookupValueDAO {
 	public void addNewVendor(SciVendorMaster vendorMaster);
 	public List<SciReportConfiguration> loadReports();
 	public void updateStatus(SciReportConfiguration config);
+	public void updateVendor(SciVendorMaster vendorMaster);
+	public  SciVendorMaster loadVendor(Long seqVendorId);
+	public void updateCustomer(SciCustomerMaster customerMaster);
+
+
 }

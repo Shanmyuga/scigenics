@@ -37,12 +37,22 @@
      
       <put-attribute name="body" value="/WEB-INF/jsp/lookup/addNewCustomer.jsp" />
   </definition>
- 
+    <definition name="customer.edit" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+        <put-attribute name="menu" value="usermenu.jsp" />
+
+        <put-attribute name="body" value="/WEB-INF/jsp/lookup/addNewCustomer.jsp" />
+    </definition>
    <definition name="vendor.add" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
   <put-attribute name="menu" value="usermenu.jsp" />
      
       <put-attribute name="body" value="/WEB-INF/jsp/lookup/addNewVendor.jsp" />
   </definition>
+
+    <definition name="vendor.edit" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+        <put-attribute name="menu" value="usermenu.jsp" />
+
+        <put-attribute name="body" value="/WEB-INF/jsp/lookup/editVendor.jsp" />
+    </definition>
    <definition name="matspec.add" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
   <put-attribute name="menu" value="usermenu.jsp" />
      

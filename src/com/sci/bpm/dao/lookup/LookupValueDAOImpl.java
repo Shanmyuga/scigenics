@@ -128,4 +128,19 @@ public class LookupValueDAOImpl implements LookupValueDAO {
 		em.merge(config);
 	}
 
+	@Override
+	public void updateVendor(SciVendorMaster vendorMaster) {
+		em.merge(vendorMaster);
+	}
+
+	@Override
+	public SciVendorMaster loadVendor(Long seqVendorId) {
+		return em.find(SciVendorMaster.class,seqVendorId);
+	}
+
+	@Override
+	public void updateCustomer(SciCustomerMaster customerMaster) {
+		em.merge(customerMaster);
+	}
+
 }

@@ -38,6 +38,7 @@
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addVendor-flow">Add New Vendor</a></td>
                 
               </tr>
+
                <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewstreq-flow">View/Approve Stores Request</a></td>
                 

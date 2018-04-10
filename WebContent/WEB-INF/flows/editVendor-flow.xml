@@ -2,26 +2,12 @@
 <webflow:flow xmlns:webflow="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="addlookup">
 <webflow:on-start>
         <webflow:evaluate expression="lookupcontbean.setupForm"/>
-
+    <webflow:evaluate expression="lookupbean.getDropDownList('vendor_key')" result="flowScope.vendordroplist"/>
     </webflow:on-start>
-<webflow:view-state id="addlookup" view="vendor.add">
-    <webflow:on-entry>
-        <webflow:evaluate expression="lookupbean.getDropDownList('vendor_key')" result="flowScope.vendordroplist"/>
-    </webflow:on-entry>
+<webflow:view-state id="addlookup" view="vendor.edit">
         <webflow:transition on="addlookup" to="addsuccess">
             <webflow:evaluate expression="lookupcontbean.bind"/>
             <webflow:evaluate expression="lookupcontbean.addNewVendor"/>
-        </webflow:transition>
-    <webflow:transition on="editLookup" to="editlookup">
-        <webflow:evaluate expression="lookupcontbean.bind"/>
-        <webflow:evaluate expression="lookupcontbean.selectVendor"/>
-    </webflow:transition>
-    </webflow:view-state>
-
-    <webflow:view-state id="editlookup" view="vendor.edit">
-        <webflow:transition on="editVendor" to="addsuccess">
-            <webflow:evaluate expression="lookupcontbean.bind"/>
-            <webflow:evaluate expression="lookupcontbean.editVendor"/>
         </webflow:transition>
     </webflow:view-state>
 <webflow:view-state id="addsuccess" view="lookup.success"/>

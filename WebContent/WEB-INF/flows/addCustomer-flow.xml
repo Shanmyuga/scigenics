@@ -3,11 +3,25 @@
 <webflow:on-start>
         <webflow:evaluate expression="lookupcontbean.setupForm"/>
           <webflow:evaluate expression="lookupbean.getDropDownList('state_key')" result="flowScope.states"/>
+    <webflow:evaluate expression="lookupbean.getDropDownList('customer_key')" result="flowScope.customerList"/>
     </webflow:on-start>
 <webflow:view-state id="addlookup" view="customer.add">
         <webflow:transition on="addlookup" to="addsuccess">
             <webflow:evaluate expression="lookupcontbean.bind"/>
             <webflow:evaluate expression="lookupcontbean.addNewCustomer"/>
+        </webflow:transition>
+
+    <webflow:transition on="editLookup" to="editlookup">
+        <webflow:evaluate expression="lookupcontbean.bind"/>
+        <webflow:evaluate expression="lookupcontbean.selectCustomer"/>
+    </webflow:transition>
+    </webflow:view-state>
+
+
+    <webflow:view-state id="editlookup" view="customer.edit">
+        <webflow:transition on="editCustomer" to="addsuccess">
+            <webflow:evaluate expression="lookupcontbean.bind"/>
+            <webflow:evaluate expression="lookupcontbean.editCustomer"/>
         </webflow:transition>
     </webflow:view-state>
 <webflow:view-state id="addsuccess" view="lookup.success"/>

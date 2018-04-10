@@ -11,7 +11,7 @@ Data</font></p>
 
 
 <div width="787px"  style="float:left;height: 87px;">
-<form:form commandName="lookupvalbean"  name="lookupvalbean" >
+<form:form commandName="lookupvalbean" >
 
 <table border="0" width="100%" cellpadding="10x" height="70px">
 <tr>
@@ -52,7 +52,7 @@ Data</font></p>
 </tr>
 <tr >
 <td align="right" >&nbsp;</td>
-<td><input type="submit" value="Add New Customer" /></td>
+<td><input type="submit" value="Edit Customer" /></td>
 </tr>
 <form:errors >
 <c:forEach items="${messages}" var="message">
@@ -63,48 +63,12 @@ Data</font></p>
 </table>
 
  <input type="hidden" name="_flowExecutionKey" value='<c:out value="${flowExecutionKey}"/>'>
- <input type="hidden" name="_eventId" value='addlookup' id="_eventId" > 
+ <input type="hidden" name="_eventId" value='editCustomer' id="_eventId" >
    
-
+</form:form>
 
 </div>
 
-     <div style="float:left;width:780px;padding:10px">
-
-         <display:table export="true" sort="list"   pagesize="5" name="customerList"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
-
-             <display:column sortable="true"  title="Select" media="html" >
-
-                 <form:radiobutton  path="seqVendorId"  value="${row.seqCustId}"/>
-
-             </display:column>
-
-
-             <display:column sortable="true"  title="customerName"  property="customerName" >
-
-             </display:column>
-             <display:column sortable="true"    property="customerAddress" >
-
-             </display:column>
-             <display:column sortable="true"    property="customerAddress1" >
-
-             </display:column>
-             <display:column sortable="true"    property="customerPhone" >
-
-             </display:column>
-             <display:column sortable="true"    property="customerEmail" >
-
-             </display:column>
-             <display:column sortable="true"    property="customerContact" >
-
-             </display:column>
-             <display:column sortable="true"    property="cusomterCity" >
-
-             </display:column>
-         </display:table>
-
-         <input type="button" value="Edit Vendor"  onclick="eventdirect('editLookup')" />
-     </div>
 
 
  </div>
@@ -112,15 +76,3 @@ Data</font></p>
 
 
 </div>
-</form:form>
-
-
-<script language="javascript">
-
-    function eventdirect(event) {
-
-        document.getElementById('_eventId').value = event;
-
-        document.lookupvalbean.submit();
-    }
-</script>
