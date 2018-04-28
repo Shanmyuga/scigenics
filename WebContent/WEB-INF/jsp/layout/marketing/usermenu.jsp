@@ -37,7 +37,7 @@
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=searchwork-flow">WO MI</a></td>
               </tr>
                   <tr> 
-                <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addCustomer-flow">Add New Customer</a></td>
+                <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addCustomer-flow">Add Edit Customer</a></td>
               </tr>
                 <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewworkorder-flow">View Work Order Docs</a></td>

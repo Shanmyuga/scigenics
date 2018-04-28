@@ -40,7 +40,7 @@
     <definition name="customer.edit" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
         <put-attribute name="menu" value="usermenu.jsp" />
 
-        <put-attribute name="body" value="/WEB-INF/jsp/lookup/addNewCustomer.jsp" />
+        <put-attribute name="body" value="/WEB-INF/jsp/lookup/editCustomer.jsp" />
     </definition>
    <definition name="vendor.add" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
   <put-attribute name="menu" value="usermenu.jsp" />

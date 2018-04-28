@@ -5,7 +5,7 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
  <div width="787px"  style="float:left;height: 150px;">
 <br>
-<p style="padding-left:20px" align="center"><font color="#0080ff" size="4" face="Baskerville Old Face"> Add  New Customer 
+<p style="padding-left:20px" align="center"><font color="#0080ff" size="4" face="Baskerville Old Face"> Edit  Customer
 Data</font></p>
 
 

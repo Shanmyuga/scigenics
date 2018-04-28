@@ -100,7 +100,7 @@ public class POEmailProcessorServlet extends HttpServlet {
 			byte[] pdfarray = out.toByteArray();
 
 	    //Send content to Browser
-			sendEmail("purchase@scigenics.in","shanmugasundarammuthuswamy@gmail.com","Purchase Order From Scigenics","Dear Sir <br> Please find the attached purchase order from Scigenics India Pvt Ltd.",pdfarray);
+			sendEmail("purchase@scigenics.in",vendorEmailId,"Purchase Order From Scigenics","Dear Sir \n Please find the attached purchase order from Scigenics India Pvt Ltd. \n\n\n Thanks and Regards \n Scigenics Purchase Manager \n email : purchase@scigenics.in ",pdfarray);
 	    response.getOutputStream().write(pdfarray);
 	    response.getOutputStream().flush();
 		} catch (FOPException e) {
@@ -174,7 +174,7 @@ doGet(request, response);
 		try {
 			// the "from" address may be set in code, or set in the
 			// config file under "mail.from" ; here, the latter style is used
-			message.setFrom(new InternetAddress("dbaseserver@scigenics.in"));
+			message.setFrom(new InternetAddress(aFromEmailAddr));
 
 			/*InternetAddress[] address = new InternetAddress[1];
 			address[0] = new InternetAddress("sundaraswamy@gmail.com");*/
@@ -188,7 +188,7 @@ doGet(request, response);
 			message.setSubject(aSubject);
 
 			MimeBodyPart mbp1 = new MimeBodyPart();
-			mbp1.setText(aSubject);
+			mbp1.setText(aBody);
 
 			MimeBodyPart mbp2 = new MimeBodyPart();
 			SimpleDateFormat dateformat = new SimpleDateFormat("dd-MM-yyyy");

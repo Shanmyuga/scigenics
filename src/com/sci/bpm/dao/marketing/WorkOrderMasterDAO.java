@@ -157,12 +157,29 @@ List<ChartModel> charts = new ArrayList<ChartModel>();
 			DataPoint point = new DataPoint();
 			point.setLabel("Electronic Cost");
 
+
+
+
+
+			if(array[3] instanceof BigDecimal) {
 				point.setY(new Double(((BigDecimal) (array[3]==null?0:array[3])).doubleValue()));
 
+			}
+			if(array[3] instanceof Integer) {
+
+				point.setY(new Double(((Integer) (array[3]==null?0:array[3])).doubleValue()));
+			}
 			model.addDataPoint(point);
 			point = new DataPoint();
 			point.setLabel("Mechanical Cost");
-			point.setY(new Double(((BigDecimal) (array[4]==null?0:array[4])).doubleValue()));
+			if(array[4] instanceof BigDecimal) {
+				point.setY(new Double(((BigDecimal) (array[4]==null?0:array[4])).doubleValue()));
+
+			}
+			if(array[4] instanceof Integer) {
+
+				point.setY(new Double(((Integer) (array[4]==null?0:array[4])).doubleValue()));
+			}
 			model.addDataPoint(point);
 			charts.add(model);
 			model = new ChartModel();
@@ -173,11 +190,25 @@ List<ChartModel> charts = new ArrayList<ChartModel>();
 
 			 point = new DataPoint();
 			point.setLabel("Electronic Cost");
-			point.setY(new Double(((BigDecimal) (array[13]==null?0:array[13])).doubleValue()));
+			if(array[13] instanceof BigDecimal) {
+				point.setY(new Double(((BigDecimal) (array[13]==null?0:array[13])).doubleValue()));
+
+			}
+			if(array[13] instanceof Integer) {
+
+				point.setY(new Double(((Integer) (array[13]==null?0:array[13])).doubleValue()));
+			}
 			model.addDataPoint(point);
 			point = new DataPoint();
 			point.setLabel("Mechanical Cost");
-			point.setY(new Double(((BigDecimal) (array[12]==null?0:array[12])).doubleValue()));
+			if(array[12] instanceof BigDecimal) {
+				point.setY(new Double(((BigDecimal) (array[12]==null?0:array[12])).doubleValue()));
+
+			}
+			if(array[12] instanceof Integer) {
+
+				point.setY(new Double(((Integer) (array[12]==null?0:array[12])).doubleValue()));
+			}
 			model.addDataPoint(point);
 			charts.add(model);
 		}

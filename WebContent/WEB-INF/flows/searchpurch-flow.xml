@@ -35,10 +35,12 @@
             <webflow:evaluate expression="pocont.bind"/>
             <webflow:evaluate expression="pocont.viewPOPDF"/>
         </webflow:transition>
-    <webflow:transition on="generateEmail" to="viewEmailPOPage">
+    <webflow:transition on="generateEmail" to="entersearch">
         <webflow:evaluate expression="pocont.bind"/>
         <webflow:evaluate expression="pocont.viewPOPDF"/>
         <webflow:evaluate expression="pocont.selectVendorEmailId"/>
+        <webflow:evaluate expression="pocont.sendEmail"/>
+        <webflow:evaluate expression="pocont.despatchPO"/>
     </webflow:transition>
         <webflow:transition on="checkstatus" to="entersearch">
             <webflow:evaluate expression="pocont.bind"/>

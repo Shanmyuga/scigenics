@@ -3,14 +3,14 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
- <div width="787px"  style="float:left;height: 150px;">
+ <div width="787px"  style="float:left;">
 <br>
 <p style="padding-left:20px" align="center"><font color="#0080ff" size="4" face="Baskerville Old Face"> Add  New Customer 
 Data</font></p>
 
 
 
-<div width="787px"  style="float:left;height: 187px;">
+<div width="787px"  style="float:left;">
 <form:form commandName="lookupvalbean"  name="lookupvalbean" >
 
 <table border="0" width="100%" cellpadding="10x" height="70px">
@@ -63,56 +63,54 @@ Data</font></p>
 </table>
 
  <input type="hidden" name="_flowExecutionKey" value='<c:out value="${flowExecutionKey}"/>'>
- <input type="hidden" name="_eventId" value='addlookup' id="_eventId" > 
-   
+ <input type="hidden" name="_eventId" value='addlookup' id="_eventId" >
 
 
+    <div style="float:left;width:780px;padding:10px">
+
+        <display:table export="true" sort="list"   pagesize="5" name="customerList"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
+
+            <display:column sortable="true"  title="Select" media="html" >
+
+                <form:radiobutton  path="seqCustId"  value="${row.seqCustId}"/>
+
+            </display:column>
+
+
+            <display:column sortable="true"  title="customerName"  property="customerName" >
+
+            </display:column>
+            <display:column sortable="true"    property="customerAddress" >
+
+            </display:column>
+            <display:column sortable="true"    property="customerAddress1" >
+
+            </display:column>
+            <display:column sortable="true"    property="customerPhone" >
+
+            </display:column>
+            <display:column sortable="true"    property="customerEmail" >
+
+            </display:column>
+            <display:column sortable="true"    property="customerContact" >
+
+            </display:column>
+            <display:column sortable="true"    property="cusomterCity" >
+
+            </display:column>
+        </display:table>
+
+        <input type="button" value="Edit Customer"  onclick="eventdirect('editLookup')" />
+    </div>
 </div>
+
+
     </div>
 
-     <div style="float:left;width:780px;padding:10px">
-
-         <display:table export="true" sort="list"   pagesize="5" name="customerList"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
-
-             <display:column sortable="true"  title="Select" media="html" >
-
-                 <form:radiobutton  path="seqVendorId"  value="${row.seqCustId}"/>
-
-             </display:column>
-
-
-             <display:column sortable="true"  title="customerName"  property="customerName" >
-
-             </display:column>
-             <display:column sortable="true"    property="customerAddress" >
-
-             </display:column>
-             <display:column sortable="true"    property="customerAddress1" >
-
-             </display:column>
-             <display:column sortable="true"    property="customerPhone" >
-
-             </display:column>
-             <display:column sortable="true"    property="customerEmail" >
-
-             </display:column>
-             <display:column sortable="true"    property="customerContact" >
-
-             </display:column>
-             <display:column sortable="true"    property="cusomterCity" >
-
-             </display:column>
-         </display:table>
-
-         <input type="button" value="Edit Vendor"  onclick="eventdirect('editLookup')" />
-     </div>
 
 
 
-<div width="787px" style="float:left;height: 150px">
 
-
-</div>
 </form:form>
 
 

@@ -1,22 +1,36 @@
 package com.sci.bpm.controller.po;
 
-import java.io.ByteArrayOutputStream;
+import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
+import javax.activation.DataHandler;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
+import javax.servlet.ServletContext;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
+import javax.xml.transform.*;
+import javax.xml.transform.sax.SAXResult;
+import javax.xml.transform.stream.StreamSource;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.fop.apps.Fop;
+import org.apache.fop.apps.FopFactory;
+import org.apache.fop.servlet.ServletContextURIResolver;
+import org.apache.xmlgraphics.util.MimeConstants;
 import org.omg.PortableServer.REQUEST_PROCESSING_POLICY_ID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.webflow.context.servlet.ServletExternalContext;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
+import org.springframework.webflow.execution.RequestContextHolder;
 import org.tempuri.po.Items;
 import org.tempuri.po.ObjectFactory;
 import org.tempuri.po.PurchaseOrderType;
@@ -461,10 +475,9 @@ public class PurchaseOrderController extends SciBaseController {
 		int idlx = poxml.indexOf("<vendorDetails>");
 		poxml = poxml.substring(idlx, poxml.length());
 		
-System.out.println("poxml - " +poxml);
 		context.getExternalContext().getSessionMap()
 				.put("poxml", "<purchaseOrder>"+poxml);
-		
+		context.getFlowScope().put("poxml_flow",poxml);
 		return success();
 	}
 
@@ -479,9 +492,55 @@ System.out.println("poxml - " +poxml);
 		}
 		context.getExternalContext().getSessionMap()
 				.put("vendorEmailID", emailId);
-
+		context.getFlowScope().put("vendorEmailID_flow",emailId);
 		return success();
 	}
+
+
+	public void sendEmail( RequestContext context) throws Exception{
+
+		ServletContext externalContext =
+				(ServletContext)context.getExternalContext().getNativeContext();
+
+		 FopFactory fopFactory = FopFactory.newInstance();
+		 TransformerFactory tFactory = TransformerFactory.newInstance();
+		 URIResolver uriResolver = null;
+
+		uriResolver = new ServletContextURIResolver(externalContext);
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+		//Setup FOP
+		Fop fop = null;
+		try {
+			fop = fopFactory.newFop(MimeConstants.MIME_PDF, out);
+			fopFactory.setURIResolver(uriResolver);
+			String poxml = (String) context.getFlowScope().get("poxml_flow");
+			String vendorEmailId = (String) context.getFlowScope().get("vendorEmailID_flow");
+			if (poxml == null) {
+
+			}
+
+			//Setup TransformerRequestContext rc = RequestContextHolder.getRequestContext();
+			Source xsltSrc = new StreamSource(new File(externalContext.getRealPath("/") + "/xslt/po_template.xsl"));
+			Transformer transformer = tFactory.newTransformer(xsltSrc);
+//transformer.setURIResolver(uriResolver);
+			//Make sure the XSL transformation's result is piped through to FOP
+			Result res = new SAXResult(fop.getDefaultHandler());
+
+			//Setup input
+			Source src = new StreamSource(new StringReader(poxml));
+
+			//Start the transformation and rendering process
+			transformer.transform(src, res);
+			byte[] pdfarray = out.toByteArray();
+
+			//Send content to Browser
+			sendEmail("purchase@scigenics.in",vendorEmailId,"Purchase Order From Scigenics","Dear Sir \n Please find the attached purchase order from Scigenics India Pvt Ltd. \n\n\n Thanks and Regards \n Scigenics Purchase Manager \n email : purchase@scigenics.in ",pdfarray);
+		}
+		catch(Exception e) {
+
+		}
+		}
 
 	public Event cancelPO(RequestContext context) throws Exception {
 
@@ -661,5 +720,85 @@ public Event loadbillDetails(RequestContext context) throws Exception {
 		List matcatlist = prservice.selectCategory(command.getMatDept());
 		context.getFlowScope().put("matcatitems", matcatlist);
 		return success();
+	}
+
+
+
+	public void sendEmail(String aFromEmailAddr, String aToEmailAddr,
+						  String aSubject, String aBody,byte[] array) throws NoSuchProviderException {
+		// Here, no Authenticator argument is used (it is null).
+		// Authenticators are used to prompt the user for user
+		// name and password.
+
+
+
+		final Properties properties = new Properties();
+		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(
+				"com/sci/bpm/service/task/maildetails.properties");
+		try {
+			properties.load(inputStream);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Properties config = createConfiguration();
+
+		Session session = Session.getDefaultInstance(config,
+				new Authenticator() {
+					protected PasswordAuthentication getPasswordAuthentication() {
+						return new PasswordAuthentication((String) properties
+								.get("mail.login.username"),
+								(String) properties.get("mail.login.password"));
+					}
+				});
+		session.setDebug(false);
+
+		MimeMessage message = new MimeMessage(session);
+		try {
+			// the "from" address may be set in code, or set in the
+			// config file under "mail.from" ; here, the latter style is used
+			message.setFrom(new InternetAddress(aFromEmailAddr));
+
+			/*InternetAddress[] address = new InternetAddress[1];
+			address[0] = new InternetAddress("sundaraswamy@gmail.com");*/
+			String[] addressarray = StringUtils.split(aToEmailAddr, ",");
+			InternetAddress[] address = new InternetAddress[addressarray.length];
+			for(int i=0;i<addressarray.length;i++) {
+				address[i] = new InternetAddress(addressarray[i]);
+			}
+			message.addRecipients(javax.mail.internet.MimeMessage.RecipientType.TO, address);
+
+			message.setSubject(aSubject);
+
+			MimeBodyPart mbp1 = new MimeBodyPart();
+			mbp1.setText(aBody);
+
+			MimeBodyPart mbp2 = new MimeBodyPart();
+			SimpleDateFormat dateformat = new SimpleDateFormat("dd-MM-yyyy");
+			mbp2.setFileName("PurchaseOrder -" +  dateformat.format(new Date())+".pdf");
+			ByteArrayDataSource bds = new ByteArrayDataSource(array, "application/pdf");
+			mbp2.setDataHandler(new DataHandler(bds));
+			Multipart mp = new MimeMultipart();
+
+			mp.addBodyPart(mbp1);
+			mp.addBodyPart(mbp2);
+			message.setContent(mp);
+			message.saveChanges();
+			Transport.send(message);
+		} catch (MessagingException ex) {
+			ex.printStackTrace();
+			System.err.println("Cannot send email. " + ex);
+		}
+	}
+
+	private Properties createConfiguration() {
+		return new Properties() {{
+			put("mail.smtp.auth", "true");
+			put("mail.smtp.starttls.enable", "true");
+			put("mail.smtp.host", "smtp.gmail.com");
+			put("mail.smtp.port", "587");
+
+		}};
 	}
 }

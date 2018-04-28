@@ -148,7 +148,7 @@ public class SearchWorkOrder extends SciBaseController{
 			workorderMastersList = searchWorkOrderList(context);
 		}
 		context.getFlowScope().put("workorderlist", workorderMastersList);
-
+		value.setWindex("");
 		return success();
 	}
 

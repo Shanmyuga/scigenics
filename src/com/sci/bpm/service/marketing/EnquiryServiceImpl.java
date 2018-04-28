@@ -39,8 +39,11 @@ public class EnquiryServiceImpl implements EnquiryService {
 			issueMaster.setUpdatedDate(new java.util.Date());
 			taskDao.addNewTask(issueMaster);
 			SciIssueDetails issueDetails = new SciIssueDetails();
-			issueDetails.setIssueSubject(master.getCustomerContact());
-			issueDetails.setIssueDetails(master.getEnqDetails());
+
+			String customerDetails = master.getSciCustomerMaster().getCustomerName() + " " + master.getSciCustomerMaster().getCustomerDetails() + master.getCustomerContact();
+					String enqDetails = master.getEnqCategory() + "  " + master.getEnqDetails();
+			issueDetails.setIssueSubject(customerDetails);
+			issueDetails.setIssueDetails(enqDetails);
 			issueDetails.setAssignedDate(new java.util.Date());
 			issueDetails.setIssueStatus(SciDataConstans.TASK_OPEN_STATUS);
 			issueDetails.setAssignedFrom(userid);
