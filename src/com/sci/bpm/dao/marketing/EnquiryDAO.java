@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.sci.bpm.command.marketing.EnqBean;
 import com.sci.bpm.db.model.SciEnquiryDetails;
+import com.sci.bpm.db.model.SciEnquiryDocs;
 import com.sci.bpm.db.model.SciEnquiryMaster;
 
 public interface EnquiryDAO {
@@ -17,4 +18,11 @@ public interface EnquiryDAO {
 	public void closeEnquury(SciEnquiryMaster master);
 	
 	public void updateEnquiryMaster(SciEnquiryMaster master);
+
+	public void addEnquiryDocMaster(SciEnquiryDocs enquiryDocs);
+
+	public List loadEnquiryDocs(SciEnquiryMaster enquiryMaster);
+
+
+
 }

@@ -1,5 +1,7 @@
 package com.sci.bpm.command.marketing;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -27,6 +29,9 @@ public class EnqBean implements Serializable {
     private Date enqFollowUpDate;
     private Long seqEnqMasterId;
     private Long customerDept;
+    private String enqDocDesc;
+
+    private MultipartFile fileDoc;
 
     public Long getSeqEnqMasterId() {
         return seqEnqMasterId;
@@ -198,5 +203,21 @@ public class EnqBean implements Serializable {
 
     public void setEnqFollowUpDate(Date enqFollowUpDate) {
         this.enqFollowUpDate = enqFollowUpDate;
+    }
+
+    public MultipartFile getFileDoc() {
+        return fileDoc;
+    }
+
+    public void setFileDoc(MultipartFile fileDoc) {
+        this.fileDoc = fileDoc;
+    }
+
+    public String getEnqDocDesc() {
+        return enqDocDesc;
+    }
+
+    public void setEnqDocDesc(String enqDocDesc) {
+        this.enqDocDesc = enqDocDesc;
     }
 }

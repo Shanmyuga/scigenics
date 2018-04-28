@@ -3,10 +3,13 @@ package com.sci.bpm.controller.marketing;
 import java.util.Date;
 import java.util.List;
 
+import com.sci.bpm.db.model.*;
+import com.sci.bpm.service.task.DiskWriterJob;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
 
@@ -15,10 +18,6 @@ import sun.swing.StringUIClientPropertyKey;
 import com.sci.bpm.command.marketing.EnqBean;
 import com.sci.bpm.command.marketing.JobDescBean;
 import com.sci.bpm.controller.base.SciBaseController;
-import com.sci.bpm.db.model.SciCustomerMaster;
-import com.sci.bpm.db.model.SciEnquiryDetails;
-import com.sci.bpm.db.model.SciEnquiryMaster;
-import com.sci.bpm.db.model.SciMatindMaster;
 import com.sci.bpm.service.marketing.EnquiryService;
 
 @Controller("enqcont")
@@ -33,6 +32,9 @@ public class EnquiryController extends SciBaseController {
 
 	@Autowired
 	private EnquiryService service;
+
+	@Autowired
+	private DiskWriterJob diskwriter;
 	
 	public Event loadEnquiryMaster(RequestContext context) throws Exception {
 		EnqBean bean = (EnqBean) getFormObject(context);
@@ -98,7 +100,11 @@ public class EnquiryController extends SciBaseController {
 		List enqmasterlist = (List) context.getFlowScope().get("openenqlist");
 		SciEnquiryMaster emaster = selectEnqmaster(enqmasterlist, bean.getSeqenqmasterid());
 		List detaillist = service.loadEnquiryDetails(emaster);
+
+		List enqdoclist = service.loadEnquiryDocs(emaster);
 		context.getFlowScope().put("openenqdetails", detaillist);
+
+		context.getFlowScope().put("enqdoclist", enqdoclist);
 		context.getFlowScope().put("selectEnq", emaster);
 		return success();
 	}
@@ -143,5 +149,34 @@ public class EnquiryController extends SciBaseController {
 		
 	  return success();	
 		
+	}
+
+
+	public Event addEnquiryDoc(RequestContext context) throws Exception{
+
+		EnqBean bean = (EnqBean) getFormObject(context);
+
+
+		MultipartFile file = bean.getFileDoc();
+
+		SciEnquiryDocs master = new SciEnquiryDocs();
+		List enqmasterlist = (List) context.getFlowScope().get("openenqlist");
+		SciEnquiryMaster emaster = selectEnqmaster(enqmasterlist, bean.getSeqenqmasterid());
+		BeanUtils.copyProperties(master, bean);
+		master.setSeqEnqId(emaster.getSeqEnqryId());
+		master.setEnqDocName(file.getName());
+
+		master.setUpdatedBy(getUserPreferences().getUserID());
+		master.setUpdatedDate(new java.util.Date());
+
+		master.setEnqDocData(bean.getFileDoc().getBytes());
+
+
+		master.setOriginalDoc(file.getOriginalFilename());
+		master.setDocCnttype(file.getContentType());
+
+		service.addEnquiryDocMaster(master);
+		diskwriter.writeEnquiryDoc();
+		return success();
 	}
 }

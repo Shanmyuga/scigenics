@@ -61,9 +61,9 @@ document.storesbean.submit();
 
 
 <td>Work Order</td>
-<td  ><form:select path="seqWorkId" size="1" id="seqWorkId">
+<td  ><form:select path="seqEnqId" size="1" id="seqEnqId">
 <form:option value="0">All</form:option>
-<form:options items="${workmastlist}" itemValue="seqWorkId" itemLabel="jobDesc"/>
+<form:options items="${workmastlist}" itemValue="seqEnqId" itemLabel="jobDesc"/>
 </form:select>
 </td>
 

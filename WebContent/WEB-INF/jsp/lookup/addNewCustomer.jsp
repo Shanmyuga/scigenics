@@ -10,7 +10,7 @@ Data</font></p>
 
 
 
-<div width="787px"  style="float:left;height: 87px;">
+<div width="787px"  style="float:left;height: 187px;">
 <form:form commandName="lookupvalbean"  name="lookupvalbean" >
 
 <table border="0" width="100%" cellpadding="10x" height="70px">
@@ -68,6 +68,7 @@ Data</font></p>
 
 
 </div>
+    </div>
 
      <div style="float:left;width:780px;padding:10px">
 
@@ -107,7 +108,7 @@ Data</font></p>
      </div>
 
 
- </div>
+
 <div width="787px" style="float:left;height: 150px">
 
 

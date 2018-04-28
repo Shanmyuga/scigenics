@@ -120,7 +120,6 @@
 function changeDtd(event) {
 
 document.enqbean._eventId.value=event;
-alert("hi")
 document.enqbean.submit();
 
 }

@@ -445,7 +445,7 @@ public class StoresManagerController extends SciBaseController {
 		StoresBean bean = (StoresBean) getFormObject(context);
 		/*SciWorkorderMaster wmaster = (SciWorkorderMaster) context.getFlowScope().get("selectedwo");
 		bean.setWmaster(wmaster);
-		bean.setSeqWorkId(wmaster.getSeqWorkId());*/
+		bean.setSeqEnqId(wmaster.getSeqEnqId());*/
 		if("Y".equals(bean.getRequestUserId())) {
 			bean.setRequestUserId(getUserPreferences().getUserID());		
 		}

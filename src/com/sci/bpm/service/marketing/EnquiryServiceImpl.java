@@ -5,16 +5,13 @@ import java.util.List;
 import com.sci.bpm.command.user.UserPreference;
 import com.sci.bpm.constants.SciDataConstans;
 import com.sci.bpm.dao.task.TaskProcessDAO;
-import com.sci.bpm.db.model.SciIssueDetails;
-import com.sci.bpm.db.model.SciIssueMaster;
+import com.sci.bpm.db.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sci.bpm.command.marketing.EnqBean;
 import com.sci.bpm.dao.marketing.EnquiryDAO;
-import com.sci.bpm.db.model.SciEnquiryDetails;
-import com.sci.bpm.db.model.SciEnquiryMaster;
 
 @Service
 @Transactional
@@ -69,6 +66,8 @@ public class EnquiryServiceImpl implements EnquiryService {
 		return dao.loadEnquiryDetails(master);
 	}
 
+
+
 	public List loadOpenEnquiry(EnqBean bean) {
 		
 		
@@ -83,6 +82,17 @@ public class EnquiryServiceImpl implements EnquiryService {
 	public void updateEnquiryMaster(SciEnquiryMaster master) {
 		// TODO Auto-generated method stub
 		dao.closeEnquury(master);
+	}
+
+	@Override
+	public void addEnquiryDocMaster(SciEnquiryDocs enquiryDocs) {
+
+		dao.addEnquiryDocMaster(enquiryDocs);
+	}
+
+	@Override
+	public List loadEnquiryDocs(SciEnquiryMaster enquiryMaster) {
+		return dao.loadEnquiryDocs(enquiryMaster);
 	}
 
 }

@@ -120,10 +120,10 @@
 <p align="center"> Work Order Documents </p>
 <display:table export="true" sort="list"   pagesize="5" name="workjdrdocs"  id="row3"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" htmlId="3" >
 
-<display:column sortable="true"   title="Document Name" property="jdrDocName" >
+<display:column sortable="true"   title="Document Name" property="enqDocName" >
 
 </display:column>
-<display:column sortable="true"  title="Document Desc" property="jdrDesc" >
+<display:column sortable="true"  title="Document Desc" property="enqDocDesc" >
 
 </display:column>
 <display:column sortable="true"  title="Document Version" property="docVersion"  >

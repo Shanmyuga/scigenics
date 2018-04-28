@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.sci.bpm.db.model.SciEnquiryDocs;
 import org.springframework.stereotype.Repository;
 
 import com.sci.bpm.command.marketing.EnqBean;
@@ -94,6 +95,18 @@ public class EnquiryDAOImpl implements EnquiryDAO {
     public void updateEnquiryMaster(SciEnquiryMaster master) {
         // TODO Auto-generated method stub
         em.merge(master);
+    }
+
+    @Override
+    public void addEnquiryDocMaster(SciEnquiryDocs enquiryDocs) {
+        em.persist(enquiryDocs);
+    }
+
+    @Override
+    public List loadEnquiryDocs(SciEnquiryMaster enquiryMaster) {
+        Query qry = em.createQuery("from SciEnquiryDocs where seqEnqId =:emaster");
+        qry.setParameter("emaster", enquiryMaster.getSeqEnqryId());
+        return qry.getResultList();
     }
 
 }

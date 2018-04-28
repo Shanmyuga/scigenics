@@ -230,4 +230,55 @@ public  void writejdr() throws SQLException  {
 	}
 }
 
+
+	public  void writeEnquiryDoc() throws SQLException  {
+		Connection conn  = null;
+		try {
+			conn = getConnection();
+			String query = "Select * from scigenics.SCI_ENQUIRY_DOCS where ENQ_DOC_DATA is not null";
+			ResultSet rst = conn.createStatement().executeQuery(query);
+			int idx =1;
+			while(rst.next()) {
+				String key  =rst.getString("SEQ_ENQ_DOC_ID");
+				String filename = rst.getString("ORIGINAL_DOC");
+				Blob blob = rst.getBlob("ENQ_DOC_DATA");
+				if(blob != null) {
+					BufferedInputStream bis =
+							new BufferedInputStream(blob.getBinaryStream());
+					BufferedOutputStream bo = new BufferedOutputStream(new FileOutputStream(new File(diskfileloc+"ENQ_"+key+"_"+filename)));
+
+					byte[] buf = new byte[4096];
+					int n = 0;
+
+					while ((n = bis.read(buf, 0, 4096)) != -1) {
+						bo.write(buf, 0, n);
+					}
+
+					bo.flush();
+					bo.close();
+					bis.close();
+				}
+				idx++;
+				System.out.println(idx);
+			}
+			conn.createStatement().executeUpdate("UPDATE scigenics.SCI_ENQUIRY_DOCS d set ENQ_DOC_DATA = null where ENQ_DOC_DATA is not null");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}
 }

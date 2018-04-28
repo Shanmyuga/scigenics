@@ -28,6 +28,11 @@
            <webflow:evaluate expression="enqcont.bind"/>
             <webflow:evaluate expression="enqcont.addEnquiryDetails"/>
         </webflow:transition>
+
+       <webflow:transition on="addEnquirydoc" to="entersearch" >
+           <webflow:evaluate expression="enqcont.bind"/>
+           <webflow:evaluate expression="enqcont.addEnquiryDoc"/>
+       </webflow:transition>
            <webflow:transition on="closeenq" to="entersearch" >
            <webflow:evaluate expression="enqcont.bind"/>
             <webflow:evaluate expression="enqcont.closeEnquiry"/>

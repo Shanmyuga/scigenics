@@ -24,9 +24,9 @@
 </td>
 
  <td>Work Order</td>
-<td><form:select path="seqWorkId"    >
+<td><form:select path="seqEnqId"    >
 <form:option value="">All</form:option>
-<form:options items="${workmastlist}" itemLabel="jobDesc" itemValue="seqWorkId"/>
+<form:options items="${workmastlist}" itemLabel="jobDesc" itemValue="seqEnqId"/>
 </form:select>
 
 </td>

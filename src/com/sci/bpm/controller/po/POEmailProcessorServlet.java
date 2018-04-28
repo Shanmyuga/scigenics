@@ -210,11 +210,11 @@ doGet(request, response);
 
 	private Properties createConfiguration() {
 		return new Properties() {{
-			put("mail.smtp.host", "smtp.gmail.com");
 			put("mail.smtp.auth", "true");
-			put("mail.smtp.port", "465");
-			put("mail.smtp.socketFactory.port", "465");
-			put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+			put("mail.smtp.starttls.enable", "true");
+			put("mail.smtp.host", "smtp.gmail.com");
+			put("mail.smtp.port", "587");
+
 		}};
 	}
 
