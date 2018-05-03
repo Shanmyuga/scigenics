@@ -10,14 +10,22 @@
   <target name="init" depends="clean">
     <!-- Create the time stamp -->
     <tstamp/>
+	  <delete dir="dist"/>
     <!-- Create the build directory structure used by compile -->
     <mkdir dir="${build}"/>
   	 <mkdir dir="WebContent/WEB-INF/src"/>
   	
   </target>
 
+
   <target name="copywardata" depends="compile"
         description="compile the source " >
+
+	  <copy todir="${build}">
+		  <fileset dir="${src}">
+			  <exclude name="**/*.java"/>
+		  </fileset>
+	  </copy>
     <!-- Compile the java code from ${src} into ${build} -->
    <copy todir="WebContent/WEB-INF/src" >
    	<fileset dir="src"  ></fileset>

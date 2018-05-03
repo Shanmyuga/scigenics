@@ -61,9 +61,9 @@
 </tr>
 <tr>
 <td>Work Order</td>
-<td  ><form:select path="seqEnqId" size="1" id="seqEnqId">
+<td  ><form:select path="seqWorkId" size="1" id="seqWorkId">
 <form:option value="0">All</form:option>
-<form:options items="${workmastlist}" itemValue="seqEnqId" itemLabel="jobDesc"/>
+<form:options items="${workmastlist}" itemValue="seqWorkId" itemLabel="jobDesc"/>
 </form:select>
 </td>
 
